@@ -1,0 +1,20 @@
+---
+title: "Untitled"
+format: html
+---
+
+# Week 1
+
+- Read through Bailey's paper - Done
+- Establish meetings - Done
+- Email Natalia - Done
+- Prepare GitHub - Done
+
+# Week 2
+
+- Quarto Template
+- GitHub Repo
+- Thesis section mapping
+- Add sections: Introduction of the Topic, Literature Review, Research Question and Research Plan, Preliminary Results
+- Try some sample data with Panelot and see how it performs, what it does, what I was expecting
+- Read Optimisation Book
