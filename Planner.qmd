@@ -15,6 +15,6 @@ format: html
 - Quarto Template - Imported
 - GitHub Repo - Setup
 - Thesis section mapping - In progress
-- Add sections: Introduction of the Topic, Literature Review, Research Question and Research Plan, Preliminary Results
+- Add sections: Introduction of the Topic, Literature Review, Research Question and Research Plan, Preliminary Results - Done
 - Try some sample data with Panelot and see how it performs, what it does, what I was expecting
-- Read Optimisation Book
+- Read Optimisation Book - Chapter 1 read
