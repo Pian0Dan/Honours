@@ -2,23 +2,25 @@ project:
   type: book
 
 book:
-  title: "This is my thesis"
-  author: "Susan Su"
+  title: "Optimal Sortition: How Does it Perform?"
+  author: "Daniel Loza"
   chapters:
     - text: "Front matter"
       file: index.qmd
     - "01-chap1.qmd"
     - "02-chap2.qmd"
+    - "03-chap3.qmd"
+    - "04-chap4.qmd"
     - "refs.qmd"
   sidebar:
     style: "docked"
 
 bibliography: thesisrefs.bib
 csl: american-statistical-association.csl
-degreetype: Doctor of Philosophy
+degreetype: Bachelor of Commerce (Honours)
 submitted: 2024
 affiliation: Department of Econometrics & Business Statistics
-degrees: 'B.Sc. (Hons), University of Tangambalanga'
+degrees: 'B.Bus., Monash University'
 
 format:
   monashthesis-html: default
