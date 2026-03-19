@@ -12,9 +12,9 @@ format: html
 
 # Week 2
 
-- Quarto Template
-- GitHub Repo
-- Thesis section mapping
+- Quarto Template - Imported
+- GitHub Repo - Setup
+- Thesis section mapping - In progress
 - Add sections: Introduction of the Topic, Literature Review, Research Question and Research Plan, Preliminary Results
 - Try some sample data with Panelot and see how it performs, what it does, what I was expecting
 - Read Optimisation Book
