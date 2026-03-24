@@ -18,3 +18,6 @@ format: html
 - Add sections: Introduction of the Topic, Literature Review, Research Question and Research Plan, Preliminary Results - Done
 - Try some sample data with Panelot and see how it performs, what it does, what I was expecting
 - Read Optimisation Book - Chapter 1 read
+
+# Week 3
+- Change meeting times - Adjusted to Thursdays 2:30-3:30pm
