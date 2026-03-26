@@ -21,3 +21,5 @@ format: html
 
 # Week 3
 - Change meeting times - Adjusted to Thursdays 2:30-3:30pm
+- Develop research question - added to 03-chap3
+- Make more notes on linear book and Natures paper
