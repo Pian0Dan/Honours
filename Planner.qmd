@@ -23,3 +23,8 @@ format: html
 - Change meeting times - Adjusted to Thursdays 2:30-3:30pm
 - Develop research question - added to 03-chap3
 - Make more notes on linear book and Natures paper
+
+# Week 4
+- Write down the algorithm that is being used and understand what it is doing well enough to explain it to someone else - 
+- Write up for points 1 - 3 of Research Proposal guideline
+- Export PDF of write-up to share with Di and Jess ahead of next meeting

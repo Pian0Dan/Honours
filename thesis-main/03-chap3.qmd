@@ -5,6 +5,8 @@ What does it mean for a panel to be "good" at being representative and are we ac
 - How do unobserved/unfiltered traits affect response rates, and therefore panel composition and representativeness?
 - How can survey non-response and other sampling-level issues bias representativeness?
 
+nDF suggests 10x response to panel count; not generally feasibly, more often get 3x. How much of a difference does this make to burden and selection likelihood?
+
 # Research Plan {#sec-resplan}
 
 Plan
