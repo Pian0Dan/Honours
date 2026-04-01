@@ -6,10 +6,14 @@ P_init:
 - Non-empty portfolio of panels that initiates the optimisation process. As there could be exponentially many panels, it just starts with a small subset, then iteratively produces more panels through column generation.
 
 C_aux:
-- Value 1: The total probability assigned to all possible panels must sum to 1 (100%).
-- Value 2: The selection probability of a person is the sum of all valid panels that include them.
-- Value 3: For all unfixed (unselected) people, the selection probability must be at least a defined floor (minimum selection probability).
-- Value 4: For all fixed (previously selected) people, the probability will be held constant.
+- Property 1: The total probability assigned to all possible panels must sum to 1 (100%).
+- Property 2: The selection probability of a person is the sum of all valid panels that include them.
+- Property 3: For all unfixed (unselected) people, the selection probability must be at least a defined floor (minimum selection probability).
+- Property 4: For all fixed (previously selected) people, the probability will be held constant.
 
-LexiMin aims to maximise the minimum selection probability (floor) across all participants, and represents the minimum selection probability for the currently least-likely-to-be-chosen individuals.
+Overall function:
+LexiMin aims to maximise the minimum selection probability (floor) across all participants, which represents the minimum selection probability for the currently least-likely-to-be-chosen individuals.
 It uses Lambda panel-weighting to list likelihood of every given panel iteration.
+It creates a "fixed set" of participants whose probabilities were already locked in during previous iterative rounds.
+It uses rho to maintain "fixed values" for selection likelihoods of members of the "fixed set".
+And then lumps all feasible panel sets back into the Portfolio.
