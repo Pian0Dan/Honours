@@ -12,4 +12,4 @@ library(fable)
 ```
 
 Aim:
-This study aims to invstigate
+This study aims to evaluate current sortition methods and representative community processes, with a focus on the LexiMin algorithm, and to investigate how unobserved traits and survey non-response may affect panel representativeness. By understanding these factors, we can develop a greater understanding of current tools and procedures, how they work, how they fall short, and what it would mean for them to be more representative.
