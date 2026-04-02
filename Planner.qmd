@@ -28,3 +28,14 @@ format: html
 - Write down the algorithm that is being used and understand what it is doing well enough to explain it to someone else - 
 - Write up for points 1 - 3 of Research Proposal guideline
 - Export PDF of write-up to share with Di and Jess ahead of next meeting
+
+# Week 5
+- Generate PDF
+- Give clear background to the problem and why we need sortition
+- Describe the objective problem, what representativeness is, why it is important and how it is measured
+- Summarise learnings from articles for visualisation methods, and from Natures papers (Flanigan et al.)
+
+- Research direction: Measure representation of intersectional minorities; how do we use visualisation tools to show the discrepancy; consider how simulation might look to showcase this
+
+- Additional tool for situations where you want specific joint traits for subsets
+- How could this be used/balanced in general panel situations, without reintroducing representative burden
