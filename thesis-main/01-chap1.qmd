@@ -14,3 +14,5 @@ library(fable)
 Aim:
 
 This study aims to evaluate current sortition methods and community representation processes, as well as to investigate how unobserved traits and survey non-response may affect panel representativeness. By understanding these factors, we can develop a greater understanding of existing tools and procedures, how they work, how they fall short, and what it would mean for them to be more representative.
+
+* Add reference to diagnostic tool

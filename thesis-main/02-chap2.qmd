@@ -1,6 +1,6 @@
 # Literature Review {#sec-litreview}
 
-LexiMin
+LexiMin [@Flanigan2021FairAF]
 
 P_init:
 
