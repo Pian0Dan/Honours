@@ -7,9 +7,13 @@ P_init:
 
 C_aux:
 - Property 1: The total probability assigned to all possible panels must sum to 1 (100%).
+
 - Property 2: The selection probability of a person is the sum of all valid panels that include them.
+
 - Property 3: For all unfixed (unselected) people, the selection probability must be at least a defined floor (minimum selection probability).
+
 - Property 4: For all fixed (previously selected) people, the probability will be held constant.
+
 
 Overall function:
 LexiMin aims to maximise the minimum selection probability (floor) across all participants, which represents the minimum selection probability for the currently least-likely-to-be-chosen individuals.
