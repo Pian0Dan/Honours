@@ -6,6 +6,7 @@ P_init:
 - Non-empty portfolio of panels that initiates the optimisation process. As there could be exponentially many panels, it just starts with a single arbitrary panel, then iteratively produces more through column generation.
 
 C_aux:
+
 - Property 1: The total probability assigned to all possible panels must sum to 1 (100%).
 
 - Property 2: The selection probability of a person is the sum of all valid panels that include them.
