@@ -17,8 +17,13 @@ C_aux:
 
 
 Overall function:
-LexiMin aims to maximise the minimum selection probability (floor) across all participants, which represents the minimum selection probability for the currently least-likely-to-be-chosen individuals.
-It uses Lambda panel-weighting to list likelihood of every given panel iteration.
-It creates a "fixed set" of participants whose probabilities were already locked in during previous iterative rounds.
-It uses rho to maintain "fixed values" for selection likelihoods of members of the "fixed set".
-And then lumps all feasible panel sets back into the Portfolio.
+
+- LexiMin aims to maximise the minimum selection probability (floor) across all participants, which represents the minimum selection probability for the currently least-likely-to-be-chosen individuals.
+
+- It uses Lambda panel-weighting to list likelihood of every given panel iteration.
+
+- It creates a "fixed set" of participants whose probabilities were already locked in during previous iterative rounds.
+
+- It uses rho to maintain "fixed values" for selection likelihoods of members of the "fixed set".
+
+- And then lumps all feasible panel sets back into the Portfolio.
