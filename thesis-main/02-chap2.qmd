@@ -3,6 +3,7 @@
 LexiMin
 
 P_init:
+
 - Non-empty portfolio of panels that initiates the optimisation process. As there could be exponentially many panels, it just starts with a single arbitrary panel, then iteratively produces more through column generation.
 
 C_aux:
