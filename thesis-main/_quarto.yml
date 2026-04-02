@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-  title: "Optimal Sortition: How Does it Perform?"
+  title: "Optimal Sortition: A Framework Analysis"
   author: "Daniel Loza"
   chapters:
     - text: "Front matter"
