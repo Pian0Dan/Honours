@@ -42,3 +42,5 @@ format: gfm
 
 - Additional tool for situations where you want specific joint traits for subsets
 - How could this be used/balanced in general panel situations, without reintroducing representative burden
+
+## Week 6
