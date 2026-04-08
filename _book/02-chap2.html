@@ -246,11 +246,14 @@ window.Quarto = {
 
 <section id="leximin-panel-selection-flanigan2021fairaf" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="leximin-panel-selection-flanigan2021fairaf"><span class="header-section-number">2.1</span> LexiMin Panel Selection <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></h2>
-<section id="definition" class="level3">
-<h3 class="anchored" data-anchor-id="definition">Definition</h3>
+<section id="problem-definition" class="level3">
+<h3 class="anchored" data-anchor-id="problem-definition">Problem Definition</h3>
 <p>Suppose there is a pool of individuals numbered 1 to n.</p>
 <p>We want to choose a panel of size k.</p>
-<p>Let K be the set of all feasible panels. A feasible panel is any group of k individuals that satisfies the required constraints, such as quotas.</p>
+<p>Let K be the set of all feasible panels. A feasible panel is any group of k individuals that satisfies the required constraints (which generally take the form of quotas).</p>
+</section>
+<section id="leximin-approach" class="level3">
+<h3 class="anchored" data-anchor-id="leximin-approach">LexiMin Approach</h3>
 <p>LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.</p>
 <p>Each feasible panel is assigned a probability.</p>
 <p>These probabilities must be non-negative and must add up to 1.</p>
