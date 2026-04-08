@@ -2,21 +2,41 @@
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
-# Monash Thesis Template
+# Planner
 
-This is a Quarto template that assists you in creating a Monash
-University thesis.
+## Week 1
 
-## Installation
+- Read through Bailey's paper - Done
+- Establish meetings - Done
+- Email Natalia - Done
+- Prepare GitHub - Done
 
-You can create a thesis based on this template with the following
-command:
+## Week 2
 
-``` bash
-quarto use template quarto-monash/thesis
-```
+- Quarto Template - Imported
+- GitHub Repo - Setup
+- Thesis section mapping - In progress
+- Add sections: Introduction of the Topic, Literature Review, Research Question and Research Plan, Preliminary Results - Done
+- Try some sample data with Panelot and see how it performs, what it does, what I was expecting
+- Read Optimisation Book - Chapter 1 read
 
-This will install the extension and create the files that you can use as
-a starting place for your thesis.
+## Week 3
+- Change meeting times - Adjusted to Thursdays 2:30-3:30pm
+- Develop research question - added to 03-chap3
+- Make more notes on linear book and Natures paper
 
-[![](examples/template.png)](examples/template.pdf)
+## Week 4
+- Write down the algorithm that is being used and understand what it is doing well enough to explain it to someone else - 
+- Write up for points 1 - 3 of Research Proposal guideline
+- Export PDF of write-up to share with Di and Jess ahead of next meeting
+
+## Week 5
+- Generate PDF
+- Give clear background to the problem and why we need sortition
+- Describe the objective problem, what representativeness is, why it is important and how it is measured
+- Summarise learnings from articles for visualisation methods, and from Natures papers (Flanigan et al.)
+
+- Research direction: Measure representation of intersectional minorities; how do we use visualisation tools to show the discrepancy; consider how simulation might look to showcase this
+
+- Additional tool for situations where you want specific joint traits for subsets
+- How could this be used/balanced in general panel situations, without reintroducing representative burden
