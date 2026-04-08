@@ -1,13 +1,15 @@
 # Literature Review {#sec-litreview}
 ## LexiMin Panel Selection [@Flanigan2021FairAF]
 
-### Definition
+### Problem Definition
 
 Suppose there is a pool of individuals numbered 1 to n.
 
 We want to choose a panel of size k.
 
-Let K be the set of all feasible panels. A feasible panel is any group of k individuals that satisfies the required constraints, such as quotas.
+Let K be the set of all feasible panels. A feasible panel is any group of k individuals that satisfies the required constraints (which generally take the form of quotas).
+
+### LexiMin Approach
 
 LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.
 
