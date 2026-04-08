@@ -17,7 +17,7 @@ This study aims to evaluate current sortition methods and community representati
 
 # Background {#sec-background}
 
-We live in an age where decision-making and its impacts feel like they are only growing in importance and scale, yet our ability to impart influence seems to only be diminishing. Many feel disenfranchised and like power is being taken away from them, and that their voices are not being heard. This is a problem. Not only because it can lead to disengagement, apathy, and a lack of trust in institutions, but also because _not_ listening directly to lived experiences and perspectives limits the effectiveness of the very decisions we do make.
+We live in an age where decision-making and its impacts feel like they are only growing in importance and scale, yet our ability to impart influence seems to only be diminishing. Many feel disenfranchised and like power is being taken away from them, and that their voices are not being heard. This is a problem. Not only because it can lead to disengagement, apathy, and a lack of trust in institutions, but also because _not_ listening directly to lived experiences and perspectives limits the effectiveness of the very decisions we _do_ make.
 
 According to @Flanigan2021FairAF, sortition creates groups that are statistical “mini-publics” of society, reflecting demographics and perspectives more accurately than elected bodies. Which, given the polarised and over-dramatised nature of policy today, is a much-needed breath of fresh air. 
 
@@ -27,5 +27,4 @@ An increasing number of institutions (including the Parisian Citizens' Assembly,
 
 One of the main challenges is ensuring that the selection process is transparent and fair, and that the panels are truly representative of the population in terms of demographics and perspectives. But this raises the questions of both a) what does it mean to be fair? and b) what does it mean to be representative?
 
-Additionally, though some have already been developed, there is a need for better tools, methods and frameworks to evaluate the representativeness of these panels and to ensure that they are robust in achieving their goals.
-
+Additionally, though some (such as LexiMin [@Flanigan2021FairAF]) have already been developed, there is a need for better tools, methods and frameworks to evaluate the representativeness of these panels and to ensure that they are robust in achieving their goals.
