@@ -1,4 +1,7 @@
 # Literature Review {#sec-litreview}
+
+## Sortition and Representation
+
 ## LexiMin Panel Selection [@Flanigan2021FairAF]
 
 ### Problem Definition
@@ -94,3 +97,27 @@ This makes the selection probabilities as equal as possible while still respecti
 ### Summary
 
 LexiMin chooses a probability distribution over feasible panels that makes individual selection probabilities as equal as possible, starting with the lowest.
+
+
+## Visualisation Methods
+
+### Parallel coordinate plots
+
+- Can help to show the distribution of traits across the selected panel and how it compares to the overall population.
+- Can also show the trade-offs between different traits and how they are balanced in the selection process
+- Can be used to identify any segments of the population that are underrepresented in the selected panel, and to highlight any potential biases in the selection process.
+
+### Matrix-based set representation
+
+- Can be used to show how different traits connect with each other and how they are distributed across the selected panel.
+- Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.
+
+### Query-based highlighting
+
+- Makes the visualisation interactive, allowing users to explore the data and identify specific patterns or trends in the selection process.
+- Can be used to highlight specific traits or combinations of traits that are of interest, and to show how they are represented in the selected panel compared to the overall population.
+- Also creates opportunity to ensure specific combinations of traits are represented in the selected panel, without reintroducing representative burden.
+
+### Attribute distribution analysis
+
+- Showcase how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process.
