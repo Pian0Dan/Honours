@@ -218,7 +218,7 @@ window.Quarto = {
     <h2 id="toc-title"><b>Sections</b></h2>
    
   <ul class="collapse">
-  <li><a href="#leximin-panel-selection" id="toc-leximin-panel-selection" class="nav-link active" data-scroll-target="#leximin-panel-selection"><span class="header-section-number">2.1</span> LexiMin Panel Selection</a></li>
+  <li><a href="#leximin-panel-selection-flanigan2021fairaf" id="toc-leximin-panel-selection-flanigan2021fairaf" class="nav-link active" data-scroll-target="#leximin-panel-selection-flanigan2021fairaf"><span class="header-section-number">2.1</span> LexiMin Panel Selection <span class="citation" data-cites="Flanigan2021FairAF">(Flanigan et al. 2021)</span></a></li>
   </ul>
 </nav>
     </div>
@@ -244,8 +244,8 @@ window.Quarto = {
 </header>
 
 
-<section id="leximin-panel-selection" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="leximin-panel-selection"><span class="header-section-number">2.1</span> LexiMin Panel Selection</h2>
+<section id="leximin-panel-selection-flanigan2021fairaf" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="leximin-panel-selection-flanigan2021fairaf"><span class="header-section-number">2.1</span> LexiMin Panel Selection <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></h2>
 <section id="definition" class="level3">
 <h3 class="anchored" data-anchor-id="definition">Definition</h3>
 <p>Suppose there is a pool of individuals numbered 1 to n.</p>
@@ -306,34 +306,14 @@ p_S \ge 0
 <li><p>Sample a final panel according to that distribution.</p></li>
 </ol>
 </section>
-<section id="intuition" class="level3">
-<h3 class="anchored" data-anchor-id="intuition">Intuition</h3>
+<section id="logic" class="level3">
+<h3 class="anchored" data-anchor-id="logic">Logic</h3>
 <p>LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. Then it improves the next-lowest probabilities, and so on.</p>
 <p>This makes the selection probabilities as equal as possible while still respecting the panel constraints.</p>
 </section>
-<section id="one-line-summary" class="level3">
-<h3 class="anchored" data-anchor-id="one-line-summary">One-line summary</h3>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
 <p>LexiMin chooses a probability distribution over feasible panels that makes individual selection probabilities as equal as possible, starting with the lowest.</p>
-<p>LexiMin <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></p>
-<p>P_init:</p>
-<ul>
-<li>Non-empty portfolio of panels that initiates the optimisation process. As there could be exponentially many panels, it just starts with a single arbitrary panel, then iteratively produces more through column generation.</li>
-</ul>
-<p>C_aux:</p>
-<ul>
-<li><p>Property 1: The total probability assigned to all possible panels must sum to 1 (100%).</p></li>
-<li><p>Property 2: The selection probability of a person is the sum of all valid panels that include them.</p></li>
-<li><p>Property 3: For all unfixed (unselected) people, the selection probability must be at least a defined floor (minimum selection probability).</p></li>
-<li><p>Property 4: For all fixed (previously selected) people, the probability will be held constant.</p></li>
-</ul>
-<p>Overall function:</p>
-<ul>
-<li><p>LexiMin aims to maximise the minimum selection probability (floor) across all participants, which represents the minimum selection probability for the currently least-likely-to-be-chosen individuals.</p></li>
-<li><p>It uses Lambda panel-weighting to list likelihood of every given panel iteration.</p></li>
-<li><p>It creates a “fixed set” of participants whose probabilities were already locked in during previous iterative rounds.</p></li>
-<li><p>It uses rho to maintain “fixed values” for selection likelihoods of members of the “fixed set”.</p></li>
-<li><p>And then lumps all feasible panel sets back into the Portfolio.</p></li>
-</ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

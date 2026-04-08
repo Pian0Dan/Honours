@@ -27,4 +27,4 @@ An increasing number of institutions (including the Parisian Citizens' Assembly,
 
 One of the main challenges is ensuring that the selection process is transparent and fair, and that the panels are truly representative of the population in terms of demographics and perspectives. But this raises the questions of both a) what does it mean to be fair? and b) what does it mean to be representative?
 
-Additionally, though some (such as LexiMin [@Flanigan2021FairAF]) have already been developed, there is a need for better tools, methods and frameworks to evaluate the representativeness of these panels and to ensure that they are robust in achieving their goals.
+Additionally, though some (such as LexiMin, from @Flanigan2021FairAF) have already been developed, there is a need for better tools, methods and frameworks to evaluate the representativeness of these panels and to ensure that they are robust in achieving their goals.
