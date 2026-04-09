@@ -1,10 +1,32 @@
 # Literature Review {#sec-litreview}
 
-## Sortition and Representation
+## Representation and Sortition
 
-## LexiMin Panel Selection [@Flanigan2021FairAF]
+### What does it mean to be representative?
 
-### Problem Definition
+The main aim of any and all selection methods is to create a panel that is fair and representative of the population. But what does this actually mean?
+
+Fairness refers to the idea that the selection process should be transparent, unbiased, and inclusive. It should give everyone an equal chance of being selected, regardless of their background or characteristics. Which is easier said than done.
+
+Alongside this, representativeness refers to the idea that the selected panel should accurately reflect the demographics and perspectives of the population. This means that the panel should be diverse and inclusive, and should contain individuals from a wide range of relevant backgrounds.
+
+Approaching it systematically, the sortition process can be thought of in four stages:
+- Defining the population and traits of interest
+- Sampling from the population (through survey or other outreach)
+- Panel selection (through algorithmic means or other method)
+- Panel evaluation, confirmation and engagement
+
+Each of these steps presents an opportunity for bias to be introduced, and for the panel to become less representative of the population. Which is why it is crucial to evaluate the level of representativeness (or _potential_ representativeness) at each stage, and to understand how different factors may affect it.
+
+For example, if the population of interest and investigated traits are poorly defined, then the selection process may not be able to capture the diversity and perspectives of the desired group, leading to a less representative panel. This presents a challenge in itself, given most population descriptions (as previously discussed) are often based on disjoint demographic characteristics and do not provide a way to capture intersectionality, which is a key aspect of representativeness. This may be beyond the scope of this thesis, as it is already a foray into broader data collection and storage methods, but it is important to keep in mind that representation goes beyond the margin.
+
+Similarly, if certain groups are less likely to respond to the survey, then they may be underrepresented in the pool of potential panelists, which can lead to a less representative panel from the outset. Illustratively--if there were to be no female respondents for a certain survey in an area comprised of 60% women, then the representativeness assumption (and goal) would be majorly violated before an attempt at putting a panel together has even been made. Situations like these raise the question of how we can account for this non-response bias, and whether we can use visualisation tools to show the discrepancy between the pool and the population (which leads back to part of this thesis' aim).
+
+
+
+### Panel Selection 
+
+#### Problem Definition
 
 Suppose there is a pool of individuals numbered 1 to n.
 
@@ -12,7 +34,7 @@ We want to choose a panel of size k.
 
 Let K be the set of all feasible panels. A feasible panel is any group of k individuals that satisfies the required constraints (which generally take the form of quotas).
 
-### LexiMin Approach
+#### LexiMin Approach [@Flanigan2021FairAF]
 
 LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.
 
@@ -62,7 +84,7 @@ $$
 
 LexiMin chooses p so that this sorted vector is maximised in order.
 
-### Algorithm
+#### Algorithm
 
 1. List all feasible panels in K.
 
@@ -88,13 +110,13 @@ $$
 
 8. Sample a final panel according to that distribution.
 
-### Logic
+#### Logic
 
 LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. Then it improves the next-lowest probabilities, and so on.
 
 This makes the selection probabilities as equal as possible while still respecting the panel constraints.
 
-### Summary
+#### Summary
 
 LexiMin chooses a probability distribution over feasible panels that makes individual selection probabilities as equal as possible, starting with the lowest.
 
