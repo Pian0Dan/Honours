@@ -24,9 +24,9 @@ Similarly, if certain groups are less likely to respond to the survey, then they
 
 
 
-### Panel Selection 
+## Panel Selection 
 
-#### Problem Definition
+### Problem Definition
 
 Suppose there is a pool of individuals numbered 1 to n.
 
@@ -34,7 +34,7 @@ We want to choose a panel of size k.
 
 Let K be the set of all feasible panels. A feasible panel is any group of k individuals that satisfies the required constraints (which generally take the form of quotas).
 
-#### LexiMin Approach [@Flanigan2021FairAF]
+### LexiMin Approach [@Flanigan2021FairAF]
 
 LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.
 
@@ -84,7 +84,7 @@ $$
 
 LexiMin chooses p so that this sorted vector is maximised in order.
 
-#### Algorithm
+### Algorithm
 
 1. List all feasible panels in K.
 
@@ -110,30 +110,27 @@ $$
 
 8. Sample a final panel according to that distribution.
 
-#### Logic
+### Logic
 
 LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. Then it improves the next-lowest probabilities, and so on.
 
 This makes the selection probabilities as equal as possible while still respecting the panel constraints.
 
-#### Summary
+### Summary
 
 LexiMin chooses a probability distribution over feasible panels that makes individual selection probabilities as equal as possible, starting with the lowest.
 
 
 ## Visualisation Methods
 
-[@vanderplasPenguinsGoParallel2023a]
-
-### Parallel coordinate plots
+### Parallel coordinate plots [@vanderplasPenguinsGoParallel2023a]
 
 - Can help to show the distribution of traits across the selected panel and how it compares to the overall population.
 - Can also show the trade-offs between different traits and how they are balanced in the selection process
 - Can be used to identify any segments of the population that are underrepresented in the selected panel, and to highlight any potential biases in the selection process.
 
-[@conwayUpSetRPackageVisualization2017]
 
-### Matrix-based set representation (UpSetR)
+### Matrix-based set representation (UpSetR) [@conwayUpSetRPackageVisualization2017]
 
 - Can be used to show how different traits connect with each other and how they are distributed across the distribution and/or selected panel.
 - Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.

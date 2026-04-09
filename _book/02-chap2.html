@@ -219,8 +219,9 @@ window.Quarto = {
    
   <ul class="collapse">
   <li><a href="#representation-and-sortition" id="toc-representation-and-sortition" class="nav-link active" data-scroll-target="#representation-and-sortition"><span class="header-section-number">2.1</span> Representation and Sortition</a></li>
-  <li><a href="#visualisation-methods" id="toc-visualisation-methods" class="nav-link" data-scroll-target="#visualisation-methods"><span class="header-section-number">2.2</span> Visualisation Methods</a></li>
-  <li><a href="#working-questions" id="toc-working-questions" class="nav-link" data-scroll-target="#working-questions"><span class="header-section-number">2.3</span> Working questions</a></li>
+  <li><a href="#panel-selection" id="toc-panel-selection" class="nav-link" data-scroll-target="#panel-selection"><span class="header-section-number">2.2</span> Panel Selection</a></li>
+  <li><a href="#visualisation-methods" id="toc-visualisation-methods" class="nav-link" data-scroll-target="#visualisation-methods"><span class="header-section-number">2.3</span> Visualisation Methods</a></li>
+  <li><a href="#working-questions" id="toc-working-questions" class="nav-link" data-scroll-target="#working-questions"><span class="header-section-number">2.4</span> Working questions</a></li>
   </ul>
 </nav>
     </div>
@@ -258,23 +259,23 @@ window.Quarto = {
 <p>For example, if the population of interest and investigated traits are poorly defined, then the selection process may not be able to capture the diversity and perspectives of the desired group, leading to a less representative panel. This presents a challenge in itself, given most population descriptions (as previously discussed) are often based on disjoint demographic characteristics and do not provide a way to capture intersectionality, which is a key aspect of representativeness. This may be beyond the scope of this thesis, as it is already a foray into broader data collection and storage methods, but it is important to keep in mind that representation goes beyond the margin.</p>
 <p>Similarly, if certain groups are less likely to respond to the survey, then they may be underrepresented in the pool of potential panelists, which can lead to a less representative panel from the outset. Illustratively–if there were to be no female respondents for a certain survey in an area comprised of 60% women, then the representativeness assumption (and goal) would be majorly violated before an attempt at putting a panel together has even been made. Situations like these raise the question of how we can account for this non-response bias, and whether we can use visualisation tools to show the discrepancy between the pool and the population (which leads back to part of this thesis’ aim).</p>
 </section>
-<section id="panel-selection" class="level3">
-<h3 class="anchored" data-anchor-id="panel-selection">Panel Selection</h3>
-<section id="problem-definition" class="level4">
-<h4 class="anchored" data-anchor-id="problem-definition">Problem Definition</h4>
+</section>
+<section id="panel-selection" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="panel-selection"><span class="header-section-number">2.2</span> Panel Selection</h2>
+<section id="problem-definition" class="level3">
+<h3 class="anchored" data-anchor-id="problem-definition">Problem Definition</h3>
 <p>Suppose there is a pool of individuals numbered 1 to n.</p>
 <p>We want to choose a panel of size k.</p>
 <p>Let K be the set of all feasible panels. A feasible panel is any group of k individuals that satisfies the required constraints (which generally take the form of quotas).</p>
 </section>
-<section id="leximin-approach-flanigan2021fairaf" class="level4">
-<h4 class="anchored" data-anchor-id="leximin-approach-flanigan2021fairaf">LexiMin Approach <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></h4>
+<section id="leximin-approach-flanigan2021fairaf" class="level3">
+<h3 class="anchored" data-anchor-id="leximin-approach-flanigan2021fairaf">LexiMin Approach <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></h3>
 <p>LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.</p>
 <p>Each feasible panel is assigned a probability.</p>
 <p>These probabilities must be non-negative and must add up to 1.</p>
 <p>For each individual, we then calculate their overall probability of being selected by adding up the probabilities of all feasible panels that include that individual.</p>
 <p>Next, we sort the individual selection probabilities from smallest to largest.</p>
 <p>The LexiMin rule works by first making the smallest selection probability as large as possible. Subject to that, it makes the second-smallest as large as possible. It then does the same for the third-smallest, and continues in this way.</p>
-</section>
 </section>
 <section id="formal-representation" class="level3">
 <h3 class="anchored" data-anchor-id="formal-representation">Formal Representation</h3>
@@ -300,8 +301,9 @@ p_S \ge 0
 \pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
 </span></p>
 <p>LexiMin chooses p so that this sorted vector is maximised in order.</p>
-<section id="algorithm" class="level4">
-<h4 class="anchored" data-anchor-id="algorithm">Algorithm</h4>
+</section>
+<section id="algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="algorithm">Algorithm</h3>
 <ol type="1">
 <li><p>List all feasible panels in K.</p></li>
 <li><p>Consider all possible probability distributions over those panels.</p></li>
@@ -323,31 +325,28 @@ p_S \ge 0
 <li><p>Sample a final panel according to that distribution.</p></li>
 </ol>
 </section>
-<section id="logic" class="level4">
-<h4 class="anchored" data-anchor-id="logic">Logic</h4>
+<section id="logic" class="level3">
+<h3 class="anchored" data-anchor-id="logic">Logic</h3>
 <p>LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. Then it improves the next-lowest probabilities, and so on.</p>
 <p>This makes the selection probabilities as equal as possible while still respecting the panel constraints.</p>
 </section>
-<section id="summary" class="level4">
-<h4 class="anchored" data-anchor-id="summary">Summary</h4>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
 <p>LexiMin chooses a probability distribution over feasible panels that makes individual selection probabilities as equal as possible, starting with the lowest.</p>
 </section>
 </section>
-</section>
-<section id="visualisation-methods" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="visualisation-methods"><span class="header-section-number">2.2</span> Visualisation Methods</h2>
-<p><span class="citation" data-cites="vanderplasPenguinsGoParallel2023a">(<a href="refs.html#ref-vanderplasPenguinsGoParallel2023a" role="doc-biblioref">VanderPlas et al. 2023</a>)</span></p>
-<section id="parallel-coordinate-plots" class="level3">
-<h3 class="anchored" data-anchor-id="parallel-coordinate-plots">Parallel coordinate plots</h3>
+<section id="visualisation-methods" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="visualisation-methods"><span class="header-section-number">2.3</span> Visualisation Methods</h2>
+<section id="parallel-coordinate-plots-vanderplaspenguinsgoparallel2023a" class="level3">
+<h3 class="anchored" data-anchor-id="parallel-coordinate-plots-vanderplaspenguinsgoparallel2023a">Parallel coordinate plots <span class="citation" data-cites="vanderplasPenguinsGoParallel2023a">(<a href="refs.html#ref-vanderplasPenguinsGoParallel2023a" role="doc-biblioref">VanderPlas et al. 2023</a>)</span></h3>
 <ul>
 <li>Can help to show the distribution of traits across the selected panel and how it compares to the overall population.</li>
 <li>Can also show the trade-offs between different traits and how they are balanced in the selection process</li>
 <li>Can be used to identify any segments of the population that are underrepresented in the selected panel, and to highlight any potential biases in the selection process.</li>
 </ul>
-<p><span class="citation" data-cites="conwayUpSetRPackageVisualization2017">(<a href="refs.html#ref-conwayUpSetRPackageVisualization2017" role="doc-biblioref">Conway et al. 2017</a>)</span></p>
 </section>
-<section id="matrix-based-set-representation-upsetr" class="level3">
-<h3 class="anchored" data-anchor-id="matrix-based-set-representation-upsetr">Matrix-based set representation (UpSetR)</h3>
+<section id="matrix-based-set-representation-upsetr-conwayupsetrpackagevisualization2017" class="level3">
+<h3 class="anchored" data-anchor-id="matrix-based-set-representation-upsetr-conwayupsetrpackagevisualization2017">Matrix-based set representation (UpSetR) <span class="citation" data-cites="conwayUpSetRPackageVisualization2017">(<a href="refs.html#ref-conwayUpSetRPackageVisualization2017" role="doc-biblioref">Conway et al. 2017</a>)</span></h3>
 <ul>
 <li>Can be used to show how different traits connect with each other and how they are distributed across the distribution and/or selected panel.</li>
 <li>Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.</li>
@@ -369,8 +368,8 @@ p_S \ge 0
 </ul>
 </section>
 </section>
-<section id="working-questions" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="working-questions"><span class="header-section-number">2.3</span> Working questions</h2>
+<section id="working-questions" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="working-questions"><span class="header-section-number">2.4</span> Working questions</h2>
 <section id="sortition" class="level3">
 <h3 class="anchored" data-anchor-id="sortition">Sortition</h3>
 <ul>
