@@ -115,6 +115,7 @@ LexiMin chooses a probability distribution over feasible panels that makes indiv
 
 - Can be used to show how different traits connect with each other and how they are distributed across the distribution and/or selected panel.
 - Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.
+- Can highlight specific combinations of traits that are of interest, and show how they are represented in the selected panel compared to the overall population. (Though there is no way to gauge the prevalence of these combinations in the population, beyond anecdotal observations)
 
 ### Query-based highlighting
 
