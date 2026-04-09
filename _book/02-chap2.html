@@ -221,6 +221,7 @@ window.Quarto = {
   <li><a href="#sortition-and-representation" id="toc-sortition-and-representation" class="nav-link active" data-scroll-target="#sortition-and-representation"><span class="header-section-number">2.1</span> Sortition and Representation</a></li>
   <li><a href="#leximin-panel-selection-flanigan2021fairaf" id="toc-leximin-panel-selection-flanigan2021fairaf" class="nav-link" data-scroll-target="#leximin-panel-selection-flanigan2021fairaf"><span class="header-section-number">2.2</span> LexiMin Panel Selection <span class="citation" data-cites="Flanigan2021FairAF">(Flanigan et al. 2021)</span></a></li>
   <li><a href="#visualisation-methods" id="toc-visualisation-methods" class="nav-link" data-scroll-target="#visualisation-methods"><span class="header-section-number">2.3</span> Visualisation Methods</a></li>
+  <li><a href="#working-questions" id="toc-working-questions" class="nav-link" data-scroll-target="#working-questions"><span class="header-section-number">2.4</span> Working questions</a></li>
   </ul>
 </nav>
     </div>
@@ -326,6 +327,7 @@ p_S \ge 0
 </section>
 <section id="visualisation-methods" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="visualisation-methods"><span class="header-section-number">2.3</span> Visualisation Methods</h2>
+<p><span class="citation" data-cites="vanderplasPenguinsGoParallel2023a">(<a href="refs.html#ref-vanderplasPenguinsGoParallel2023a" role="doc-biblioref">VanderPlas et al. 2023</a>)</span></p>
 <section id="parallel-coordinate-plots" class="level3">
 <h3 class="anchored" data-anchor-id="parallel-coordinate-plots">Parallel coordinate plots</h3>
 <ul>
@@ -333,6 +335,7 @@ p_S \ge 0
 <li>Can also show the trade-offs between different traits and how they are balanced in the selection process</li>
 <li>Can be used to identify any segments of the population that are underrepresented in the selected panel, and to highlight any potential biases in the selection process.</li>
 </ul>
+<p><span class="citation" data-cites="conwayUpSetRPackageVisualization2017">(<a href="refs.html#ref-conwayUpSetRPackageVisualization2017" role="doc-biblioref">Conway et al. 2017</a>)</span></p>
 </section>
 <section id="matrix-based-set-representation" class="level3">
 <h3 class="anchored" data-anchor-id="matrix-based-set-representation">Matrix-based set representation</h3>
@@ -354,11 +357,33 @@ p_S \ge 0
 <ul>
 <li>Showcase how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process.</li>
 </ul>
+</section>
+</section>
+<section id="working-questions" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="working-questions"><span class="header-section-number">2.4</span> Working questions</h2>
+<section id="sortition" class="level3">
+<h3 class="anchored" data-anchor-id="sortition">Sortition</h3>
+<ul>
+<li>For the new quota tool, would it just be a matter of making a concatenated trait quota, evaluating whether the resulting panel is still feasible and meets the requirements of the original quotas, and then tested to see whether it majorly impacted selection likelihood, vs if it were not to have been used?</li>
+</ul>
+</section>
+<section id="visualisation" class="level3">
+<h3 class="anchored" data-anchor-id="visualisation">Visualisation</h3>
+<ul>
+<li>What do we actually want to show with these visualisations? What are the key insights we want to communicate?</li>
+<li>Are we looking at likelihood of selection across traits/through stages? Or are we looking at the distribution of traits in the final panel?</li>
+</ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-conwayUpSetRPackageVisualization2017" class="csl-entry" role="listitem">
+Conway, J. R., Lex, A., and Gehlenborg, N. (2017), <span>“<span>UpSetR</span>: An <span>R</span> package for the visualization of intersecting sets and their properties,”</span> <em>Bioinformatics</em>, (J. Hancock, ed.), 33, 2938–2940. <a href="https://doi.org/10.1093/bioinformatics/btx364">https://doi.org/10.1093/bioinformatics/btx364</a>.
+</div>
 <div id="ref-Flanigan2021FairAF" class="csl-entry" role="listitem">
 Flanigan, B., Gölz, P., Gupta, A., Hennig, B., and Procaccia, A. D. (2021), <span>“<a href="https://api.semanticscholar.org/CorpusID:236927646">Fair algorithms for selecting citizens’ assemblies</a>,”</span> <em>Nature</em>, 596, 548–552.
+</div>
+<div id="ref-vanderplasPenguinsGoParallel2023a" class="csl-entry" role="listitem">
+VanderPlas, S., Ge, Y., Unwin, A., and Hofmann, H. (2023), <span>“Penguins <span>Go Parallel</span>: <span>A Grammar</span> of <span>Graphics Framework</span> for <span>Generalized Parallel Coordinate Plots</span>,”</span> <em>Journal of Computational and Graphical Statistics</em>, Taylor &amp; Francis, 32, 1572–1587. <a href="https://doi.org/10.1080/10618600.2023.2195462">https://doi.org/10.1080/10618600.2023.2195462</a>.
 </div>
 </div>
 </section>
