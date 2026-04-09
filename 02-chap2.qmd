@@ -111,9 +111,9 @@ LexiMin chooses a probability distribution over feasible panels that makes indiv
 
 [@conwayUpSetRPackageVisualization2017]
 
-### Matrix-based set representation
+### Matrix-based set representation (UpSetR)
 
-- Can be used to show how different traits connect with each other and how they are distributed across the selected panel.
+- Can be used to show how different traits connect with each other and how they are distributed across the distribution and/or selected panel.
 - Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.
 
 ### Query-based highlighting
