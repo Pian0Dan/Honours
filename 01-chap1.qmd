@@ -11,11 +11,11 @@ library(feasts)
 library(fable)
 ```
 
-Aim:
+## Aim
 
 This study aims to evaluate current sortition methods and community representation processes, as well as to investigate how unobserved traits and survey non-response may affect panel representativeness. By investigating these factors, we can develop a greater understanding of existing tools and procedures, how they work, how they fall short, what it would mean for them to be more representative, which will then enable the creation of a diagnostic tool to gauge effectiveness.
 
-# Background {#sec-background}
+## Background {#sec-background}
 
 We live in an age where decision-making and its impacts feel like they are only growing in importance and scale, yet our ability to impart influence seems to only be diminishing. Many feel disenfranchised and like power is being taken away from them, and that their voices are not being heard. This is a problem. Not only because it can lead to disengagement, apathy, and a lack of trust in institutions, but also because _not_ listening directly to lived experiences and perspectives limits the effectiveness of the very decisions we _do_ make.
 
