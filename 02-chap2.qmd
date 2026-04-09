@@ -101,11 +101,15 @@ LexiMin chooses a probability distribution over feasible panels that makes indiv
 
 ## Visualisation Methods
 
+[@vanderplasPenguinsGoParallel2023a]
+
 ### Parallel coordinate plots
 
 - Can help to show the distribution of traits across the selected panel and how it compares to the overall population.
 - Can also show the trade-offs between different traits and how they are balanced in the selection process
 - Can be used to identify any segments of the population that are underrepresented in the selected panel, and to highlight any potential biases in the selection process.
+
+[@conwayUpSetRPackageVisualization2017]
 
 ### Matrix-based set representation
 
@@ -121,3 +125,14 @@ LexiMin chooses a probability distribution over feasible panels that makes indiv
 ### Attribute distribution analysis
 
 - Showcase how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process.
+
+## Working questions
+
+### Sortition
+
+- For the new quota tool, would it just be a matter of making a concatenated trait quota, evaluating whether the resulting panel is still feasible and meets the requirements of the original quotas, and then tested to see whether it majorly impacted selection likelihood, vs if it were not to have been used?
+
+### Visualisation
+
+- What do we actually want to show with these visualisations? What are the key insights we want to communicate?
+- Are we looking at likelihood of selection across traits/through stages? Or are we looking at the distribution of traits in the final panel?
