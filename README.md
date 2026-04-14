@@ -42,4 +42,11 @@
 - How could this be used/balanced in general panel situations, without reintroducing representative burden
 
 ## Week 6
-- 
+- Edit and rearrange background; change first paragraph motivation to be more about why the panels are made, why it is important and why it is relevant to the audience
+- Summarise literature on multivariate categorical visualisation
+- Show how many panels a person ends up on;
+- ggdibbler, mosaicplots, double decker plots
+- Define quotas and how they play into the optimisation problem
+- Reinforce requirements of representativeness and of fairness
+
+- Use UpSet plot to show different intersections across different iterations of panels
