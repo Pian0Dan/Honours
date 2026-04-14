@@ -1,0 +1,90 @@
+---
+title: "LexiMin Stash"
+format: html
+---
+
+### LexiMin Approach [@Flanigan2021FairAF]
+
+LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.
+
+Each feasible panel is assigned a probability.
+
+These probabilities must be non-negative and must add up to 1.
+
+For each individual, we then calculate their overall probability of being selected by adding up the probabilities of all feasible panels that include that individual.
+
+Next, we sort the individual selection probabilities from smallest to largest.
+
+The LexiMin rule works by first making the smallest selection probability as large as possible. Subject to that, it makes the second-smallest as large as possible. It then does the same for the third-smallest, and continues in this way.
+
+### Formal Representation
+
+Let p_S be the probability assigned to panel S.
+
+These probabilities satisfy:
+
+$$
+p_S \ge 0
+$$
+
+and
+
+$$
+\sum_{S \in K} p_S = 1
+$$
+
+The selection probability for individual i is:
+
+$$
+\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
+$$
+
+This gives the vector of individual selection probabilities:
+
+$$
+\pi(p) = (\pi_1(p), \pi_2(p), ..., \pi_n(p))
+$$
+
+Sort these from smallest to largest:
+
+$$
+\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
+$$
+
+LexiMin chooses p so that this sorted vector is maximised in order.
+
+### Algorithm
+
+1. List all feasible panels in K.
+
+2. Consider all possible probability distributions over those panels.
+
+3. For each distribution, compute:
+
+$$
+\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
+$$
+
+4. Sort the selection probabilities:
+
+$$
+\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
+$$
+
+5. Choose the distribution that maximises the smallest selection probability.
+
+6. If more than one distribution still remains, choose the one that maximises the second-smallest selection probability.
+
+7. Continue in this way until the distribution is determined.
+
+8. Sample a final panel according to that distribution.
+
+### Logic
+
+LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. Then it improves the next-lowest probabilities, and so on.
+
+This makes the selection probabilities as equal as possible while still respecting the panel constraints.
+
+### Discussion
+
+This approach to the problem of panel selection is elegant and has some nice properties. It ensures that the selection probabilities are as equal as possible, which can help to create a more representative panel. However, it does not give a way to introduce specific joint trait requirements for subsets of the population, which is something that may be desirable in certain situations. For example, if there is a need to ensure that a certain combination of traits is represented in the panel, then this approach may not be able to accommodate that requirement without reintroducing representative burden.
