@@ -4,17 +4,20 @@
 
 ### What does it mean to be representative?
 
-The main aim of any and all selection methods is to create a panel that is fair and representative of the population. But what does this actually mean?
+The main aim of any and all selection methods within sortition is to create a panel that is fair and representative of the population. But what does this actually mean?
 
-Fairness refers to the idea that the selection process should be transparent, unbiased, and inclusive. It should give everyone an equal chance of being selected, regardless of their background or characteristics. Which is easier said than done.
-
-Alongside this, representativeness refers to the idea that the selected panel should accurately reflect the demographics and perspectives of the population. This means that the panel should be diverse and inclusive, and should contain individuals from a wide range of relevant backgrounds.
+Fairness refers to the idea that the selection process should be transparent, unbiased, and inclusive. It should give everyone an equal chance of being selected, regardless of their background or characteristic, which presents a challenge. Alongside this, representativeness refers to the idea that the selected panel should accurately reflect the demographics and perspectives of the given population. This means that the panel should be diverse and inclusive, and should contain individuals from a wide range of relevant backgrounds.
 
 Approaching it systematically, the sortition process can be thought of in four stages:
+
 - Defining the population and traits of interest
+
 - Sampling from the population (through survey or other outreach)
+
 - Panel selection (through algorithmic means or other method)
+
 - Panel evaluation, confirmation and engagement
+
 
 Each of these steps presents an opportunity for bias to be introduced, and for the panel to become less representative of the population. Which is why it is crucial to evaluate the level of representativeness (or _potential_ representativeness) at each stage, and to understand how different factors may affect it.
 
@@ -34,94 +37,27 @@ We want to choose a panel of size k.
 
 Let K be the set of all feasible panels. A feasible panel is any group of k individuals that satisfies the required constraints (which generally take the form of quotas).
 
-### LexiMin Approach [@Flanigan2021FairAF]
+### Existing Methods
 
-LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.
+##### Legacy
 
-Each feasible panel is assigned a probability.
+#### LexiMin [@Flanigan2021FairAF]
 
-These probabilities must be non-negative and must add up to 1.
+LexiMin, or lexicographic minimisation, is a method of panel selection that aims to minimise the maximum deviation from the desired equal selection chance for each participant. It works by first identifying the individual with the largest deviation from the desired selection chance, and then selecting panel combinations that make this individual's selection chance as close to equal to others as possible. This process is repeated for each individual in order of their deviation until overall selection chance is maximised and made as equal as possible across all participants.
 
-For each individual, we then calculate their overall probability of being selected by adding up the probabilities of all feasible panels that include that individual.
 
-Next, we sort the individual selection probabilities from smallest to largest.
 
-The LexiMin rule works by first making the smallest selection probability as large as possible. Subject to that, it makes the second-smallest as large as possible. It then does the same for the third-smallest, and continues in this way.
+#### Goldilocks
 
-### Formal Representation
+### New Investigation
 
-Let p_S be the probability assigned to panel S.
+Across all of the three previous techniques, it is noted that stratification for combinations of demographic traits is either unrealistically difficult to achieve or not possible, and that the selection process is based on the assumption that the traits are independent of each other. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations, it may be necessary to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. 
 
-These probabilities satisfy:
-
-$$
-p_S \ge 0
-$$
-
-and
-
-$$
-\sum_{S \in K} p_S = 1
-$$
-
-The selection probability for individual i is:
-
-$$
-\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
-$$
-
-This gives the vector of individual selection probabilities:
-
-$$
-\pi(p) = (\pi_1(p), \pi_2(p), ..., \pi_n(p))
-$$
-
-Sort these from smallest to largest:
-
-$$
-\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
-$$
-
-LexiMin chooses p so that this sorted vector is maximised in order.
-
-### Algorithm
-
-1. List all feasible panels in K.
-
-2. Consider all possible probability distributions over those panels.
-
-3. For each distribution, compute:
-
-$$
-\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
-$$
-
-4. Sort the selection probabilities:
-
-$$
-\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
-$$
-
-5. Choose the distribution that maximises the smallest selection probability.
-
-6. If more than one distribution still remains, choose the one that maximises the second-smallest selection probability.
-
-7. Continue in this way until the distribution is determined.
-
-8. Sample a final panel according to that distribution.
-
-### Logic
-
-LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. Then it improves the next-lowest probabilities, and so on.
-
-This makes the selection probabilities as equal as possible while still respecting the panel constraints.
-
-### Discussion
-
-This approach to the problem of panel selection is elegant and has some nice properties. It ensures that the selection probabilities are as equal as possible, which can help to create a more representative panel. However, it does not give a way to introduce specific joint trait requirements for subsets of the population, which is something that may be desirable in certain situations. For example, if there is a need to ensure that a certain combination of traits is represented in the panel, then this approach may not be able to accommodate that requirement without reintroducing representative burden.
-
+The extent to which this happens naturally through current methods will be evaluated in the later simulation. We will then also test the effects of further imposing combinational quotas
 
 ## Visualisation Methods
+
+In order to evaluate the representativeness of selected panels, we will use a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: mosaic plots, double decker plots, UpSet plots, parallel coordinate plots, and query-based highlighting.
 
 ### Parallel coordinate plots [@vanderplasPenguinsGoParallel2023a]
 
