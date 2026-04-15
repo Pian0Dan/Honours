@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Literature Review – Optimal Sortition: A Framework Analysis</title>
+<title>2&nbsp; Literature Review – Are current sortition methods creating representative panels? A framework analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -101,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Optimal Sortition: A Framework Analysis</a> 
+      <a href="./">Are current sortition methods creating representative panels? A framework analysis</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -191,8 +211,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="what-does-it-mean-to-be-representative" class="level3">
 <h3 class="anchored" data-anchor-id="what-does-it-mean-to-be-representative">What does it mean to be representative?</h3>
 <p>The main aim of any and all selection methods within sortition is to create a panel that is fair and representative of the population. But what does this actually mean?</p>
-<p>Fairness refers to the idea that the selection process should be transparent, unbiased, and inclusive. It should give everyone an equal chance of being selected, regardless of their background or characteristics. Which is easier said than done.</p>
-<p>Alongside this, representativeness refers to the idea that the selected panel should accurately reflect the demographics and perspectives of the population. This means that the panel should be diverse and inclusive, and should contain individuals from a wide range of relevant backgrounds.</p>
+<p>Fairness refers to the idea that the selection process should be transparent, unbiased, and inclusive. It should give everyone an equal chance of being selected, regardless of their background or characteristic, which presents a likelihood difference minimisation challenge. Alongside this, representativeness refers to the idea that the selected panel should accurately reflect the demographics and perspectives of the given population. This means that the panel should be diverse and inclusive, and should contain individuals from a wide range of relevant backgrounds.</p>
 <p>Approaching it systematically, the sortition process can be thought of in four stages:</p>
 <ul>
 <li><p>Defining the population and traits of interest</p></li>
@@ -213,11 +232,35 @@ ul.task-list li input[type="checkbox"] {
 <p>We want to choose a panel of size k.</p>
 <p>Let K be the set of all feasible panels. A feasible panel is any group of k individuals that satisfies the required constraints (which generally take the form of quotas).</p>
 </section>
+<section id="existing-methods" class="level3">
+<h3 class="anchored" data-anchor-id="existing-methods">Existing Methods</h3>
+<section id="non-algorithmicself-selection" class="level4">
+<h4 class="anchored" data-anchor-id="non-algorithmicself-selection">Non-algorithmic/self-selection</h4>
+<p>This is the most basic method of panel selection, where individuals are simply allowed to self-select into the panel. This can be done through a variety of means, such as advertising the opportunity to participate in the panel and allowing individuals to sign up on a first-come, first-served basis. However, these types of methods are often not very effective at creating representative panels, as they can a) lead to self-selection bias (those who put their hand up of their own volition are more likely to have pre-formed perspectives, ahead of the panel process), thus possibly not capturing the diversity and perspectives of the population, and b) lead to lower-than-desired engagement, as it does not guarantee any particular level of exposure or direct engagement.</p>
+<section id="legacy-algorithm-i-cant-find-its-original-source-but-it-is-mentioned-in-flanigan2021fairaf" class="level5">
+<h5 class="anchored" data-anchor-id="legacy-algorithm-i-cant-find-its-original-source-but-it-is-mentioned-in-flanigan2021fairaf">LEGACY algorithm (I can’t find its original source??, but it is mentioned in <span class="citation" data-cites="Flanigan2021FairAF">Flanigan et al. (<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">2021</a>)</span>)</h5>
+<p>Already a systematic improvement over non-algorithmic methods, the LEGACY selection algorithm takes a given sample of respondents and selects individuals one-by-one until the panel is full. At each step, the algorithm calculates a “need” value to identify the trait that is currently furthest from the desired count in the panel. LEGACY then selects a random individual from the pool who possesses that trait. If selecting any given individual would cause the panel to hit the upper quota for any trait, then all other individuals with that trait are removed from the pool before the next selection. This process is repeated until the algorithm either becomes infeasible (exhausts the dataset before hitting overall quota, at which point it will restart), or builds a full panel with desired quota representation. LEGACY’s process fulfils the base requirements of building a panel that meets the desired quotas, but it does not necessarily maximise representativeness, as it does not take into account the likelihood of selection for different individuals (allowing them to just be 0%, in extreme cases), and it does not attempt to minimise the maximum deviation from equal selection chance across all individuals.</p>
+</section>
+</section>
+<section id="leximin-flanigan2021fairaf" class="level4">
+<h4 class="anchored" data-anchor-id="leximin-flanigan2021fairaf">LexiMin <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></h4>
+<p>This aforementioned shortcoming is then addressed by LexiMin, or lexicographic minimisation–a method of panel selection that aims to maximise the minimum likelihood of each individual being selected. It works by first identifying the individual with the lowest selection chance, and then selecting panel combinations that make this individual’s selection chance as high as possible. This process is repeated for each individual in order of their selection likelihood until overall selection chance is maximised and, ideally, made as equal as possible across all participants. This ensures that each individual has the highest possible chance of being selected, but in itself, can make it vulnerable to manipulation and lead to some individuals having overly high selection chances if they elect as belonging to certain quotas with lesser representation in the sample. Thus,leading to potential representative burden.</p>
+</section>
+<section id="goldilocks" class="level4">
+<h4 class="anchored" data-anchor-id="goldilocks">Goldilocks</h4>
+</section>
+</section>
+<section id="new-investigation" class="level3">
+<h3 class="anchored" data-anchor-id="new-investigation">New Investigation</h3>
+<p>Across all of the previous algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs–focusing instead on each trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g.&nbsp;supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be necessary to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population.</p>
+<p>The extent to which this happens naturally through current methods will be evaluated in the later simulation. We will then also test the effects of further imposing combinational quotas on the representative burden, and on the selection probabilities of different individuals, to see whether this is a feasible way to ensure the representation of intersectional minorities in situations where it is deemed necessary.</p>
+</section>
 </section>
 <section id="visualisation-methods" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="visualisation-methods"><span class="header-section-number">2.3</span> Visualisation Methods</h2>
+<p>In order to evaluate the representativeness of selected panels, we will use a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: mosaic plots, double decker plots, UpSet plots, parallel coordinate plots, and query-based highlighting.</p>
 <section id="parallel-coordinate-plots-vanderplaspenguinsgoparallel2023a" class="level3">
-<h3 class="anchored" data-anchor-id="parallel-coordinate-plots-vanderplaspenguinsgoparallel2023a">Parallel coordinate plots <span class="citation" data-cites="vanderplasPenguinsGoParallel2023a">[@vanderplasPenguinsGoParallel2023a]</span></h3>
+<h3 class="anchored" data-anchor-id="parallel-coordinate-plots-vanderplaspenguinsgoparallel2023a">Parallel coordinate plots <span class="citation" data-cites="vanderplasPenguinsGoParallel2023a">(<a href="refs.html#ref-vanderplasPenguinsGoParallel2023a" role="doc-biblioref">VanderPlas et al. 2023</a>)</span></h3>
 <ul>
 <li>Can help to show the distribution of traits across the selected panel and how it compares to the overall population.</li>
 <li>Can also show the trade-offs between different traits and how they are balanced in the selection process</li>
@@ -225,7 +268,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </section>
 <section id="matrix-based-set-representation-upsetr-conwayupsetrpackagevisualization2017" class="level3">
-<h3 class="anchored" data-anchor-id="matrix-based-set-representation-upsetr-conwayupsetrpackagevisualization2017">Matrix-based set representation (UpSetR) <span class="citation" data-cites="conwayUpSetRPackageVisualization2017">[@conwayUpSetRPackageVisualization2017]</span></h3>
+<h3 class="anchored" data-anchor-id="matrix-based-set-representation-upsetr-conwayupsetrpackagevisualization2017">Matrix-based set representation (UpSetR) <span class="citation" data-cites="conwayUpSetRPackageVisualization2017">(<a href="refs.html#ref-conwayUpSetRPackageVisualization2017" role="doc-biblioref">Conway et al. 2017</a>)</span></h3>
 <ul>
 <li>Can be used to show how different traits connect with each other and how they are distributed across the distribution and/or selected panel.</li>
 <li>Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.</li>
@@ -263,6 +306,17 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-conwayUpSetRPackageVisualization2017" class="csl-entry" role="listitem">
+Conway, J. R., Lex, A., and Gehlenborg, N. (2017), <span>“<span>UpSetR</span>: An <span>R</span> package for the visualization of intersecting sets and their properties,”</span> <em>Bioinformatics</em>, (J. Hancock, ed.), 33, 2938–2940. <a href="https://doi.org/10.1093/bioinformatics/btx364">https://doi.org/10.1093/bioinformatics/btx364</a>.
+</div>
+<div id="ref-Flanigan2021FairAF" class="csl-entry" role="listitem">
+Flanigan, B., Gölz, P., Gupta, A., Hennig, B., and Procaccia, A. D. (2021), <span>“<a href="https://api.semanticscholar.org/CorpusID:236927646">Fair algorithms for selecting citizens’ assemblies</a>,”</span> <em>Nature</em>, 596, 548–552.
+</div>
+<div id="ref-vanderplasPenguinsGoParallel2023a" class="csl-entry" role="listitem">
+VanderPlas, S., Ge, Y., Unwin, A., and Hofmann, H. (2023), <span>“Penguins <span>Go Parallel</span>: <span>A Grammar</span> of <span>Graphics Framework</span> for <span>Generalized Parallel Coordinate Plots</span>,”</span> <em>Journal of Computational and Graphical Statistics</em>, Taylor &amp; Francis, 32, 1572–1587. <a href="https://doi.org/10.1080/10618600.2023.2195462">https://doi.org/10.1080/10618600.2023.2195462</a>.
+</div>
+</div>
 </section>
 </section>
 

@@ -41,7 +41,7 @@
 - Additional tool for situations where you want specific joint traits for subsets
 - How could this be used/balanced in general panel situations, without reintroducing representative burden
 
-## Week 6
+## Mid-sem break
 - Edit and rearrange background; change first paragraph motivation to be more about why the panels are made, why it is important and why it is relevant to the audience
 - Summarise literature on multivariate categorical visualisation
 - Show how many panels a person ends up on;
@@ -50,3 +50,13 @@
 - Reinforce requirements of representativeness and of fairness
 
 - Use UpSet plot to show different intersections across different iterations of panels
+
+## Week 6
+
+### For discussion
+
+- nDF's 10x figure based on @redmanHowRecruitParticipants has no stated academic basis or rigour; could be interesting to evaluate validity as a whole as part of simulation
+
+- As stated above, UpSet plot could be used to show what intersections are present in which panels and at what quantities
+
+- How will simulation look? Will it just be using the Panelot tool, or will we recreate the algorithm in R somehow for reproducibility?
