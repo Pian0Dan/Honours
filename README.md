@@ -54,9 +54,11 @@
 ## Week 6
 
 ### For discussion
-
 - nDF's 10x figure based on @redmanHowRecruitParticipants has no stated academic basis or rigour; could be interesting to evaluate validity as a whole as part of simulation
-
 - As stated above, UpSet plot could be used to show what intersections are present in which panels and at what quantities
-
 - How will simulation look? Will it just be using the Panelot tool, or will we recreate the algorithm in R somehow for reproducibility?
+- Parallel coordinate plot to show whether a specific individual of defined traits gets placed in 0 or 1 across all generated panel options?
+- Would panel selection tool improvement (for intersection inclusion) just be a matter of adding a constraint that makes it so only panels with a minimum number of individuals meeting concatenated quota are feasible? I.e. algorithm still runs to maximise/minimise likelihoods, but with the constraint of ensuring the combination exists in panels before ruling them feasible and adding to portfolio before looping
+
+### Plan
+- 
