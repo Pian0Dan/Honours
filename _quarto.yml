@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-  title: "Optimal Sortition: A Framework Analysis"
+  title: "Are current sortition methods creating representative panels? A framework analysis"
   author: "Daniel Loza"
   chapters:
     - text: "Front matter"
@@ -15,7 +15,7 @@ book:
   sidebar:
     style: "docked"
 
-bibliography: thesisrefs.bib
+#bibliography: thesisrefs.bib
 csl: american-statistical-association.csl
 degreetype: Bachelor of Commerce (Honours)
 submitted: 2026
