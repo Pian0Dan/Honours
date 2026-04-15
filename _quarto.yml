@@ -15,7 +15,7 @@ book:
   sidebar:
     style: "docked"
 
-#bibliography: thesisrefs.bib
+bibliography: thesisrefs.bib
 csl: american-statistical-association.csl
 degreetype: Bachelor of Commerce (Honours)
 submitted: 2026
