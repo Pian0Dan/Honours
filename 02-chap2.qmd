@@ -45,6 +45,8 @@ This is the most basic method of panel selection, where individuals are simply a
 
 ##### Legacy
 
+A marked improvement over non-algorithmic methods, the LEGACY selection method involve some form of random sampling from the population, but do not use any algorithmic means to ensure representativeness. For example, a simple random sample of individuals from the population could be taken, and those individuals could be invited to participate in the panel. However, this method does not guarantee that the selected panel will be representative of the population, as it does not take into account any specific traits or characteristics that may be relevant to the selection process.
+
 #### LexiMin [@Flanigan2021FairAF]
 
 LexiMin, or lexicographic minimisation, is a method of panel selection that aims to minimise the maximum deviation from the desired equal selection chance for each participant. It works by first identifying the individual with the largest deviation from the desired selection chance, and then selecting panel combinations that make this individual's selection chance as close to equal to others as possible. This process is repeated for each individual in order of their deviation until overall selection chance is maximised and made as equal as possible across all participants.
@@ -55,9 +57,9 @@ LexiMin, or lexicographic minimisation, is a method of panel selection that aims
 
 ### New Investigation
 
-Across all of the three previous techniques, it is noted that stratification for combinations of demographic traits is either unrealistically difficult to achieve or not possible, and that the selection process is based on the assumption that the traits are independent of each other. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations, it may be necessary to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. 
+Across all of the previous algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs--focusing instead on each trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g. supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be necessary to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. 
 
-The extent to which this happens naturally through current methods will be evaluated in the later simulation. We will then also test the effects of further imposing combinational quotas
+The extent to which this happens naturally through current methods will be evaluated in the later simulation. We will then also test the effects of further imposing combinational quotas on the representative burden, and on the selection probabilities of different individuals, to see whether this is a feasible way to ensure the representation of intersectional minorities in  situations where it is deemed necessary.
 
 ## Visualisation Methods
 
