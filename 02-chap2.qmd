@@ -49,21 +49,20 @@ Already a systematic improvement over non-algorithmic methods; the LEGACY select
 
 #### MaxiMin and MiniMax [@baharavFairManipulationRobustTransparent2024]
 
-This aforementioned shortcoming is then addressed by our first algorithmic sorition methods: MaxiMin and MiniMax, though these both tackle the problem in opposite ways and with differing goals.
+This aforementioned shortcoming is then addressed by our first algorithmic sorition methods: MaxiMin and MiniMax, though these both tackle the problem in opposite ways and with differing goals. MaxiMin, as the name would suggest, is a selection algorithm that generates potential panels and selection probabilities and then sets out to maximise the minimum selection probability of the set. This reduces the likelihood of an individual never being chosen (improves fairness) but makes the method quite susceptible to manipulation, if an individual elects as belonging to certain quota groups with lesser representation in the sample. Thus, leading to potential representative burden. Inversely, MiniMax aims to minimise the maximum probability of an individual being selected, with the aim of making selection more robust (less vulnerable to manipulation). However, this then comes at the cost of fairness, as the issue of potential 0% selection likelihood returns.
 
 
 #### LexiMin [@Flanigan2021FairAF]
 
-LexiMin, or lexicographic minimisation--a method of panel selection that aims to maximise the minimum likelihood of each individual being selected. It works by first identifying the individual with the lowest selection chance, and then selecting panel combinations that make this individual's selection chance as high as possible. This process is repeated for each individual in order of their selection likelihood until overall selection chance is maximised and, ideally, made as equal as possible across all participants. This ensures that each individual has the highest possible chance of being selected. But this trait of LexiMin can, like MaxiMin, make it vulnerable to manipulation and lead to some individuals having overly high selection chances if they elect as belonging to certain quotas with lesser representation in the sample. Thus, leading to potential representative burden.
+LexiMin, or lexicographic minimisation, is a method of panel selection similar to MaxiMin, that aims to maximise the minimum likelihood of selection, but for each individual being selected sequentially (rather than just the outright minimum). It works by first identifying the individual with the lowest selection chance, and then selecting panel combinations that make this individual's selection chance as high as possible. This process is repeated for each individual in order of their selection likelihood until overall selection chance is maximised and, ideally, made as equal as possible across all participants. This ensures that each individual has the highest possible chance of being selected. But this trait of LexiMin can, like MaxiMin, make it vulnerable to manipulation.
 
 #### Goldilocks [@baharavFairManipulationRobustTransparent2024]
 
-Bringing us to the supposed current gold standard: the aptly named "Goldilocks" sortition algorithm.
-
+Bringing us to the supposed current gold standard: the aptly named "Goldilocks" sortition algorithm. Goldilocks is structured in such a way that it simultaneously attempts to maximise minimum selection probabilities (improve fairness) and minimise maximum selection probabilities (improve robustness), providing a "best of both worlds" solution to the problem by averaging outcomes.
 
 ### New Investigation
 
-Across all of the previous algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs--focusing instead on each trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g. supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be necessary to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. 
+Across all of these previous algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs--focusing instead on each trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g. supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be necessary to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. 
 
 The extent to which this happens naturally through current methods will be evaluated in the later simulation. We will then also test the effects of further imposing combinational quotas on the representative burden, and on the selection probabilities of different individuals, to see whether this is a feasible way to ensure the representation of intersectional minorities in  situations where it is deemed necessary.
 
@@ -71,7 +70,10 @@ The extent to which this happens naturally through current methods will be evalu
 
 In order to evaluate the representativeness of selected panels, we will use a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: bar charts, mosaic plots, double decker plots, UpSet plots and parallel coordinate plots.
 
-First, it will likely be of use to just do some illustrative graphing to show densities within the distribution, across traits
+First, it will be of use to just do some illustrative graphing to show densities within the distribution across traits, in the form of bar charts. These will give a rough visual idea of the breakdown of the population and samples within the simulation, setting up some expectations for how representation should look in further visualisations. From there, either mosaic or double decker plots will be useful for depicting the proportion of given demographic traits that are selected for the panels. Finally, UpSet plots [@conwayUpSetRPackageVisualization2017] will be an effective way to showcase the intersections that exist in generated panels, as they offer a visual link between demographic variables, as well as frequency counts to highlight how often these occur within a given panel.
+
+
+-- ignore the summaries --
 
 ### Parallel coordinate plots [@vanderplasPenguinsGoParallel2023a]
 
@@ -86,17 +88,8 @@ First, it will likely be of use to just do some illustrative graphing to show de
 - Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.
 - Can highlight specific combinations of traits that are of interest, and show how they are represented in the selected panel compared to the overall population. (Though there is no way to gauge the prevalence of these combinations in the population, beyond anecdotal observations)
 
+--
+
 ### Attribute distribution analysis
 
 - Showcase how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process.
-
-## Working questions
-
-### Sortition
-
-- For the new quota tool, would it just be a matter of making a concatenated trait quota, evaluating whether the resulting panel is still feasible and meets the requirements of the original quotas, and then tested to see whether it majorly impacted selection likelihood, vs if it were not to have been used?
-
-### Visualisation
-
-- What do we actually want to show with these visualisations? What are the key insights we want to communicate?
-- Are we looking at likelihood of selection across traits/through stages? Or are we looking at the distribution of traits in the final panel?

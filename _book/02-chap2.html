@@ -180,7 +180,6 @@ div.csl-indent {
   <li><a href="#representation-and-sortition" id="toc-representation-and-sortition" class="nav-link active" data-scroll-target="#representation-and-sortition"><span class="header-section-number">2.1</span> Representation and Sortition</a></li>
   <li><a href="#panel-selection" id="toc-panel-selection" class="nav-link" data-scroll-target="#panel-selection"><span class="header-section-number">2.2</span> Panel Selection</a></li>
   <li><a href="#visualisation-methods" id="toc-visualisation-methods" class="nav-link" data-scroll-target="#visualisation-methods"><span class="header-section-number">2.3</span> Visualisation Methods</a></li>
-  <li><a href="#working-questions" id="toc-working-questions" class="nav-link" data-scroll-target="#working-questions"><span class="header-section-number">2.4</span> Working questions</a></li>
   </ul>
 </nav>
     </div>
@@ -245,27 +244,28 @@ div.csl-indent {
 </section>
 <section id="maximin-and-minimax-baharavfairmanipulationrobusttransparent2024" class="level4">
 <h4 class="anchored" data-anchor-id="maximin-and-minimax-baharavfairmanipulationrobusttransparent2024">MaxiMin and MiniMax <span class="citation" data-cites="baharavFairManipulationRobustTransparent2024">(<a href="refs.html#ref-baharavFairManipulationRobustTransparent2024" role="doc-biblioref">Baharav and Flanigan 2024</a>)</span></h4>
-<p>This aforementioned shortcoming is then addressed by our first algorithmic sorition methods: MaxiMin and MiniMax, though these both tackle the problem in opposite ways and with differing goals.</p>
+<p>This aforementioned shortcoming is then addressed by our first algorithmic sorition methods: MaxiMin and MiniMax, though these both tackle the problem in opposite ways and with differing goals. MaxiMin, as the name would suggest, is a selection algorithm that generates potential panels and selection probabilities and then sets out to maximise the minimum selection probability of the set. This reduces the likelihood of an individual never being chosen (improves fairness) but makes the method quite susceptible to manipulation, if an individual elects as belonging to certain quota groups with lesser representation in the sample. Thus, leading to potential representative burden. Inversely, MiniMax aims to minimise the maximum probability of an individual being selected, with the aim of making selection more robust (less vulnerable to manipulation). However, this then comes at the cost of fairness, as the issue of potential 0% selection likelihood returns.</p>
 </section>
 <section id="leximin-flanigan2021fairaf" class="level4">
 <h4 class="anchored" data-anchor-id="leximin-flanigan2021fairaf">LexiMin <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></h4>
-<p>LexiMin, or lexicographic minimisation–a method of panel selection that aims to maximise the minimum likelihood of each individual being selected. It works by first identifying the individual with the lowest selection chance, and then selecting panel combinations that make this individual’s selection chance as high as possible. This process is repeated for each individual in order of their selection likelihood until overall selection chance is maximised and, ideally, made as equal as possible across all participants. This ensures that each individual has the highest possible chance of being selected. But this trait of LexiMin can, like MaxiMin, make it vulnerable to manipulation and lead to some individuals having overly high selection chances if they elect as belonging to certain quotas with lesser representation in the sample. Thus, leading to potential representative burden.</p>
+<p>LexiMin, or lexicographic minimisation, is a method of panel selection similar to MaxiMin, that aims to maximise the minimum likelihood of selection, but for each individual being selected sequentially (rather than just the outright minimum). It works by first identifying the individual with the lowest selection chance, and then selecting panel combinations that make this individual’s selection chance as high as possible. This process is repeated for each individual in order of their selection likelihood until overall selection chance is maximised and, ideally, made as equal as possible across all participants. This ensures that each individual has the highest possible chance of being selected. But this trait of LexiMin can, like MaxiMin, make it vulnerable to manipulation.</p>
 </section>
 <section id="goldilocks-baharavfairmanipulationrobusttransparent2024" class="level4">
 <h4 class="anchored" data-anchor-id="goldilocks-baharavfairmanipulationrobusttransparent2024">Goldilocks <span class="citation" data-cites="baharavFairManipulationRobustTransparent2024">(<a href="refs.html#ref-baharavFairManipulationRobustTransparent2024" role="doc-biblioref">Baharav and Flanigan 2024</a>)</span></h4>
-<p>Bringing us to the supposed current gold standard: the aptly named “Goldilocks” sortition algorithm.</p>
+<p>Bringing us to the supposed current gold standard: the aptly named “Goldilocks” sortition algorithm. Goldilocks is structured in such a way that it simultaneously attempts to maximise minimum selection probabilities (improve fairness) and minimise maximum selection probabilities (improve robustness), providing a “best of both worlds” solution to the problem by averaging outcomes.</p>
 </section>
 </section>
 <section id="new-investigation" class="level3">
 <h3 class="anchored" data-anchor-id="new-investigation">New Investigation</h3>
-<p>Across all of the previous algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs–focusing instead on each trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g.&nbsp;supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be necessary to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population.</p>
+<p>Across all of these previous algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs–focusing instead on each trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g.&nbsp;supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be necessary to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population.</p>
 <p>The extent to which this happens naturally through current methods will be evaluated in the later simulation. We will then also test the effects of further imposing combinational quotas on the representative burden, and on the selection probabilities of different individuals, to see whether this is a feasible way to ensure the representation of intersectional minorities in situations where it is deemed necessary.</p>
 </section>
 </section>
 <section id="visualisation-methods" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="visualisation-methods"><span class="header-section-number">2.3</span> Visualisation Methods</h2>
 <p>In order to evaluate the representativeness of selected panels, we will use a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: bar charts, mosaic plots, double decker plots, UpSet plots and parallel coordinate plots.</p>
-<p>First, it will likely be of use to just do some illustrative graphing to show densities within the distribution, across traits</p>
+<p>First, it will be of use to just do some illustrative graphing to show densities within the distribution across traits, in the form of bar charts. These will give a rough visual idea of the breakdown of the population and samples within the simulation, setting up some expectations for how representation should look in further visualisations. From there, either mosaic or double decker plots will be useful for depicting the proportion of given demographic traits that are selected for the panels. Finally, UpSet plots <span class="citation" data-cites="conwayUpSetRPackageVisualization2017">(<a href="refs.html#ref-conwayUpSetRPackageVisualization2017" role="doc-biblioref">Conway et al. 2017</a>)</span> will be an effective way to showcase the intersections that exist in generated panels, as they offer a visual link between demographic variables, as well as frequency counts to highlight how often these occur within a given panel.</p>
+<p>– ignore the summaries –</p>
 <section id="parallel-coordinate-plots-vanderplaspenguinsgoparallel2023a" class="level3">
 <h3 class="anchored" data-anchor-id="parallel-coordinate-plots-vanderplaspenguinsgoparallel2023a">Parallel coordinate plots <span class="citation" data-cites="vanderplasPenguinsGoParallel2023a">(<a href="refs.html#ref-vanderplasPenguinsGoParallel2023a" role="doc-biblioref">VanderPlas et al. 2023</a>)</span></h3>
 <ul>
@@ -281,27 +281,12 @@ div.csl-indent {
 <li>Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.</li>
 <li>Can highlight specific combinations of traits that are of interest, and show how they are represented in the selected panel compared to the overall population. (Though there is no way to gauge the prevalence of these combinations in the population, beyond anecdotal observations)</li>
 </ul>
+<p>–</p>
 </section>
 <section id="attribute-distribution-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="attribute-distribution-analysis">Attribute distribution analysis</h3>
 <ul>
 <li>Showcase how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process.</li>
-</ul>
-</section>
-</section>
-<section id="working-questions" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="working-questions"><span class="header-section-number">2.4</span> Working questions</h2>
-<section id="sortition" class="level3">
-<h3 class="anchored" data-anchor-id="sortition">Sortition</h3>
-<ul>
-<li>For the new quota tool, would it just be a matter of making a concatenated trait quota, evaluating whether the resulting panel is still feasible and meets the requirements of the original quotas, and then tested to see whether it majorly impacted selection likelihood, vs if it were not to have been used?</li>
-</ul>
-</section>
-<section id="visualisation" class="level3">
-<h3 class="anchored" data-anchor-id="visualisation">Visualisation</h3>
-<ul>
-<li>What do we actually want to show with these visualisations? What are the key insights we want to communicate?</li>
-<li>Are we looking at likelihood of selection across traits/through stages? Or are we looking at the distribution of traits in the final panel?</li>
 </ul>
 
 
