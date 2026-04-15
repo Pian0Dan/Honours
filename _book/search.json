@@ -62,11 +62,31 @@
   {
     "objectID": "03-chap3.html",
     "href": "03-chap3.html",
-    "title": "3  Research Question",
+    "title": "3  Methodology",
     "section": "",
-    "text": "What does it mean for a panel to be “good” at being representative and are we achieving this? - Are current methods and algorithms, like LexiMin, performing the best they could be? - How do unobserved/unfiltered traits affect response rates, and therefore panel composition and representativeness? - How can survey non-response and other sampling-level issues bias representativeness?\nnDF suggests 10x response to panel count; not generally feasibly, more often get 3x. How much of a difference does this make to burden and selection likelihood?\n\n4 Research Plan\nPlan",
+    "text": "3.1 Research Question\nWhat does it mean for a panel to be “good” at being representative and are we achieving this? - Are current methods and algorithms, like LexiMin, performing the best they could be? - How do unobserved/unfiltered traits affect response rates, and therefore panel composition and representativeness? - How can survey non-response and other sampling-level issues bias representativeness?\nnDF suggests 10x response to panel count; not generally feasibly, more often get 3x. How much of a difference does this make to burden and selection likelihood?",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Research Question</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Methodology</span>"
+    ]
+  },
+  {
+    "objectID": "03-chap3.html#research-design",
+    "href": "03-chap3.html#research-design",
+    "title": "3  Methodology",
+    "section": "3.2 Research Design",
+    "text": "3.2 Research Design",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Methodology</span>"
+    ]
+  },
+  {
+    "objectID": "03-chap3.html#research-plan",
+    "href": "03-chap3.html#research-plan",
+    "title": "3  Methodology",
+    "section": "3.3 Research Plan",
+    "text": "3.3 Research Plan\nPlan",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Methodology</span>"
     ]
   },
   {

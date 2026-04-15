@@ -1,4 +1,6 @@
-# Research Question {#sec-resquestion}
+# Methodology {#sec-methodology}
+
+## Research Question
 
 What does it mean for a panel to be "good" at being representative and are we achieving this?
 - Are current methods and algorithms, like LexiMin, performing the best they could be?
@@ -7,6 +9,8 @@ What does it mean for a panel to be "good" at being representative and are we ac
 
 nDF suggests 10x response to panel count; not generally feasibly, more often get 3x. How much of a difference does this make to burden and selection likelihood?
 
-# Research Plan {#sec-resplan}
+## Research Design
+
+## Research Plan
 
 Plan
