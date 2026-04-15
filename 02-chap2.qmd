@@ -39,6 +39,10 @@ Let K be the set of all feasible panels. A feasible panel is any group of k indi
 
 ### Existing Methods
 
+#### Non-algorithmic/self-selection
+
+This is the most basic method of panel selection, where individuals are simply allowed to self-select into the panel. This can be done through a variety of means, such as advertising the opportunity to participate in the panel and allowing individuals to sign up on a first-come, first-served basis. However, this method is often not very effective at creating representative panels, as it can a) lead to self-selection bias, thus possibly not capturing the diversity and perspectives of the population, and b) lead to lower-than-desired engagement, as it does not guarantee any particular level of exposure or direct engagement.
+
 ##### Legacy
 
 #### LexiMin [@Flanigan2021FairAF]
