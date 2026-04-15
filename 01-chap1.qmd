@@ -11,8 +11,11 @@ library(feasts)
 library(fable)
 ```
 
+(got advised in class to put aim first, but then was also told it depends on context; will need to discuss this again!)
 
-Do current sortition methods and ideologies lead to actually representative panels in practice? Sortition is a method of selection that uses random sampling to create panels that are representative of a population. It has been used in various contexts, reaching as far back as ancient Athens, where it was how jurors were selected, and into modern times for citizens' assemblies. The idea is that by randomly selecting individuals from the population, we can create panels that are more representative and inclusive than those selected through traditional methods. Sortition also reduces dominance by elites or highly engaged groups, enabling broader participation across social classes [@Giuliani2025SortitionIP], ensuring decisions actually serve the people they are meant to.
+This thesis aims to evaluate whether current sortition methods and ideologies lead to actually representative panels in practice. Through simulation and visualisation of algorithm performance, we will determine whether current tools are performing as expected and producing panels that are actually representative.
+
+Sortition is a method of selection that uses random sampling to create panels that should be descriptively representative of a population. It has been used in various contexts, reaching as far back as ancient Athens, where it was how jurors were selected, and into modern times for citizens' assemblies. The idea is that by randomly selecting individuals from the population, we can create panels that are more representative and inclusive than those selected through traditional methods. Sortition also reduces dominance by elites or highly engaged groups, enabling broader participation across social classes [@Giuliani2025SortitionIP], ensuring decisions actually serve the people they are meant to.
 
 According to @Flanigan2021FairAF, sortition creates groups that are statistical “mini-publics” of society, reflecting demographics and perspectives more accurately than elected bodies. These sorts of panels enable more inclusive and representative decision-making processes, which can lead to better outcomes and increased public trust and engagement. They also encourage more diverse perspectives and can help to break down barriers between different groups in society, fostering greater understanding and collaboration.
 
