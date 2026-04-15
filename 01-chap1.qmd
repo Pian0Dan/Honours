@@ -21,7 +21,7 @@ According to @Flanigan2021FairAF, sortition creates groups that are statistical 
 
 An increasing number of institutions, including the Parisian [@ParisCreatesPermanent], Irish [@walshDissatisfiedEngagedCitizen2021], and British Columbian [@wardExperimentPoliticalCommunication2008] governments, are using sortition to create panels that are more representative of the population for their political discussions and deliberations, so the need for robust and fair methods for building representative panels is only growing. However, there are still many challenges to overcome in order to ensure that these panels are truly representative and effective for the populations they aim to serve. 
 
-One of the main challenges is ensuring that the selection process is transparent and fair, and that the panels are truly representative of the population in terms of demographics and perspectives. But this raises the questions of what it means to be fair, what it means to be representative.
+One of the main roadblocks is ensuring that the selection process is transparent and fair, and that the panels are truly representative of the population in terms of demographics and perspectives. But this raises the questions of what it means to be fair, what it means to be representative, and how these look from a systematic perspective.
 
 Additionally, though some tools (such as LexiMin, from @Flanigan2021FairAF) have already been developed, there is a need for better methods and frameworks to evaluate the representativeness of these panels and to ensure that they are robust in achieving their goals.
 
