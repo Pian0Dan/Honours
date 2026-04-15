@@ -8,7 +8,7 @@ The main aim of any and all selection methods within sortition is to create a pa
 
 Fairness refers to the idea that the selection process should be transparent, unbiased, and inclusive. It should give everyone an equal chance of being selected, regardless of their background or characteristic, which presents a likelihood difference minimisation challenge. Systematically, this is typically achieved through introducing randomness to selection processes [@Flanigan2021FairAF], as not doing so immediately introduces implicit selection bias.
 
-Alongside this, representativeness refers to the idea that the selected panel should accurately reflect the demographics and perspectives of the given population. This means that the panel should be diverse and inclusive, and should contain individuals from a wide range of relevant backgrounds. This can be assessed directly by comparing demographic compositions of the selected panel against the population from which it was originally drawn.
+Alongside this, representativeness refers to the idea that the selected panel should accurately reflect the demographics and perspectives of the population from which it was built. This means that the panel should be diverse and inclusive, and should contain individuals from a range of prediagnosed backgrounds of interest. This can be assessed directly by comparing demographic compositions of the selected panels against the population from which it was originally drawn.
 
 Approaching it systematically, the sortition process can be thought of in four stages:
 
