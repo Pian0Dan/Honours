@@ -49,11 +49,11 @@ Already a systematic improvement over non-algorithmic methods, the LEGACY select
 
 #### LexiMin [@Flanigan2021FairAF]
 
-This aforementioned shortcoming is then addressed by LexiMin, or lexicographic minimisation--a method of panel selection that aims to minimise the maximum deviation from the desired equal selection chance for each participant. It works by first identifying the individual with the largest deviation from the desired selection chance, and then selecting panel combinations that make this individual's selection chance as close to equal to others as possible. This process is repeated for each individual in order of their deviation until overall selection chance is maximised and made as equal as possible across all participants.
-
-
+This aforementioned shortcoming is then addressed by LexiMin, or lexicographic minimisation--a method of panel selection that aims to minimise the maximum deviation from the desired equal selection chance for each participant. It works by first identifying the individual with the largest deviation from the desired selection chance, and then selecting panel combinations that make this individual's selection chance as close to equal to others as possible. This process is repeated for each individual in order of their deviation until overall selection chance is maximised and made as equal as possible across all participants. This ensures that each individual has the highest possible chance of being selected, but this in itself can lead to some individuals having overly high selection chances, which are not accounted for and can create representative burden.
 
 #### Goldilocks
+
+
 
 ### New Investigation
 
