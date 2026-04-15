@@ -43,16 +43,22 @@ These quotas will be certain desired counts, or ranges of counts, of individuals
 
 This is the most basic method of panel selection, where individuals are simply allowed to self-select into the panel. This can be done through a variety of means, such as advertising the opportunity to participate in the panel and allowing individuals to sign up on a first-come, first-served basis. However, these types of methods are often not very effective at creating representative panels, as they can a) lead to self-selection bias (as involvement will be tied to exposure and not random chance, those who put their hand up of their own volition are more likely to have pre-formed perspectives, ahead of the panel process), thus possibly not capturing the diversity and perspectives of the population, and b) lead to lower-than-desired engagement, as it does not guarantee any particular level of exposure or direct engagement in the first place.
 
-##### LEGACY algorithm (I can't find its original source??, but it is mentioned in @Flanigan2021FairAF)
+##### LEGACY heuristic (I can't find original source, but it is mentioned in @Flanigan2021FairAF)
 
-Already a systematic improvement over non-algorithmic methods; the LEGACY selection algorithm takes a given sample of respondents and selects individuals one-by-one until the panel is full. At each step, the algorithm calculates a "need" value to identify the trait that is currently furthest from the desired count in the panel. LEGACY then selects a random individual from the pool who possesses that trait. If selecting any given individual would cause the panel to hit the upper quota for any trait, then all other individuals with that trait are removed from the pool before the next selection. This process is repeated until the algorithm either becomes infeasible (exhausts the dataset before hitting overall quota, at which point it will restart), or builds a full panel with desired quota representation. LEGACY's process fulfils the base requirements of building a panel that meets the desired quotas, but it does not necessarily maximise representativeness, as it does not take into account the likelihood of selection for different individuals (allowing them to just be 0%, in extreme cases), and it does not attempt to minimise the maximum deviation from equal selection chance across all individuals.
+Already a systematic improvement over non-algorithmic methods; the LEGACY selection heuristic takes a given sample of respondents and selects individuals one-by-one until the panel is full. At each step, the heuristic calculates a "need" value to identify the trait that is currently furthest from the desired count in the panel. LEGACY then selects a random individual from the pool who possesses that trait. If selecting any given individual would cause the panel to hit the upper quota for any trait, then all other individuals with that trait are removed from the pool before the next selection. This process is repeated until it either becomes infeasible (exhausts the dataset before hitting overall quota, at which point it will restart), or builds a full panel with desired quota representation. LEGACY's process fulfils the base requirements of building a panel that meets the desired quotas, but it does not necessarily maximise representativeness, as it does not take into account the likelihood of selection for different individuals (allowing them to just be 0%, in extreme cases), and it does not attempt to minimise the maximum deviation from equal selection chance across all individuals.
+
+#### MaxiMin and MiniMax [@baharavFairManipulationRobustTransparent2024]
+
+This aforementioned shortcoming is then addressed by our first algorithmic sorition methods: MaxiMin and MiniMax, though these both tackle the problem in opposite ways and with differing goals.
+
 
 #### LexiMin [@Flanigan2021FairAF]
 
-This aforementioned shortcoming is then addressed by LexiMin, or lexicographic minimisation--a method of panel selection that aims to maximise the minimum likelihood of each individual being selected. It works by first identifying the individual with the lowest selection chance, and then selecting panel combinations that make this individual's selection chance as high as possible. This process is repeated for each individual in order of their selection likelihood until overall selection chance is maximised and, ideally, made as equal as possible across all participants. This ensures that each individual has the highest possible chance of being selected, but in itself, can make it vulnerable to manipulation and lead to some individuals having overly high selection chances if they elect as belonging to certain quotas with lesser representation in the sample. Thus,leading to potential representative burden.
+LexiMin, or lexicographic minimisation--a method of panel selection that aims to maximise the minimum likelihood of each individual being selected. It works by first identifying the individual with the lowest selection chance, and then selecting panel combinations that make this individual's selection chance as high as possible. This process is repeated for each individual in order of their selection likelihood until overall selection chance is maximised and, ideally, made as equal as possible across all participants. This ensures that each individual has the highest possible chance of being selected. But this trait of LexiMin can, like MaxiMin, make it vulnerable to manipulation and lead to some individuals having overly high selection chances if they elect as belonging to certain quotas with lesser representation in the sample. Thus, leading to potential representative burden.
 
-#### Goldilocks
+#### Goldilocks [@baharavFairManipulationRobustTransparent2024]
 
+Bringing us to the supposed current gold standard: the aptly named "Goldilocks" sortition algorithm.
 
 
 ### New Investigation
@@ -63,7 +69,9 @@ The extent to which this happens naturally through current methods will be evalu
 
 ## Visualisation Methods
 
-In order to evaluate the representativeness of selected panels, we will use a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: mosaic plots, double decker plots, UpSet plots, parallel coordinate plots, and query-based highlighting.
+In order to evaluate the representativeness of selected panels, we will use a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: bar charts, mosaic plots, double decker plots, UpSet plots and parallel coordinate plots.
+
+First, it will likely be of use to just do some illustrative graphing to show densities within the distribution, across traits
 
 ### Parallel coordinate plots [@vanderplasPenguinsGoParallel2023a]
 
@@ -77,12 +85,6 @@ In order to evaluate the representativeness of selected panels, we will use a va
 - Can be used to show how different traits connect with each other and how they are distributed across the distribution and/or selected panel.
 - Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.
 - Can highlight specific combinations of traits that are of interest, and show how they are represented in the selected panel compared to the overall population. (Though there is no way to gauge the prevalence of these combinations in the population, beyond anecdotal observations)
-
-### Query-based highlighting
-
-- Makes the visualisation interactive, allowing users to explore the data and identify specific patterns or trends in the selection process.
-- Can be used to highlight specific traits or combinations of traits that are of interest, and to show how they are represented in the selected panel compared to the overall population.
-- Also creates opportunity to ensure specific combinations of traits are represented in the selected panel, without reintroducing representative burden.
 
 ### Attribute distribution analysis
 
