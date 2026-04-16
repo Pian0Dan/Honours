@@ -64,4 +64,8 @@ format: gfm
 - Should we pivot to Goldilocks over LexiMin, since it appears to be the newest ideal? LexiMin is the one currently being used in practice, but Goldilocks is in the works of being made into a public tool as well; could ask to be put in touch with Bailey to see this preview and discuss (she is a contact through work)
 
 ### Plan
-- 
+- Condense existing content and rejig to fit research proposal structure
+- Add more editorial section to intro after the aim is stated (refer to state of representativeness in politics, potentially use existing panel example section but move it earlier)
+- Data structure summary to motivate visualisation techniques
+- Attempt mini sample structure and visualisations
+- Continue lit review, but not main
