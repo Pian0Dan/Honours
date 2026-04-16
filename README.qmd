@@ -59,8 +59,9 @@ format: gfm
 - nDF's 10x figure based on @redmanHowRecruitParticipants has no stated academic basis or rigour; could be interesting to evaluate validity as a whole as part of simulation
 - As stated above, UpSet plot could be used to show what intersections are present in which panels and at what quantities
 - How will simulation look? Will it just be using the Panelot tool, or will we recreate the algorithm in R somehow for reproducibility?
-- Raised last week: For the new quota tool, would it just be a matter of making a concatenated trait quota, evaluating whether the resulting panel is still feasible and meets the requirements of the original quotas, and then tested to see whether it majorly impacted selection likelihood, vs if it were not to have been used?
 - Parallel coordinate plot to show whether a specific individual of defined traits gets placed in 0 or 1 across all generated panel options?
+- Would panel selection tool improvement (for intersection inclusion) just be a matter of adding a constraint that makes it so only panels with a minimum number of individuals meeting concatenated quota are feasible? I.e. algorithm still runs to maximise/minimise likelihoods, but with the constraint of ensuring the combination exists in panels before ruling them feasible and adding to portfolio before looping
+- Should we pivot to Goldilocks over LexiMin, since it appears to be the newest ideal? LexiMin is the one currently being used in practice, but Goldilocks is in the works of being made into a public tool as well; could ask to be put in touch with Bailey to see this preview and discuss (she is a contact through work)
 
 ### Plan
 - 

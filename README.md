@@ -59,6 +59,7 @@
 - How will simulation look? Will it just be using the Panelot tool, or will we recreate the algorithm in R somehow for reproducibility?
 - Parallel coordinate plot to show whether a specific individual of defined traits gets placed in 0 or 1 across all generated panel options?
 - Would panel selection tool improvement (for intersection inclusion) just be a matter of adding a constraint that makes it so only panels with a minimum number of individuals meeting concatenated quota are feasible? I.e. algorithm still runs to maximise/minimise likelihoods, but with the constraint of ensuring the combination exists in panels before ruling them feasible and adding to portfolio before looping
+- Should we pivot to Goldilocks over LexiMin, since it appears to be the newest ideal? LexiMin is the one currently being used in practice, but Goldilocks is in the works of being made into a public tool as well; could ask to be put in touch with Bailey to see this preview and discuss (she is a contact through work)
 
 ### Plan
 - 
