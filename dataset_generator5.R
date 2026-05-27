@@ -23,8 +23,8 @@ generate_population5 <- function(
 
     age_group = cut(
       age,
-      breaks = c(17, 29, 44, 59, 90),
-      labels = c("18-29", "30-44", "45-59", "60+"),
+      breaks = c(17, 29, 44, 59, 74, 90),
+      labels = c("18-29", "30-44", "45-59", "60-74", "75+"),
       include.lowest = TRUE
     ),
 

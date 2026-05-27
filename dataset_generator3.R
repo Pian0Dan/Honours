@@ -21,8 +21,8 @@ generate_population3 <- function(
 
     age_group = cut(
       age,
-      breaks = c(17, 29, 44, 59, 90),
-      labels = c("18-29", "30-44", "45-59", "60+"),
+      breaks = c(17, 29, 44, 59, 74, 90),
+      labels = c("18-29", "30-44", "45-59", "60-74", "75+"),
       include.lowest = TRUE
     ),
 
@@ -66,7 +66,7 @@ scenarios <- list(
 
 set.seed(13)
 
-populations <- imap_dfr(
+populations <- imap(
   scenarios,
   ~ generate_population3(
     N = 100000,
@@ -79,18 +79,21 @@ populations <- imap_dfr(
 
 # Assess representation within the populations
 
-population_summary <- populations %>%
-  pivot_longer(
-    cols = c(age_group, gender, tenure),
-    names_to = "trait",
-    values_to = "category"
-  ) %>%
-  count(scenario, trait, category) %>%
-  group_by(scenario, trait) %>%
-  mutate(
-    proportion = n / sum(n),
-    percentage = round(proportion * 100, 1)
-  ) %>%
-  ungroup()
+population_summary <- map_dfr(
+  populations,
+  ~ .x %>%
+    pivot_longer(
+      cols = c(age_group, gender, tenure),
+      names_to = "trait",
+      values_to = "category"
+    ) %>%
+    count(scenario, trait, category) %>%
+    group_by(scenario, trait) %>%
+    mutate(
+      proportion = n / sum(n),
+      percentage = round(proportion * 100, 1)
+    ) %>%
+    ungroup()
+)
 
 population_summary
