@@ -66,7 +66,7 @@ scenarios <- list(
 
 set.seed(13)
 
-populations <- imap(
+populations3 <- imap(
   scenarios,
   ~ generate_population3(
     N = 100000,
@@ -79,8 +79,8 @@ populations <- imap(
 
 # Assess representation within the populations
 
-population_summary <- map_dfr(
-  populations,
+population_summary3 <- map_dfr(
+  populations3,
   ~ .x %>%
     pivot_longer(
       cols = c(age_group, gender, tenure),
@@ -96,4 +96,4 @@ population_summary <- map_dfr(
     ungroup()
 )
 
-population_summary
+population_summary3

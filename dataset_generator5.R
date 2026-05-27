@@ -103,7 +103,7 @@ scenarios <- list(
 
 set.seed(13)
 
-populations <- imap(
+populations5 <- imap(
   scenarios,
   ~ generate_population5(
     N = 100000,
@@ -118,7 +118,7 @@ populations <- imap(
 
 # Assess representation within the populations
 
-population_summary <- map_dfr(
+population_summary5 <- map_dfr(
   populations,
   ~ .x %>%
     pivot_longer(
@@ -135,4 +135,4 @@ population_summary <- map_dfr(
     ungroup()
 )
 
-population_summary
+population_summary5
