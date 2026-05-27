@@ -1,0 +1,30 @@
+# Introduction {#sec-intro}
+
+```{r}
+#| label: load_packages
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(tsibble)
+library(feasts)
+library(fable)
+```
+
+(got advised in class to put aim first, but then was also told it depends on context; will need to discuss this again!)
+
+This thesis aims to evaluate whether current sortition methods and ideologies lead to actually representative panels in practice. Through simulation and visualisation of algorithm performance, we will determine whether current tools are performing as expected and producing panels that are actually representative.
+
+Sortition is a method of selection that uses random sampling to create panels that should be descriptively representative of a population. It has been used in various contexts, reaching as far back as ancient Athens, where it was how jurors were selected, and into modern times for citizens' assemblies. The idea is that by randomly selecting individuals from the population, we can create panels that are more representative and inclusive than those selected through traditional methods. Sortition also reduces dominance by elites or highly engaged groups, enabling broader participation across social classes [@Giuliani2025SortitionIP], making it more likely that decisions are in the relevant population's best interest.
+
+According to @Flanigan2021FairAF, sortition creates groups that are statistical “mini-publics” of society, reflecting demographics and perspectives more accurately than elected bodies. These sorts of panels enable more inclusive and representative decision-making processes, which can lead to better outcomes and increased public trust and engagement. They also encourage more diverse perspectives and can help to break down barriers between different groups in society, fostering greater understanding and collaboration.
+
+An increasing number of institutions, including the Parisian [@ParisCreatesPermanent], Irish [@walshDissatisfiedEngagedCitizen2021], and British Columbian [@wardExperimentPoliticalCommunication2008] governments, are using sortition to create panels that are more representative of the population for their political discussions and deliberations, so the need for robust and fair methods for building representative panels is only growing. However, there are still many challenges to overcome in order to ensure that these panels are truly representative and effective for the populations they aim to serve. 
+
+One of the main roadblocks is ensuring that the selection process is transparent and fair, and that the panels are truly representative of the population in terms of demographics and perspectives. But this raises the questions of what it means to be fair, what it means to be representative, and how these look from a systematic perspective.
+
+Additionally, though some tools (such as LexiMin, from @Flanigan2021FairAF) have already been developed, there is a need for better methods and frameworks to evaluate the representativeness of these panels and to ensure that they are robust in achieving their goals.
+
+This study aims to evaluate current sortition methods and community representation processes, as well as to investigate how unobserved traits and survey non-response may affect panel representativeness. By investigating these factors, we can develop a greater understanding of existing tools and procedures, how they work, how they fall short, what it would mean for them to be more representative, which will then enable the creation of a diagnostic tool to gauge effectiveness.
+
+The remainder of this thesis is structured as follows: Chapter 2 provides a literature review of the existing research on sortition and representation, and identifies gaps in the current knowledge. Chapter 3 outlines the methodology used to evaluate the representativeness of panels and to investigate the impact of unobserved traits and survey non-response. Chapter 4 presents the results of the analysis, and Chapter 5 discusses the implications of the findings and suggests directions for future research.
