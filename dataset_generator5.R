@@ -103,7 +103,7 @@ scenarios <- list(
 
 set.seed(13)
 
-populations <- imap_dfr(
+populations <- imap(
   scenarios,
   ~ generate_population5(
     N = 100000,
@@ -111,25 +111,28 @@ populations <- imap_dfr(
     age_shape = .x$age_shape,
     gender_probs = .x$gender_probs,
     tenure_probs = .x$tenure_probs,
-    location_probs = .x$location_probs,
-    education_probs = .x$education_probs
+    education_probs = .x$education_probs,
+    location_probs = .x$location_probs
   )
 )
 
 # Assess representation within the populations
 
-population_summary <- populations %>%
-  pivot_longer(
-    cols = c(age_group, gender, tenure, location, education),
-    names_to = "trait",
-    values_to = "category"
-  ) %>%
-  count(scenario, trait, category) %>%
-  group_by(scenario, trait) %>%
-  mutate(
-    proportion = n / sum(n),
-    percentage = round(proportion * 100, 1)
-  ) %>%
-  ungroup()
+population_summary <- map_dfr(
+  populations,
+  ~ .x %>%
+    pivot_longer(
+      cols = c(age_group, gender, tenure, education, location),
+      names_to = "trait",
+      values_to = "category"
+    ) %>%
+    count(scenario, trait, category) %>%
+    group_by(scenario, trait) %>%
+    mutate(
+      proportion = n / sum(n),
+      percentage = round(proportion * 100, 1)
+    ) %>%
+    ungroup()
+)
 
 population_summary
