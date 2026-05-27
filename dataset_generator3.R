@@ -49,13 +49,13 @@ scenarios <- list(
     tenure_probs = c(Homeowner = 0.35, Renter = 0.45, Other = 0.20)
   ),
 
-  young_metro_renter = list(
+  young_renter = list(
     age_shape = c(2, 6),
     gender_probs = c(Female = 0.48, Male = 0.48, Non_binary = 0.04),
     tenure_probs = c(Homeowner = 0.15, Renter = 0.70, Other = 0.15)
   ),
 
-  older_homeowner_regional = list(
+  older_homeowner = list(
     age_shape = c(6, 2),
     gender_probs = c(Female = 0.48, Male = 0.48, Non_binary = 0.04),
     tenure_probs = c(Homeowner = 0.75, Renter = 0.15, Other = 0.10)
