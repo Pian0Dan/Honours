@@ -62,4 +62,61 @@
 - Should we pivot to Goldilocks over LexiMin, since it appears to be the newest ideal? LexiMin is the one currently being used in practice, but Goldilocks is in the works of being made into a public tool as well; could ask to be put in touch with Bailey to see this preview and discuss (she is a contact through work)
 
 ### Plan
+- Condense existing content and rejig to fit research proposal structure
+- Add more editorial section to intro after the aim is stated (refer to state of representativeness in politics, potentially use existing panel example section but move it earlier)
+- Data structure summary to motivate visualisation techniques
+- Attempt mini sample structure and visualisations
+- Continue lit review, but not main
+
+## Week 7
+
+### For discussion
+- How are the graphs?
+- Is there no chance we just dump the Python code to make it more streamlined for reproducibility?
+- How do we make unobservables more interesting? Do we assign response rate to an unobservable? Would there be a way to do weighted response probabilities?
+
+### Plan
+- Add statement about how we want to make it possible to compare selection outcomes by visualising against population; making it easier to assess representative performance across panel selections
+- Trying to investigate presence of intersections; for example, if one group is particularly small, seeing how it is represented in panels; what about if one is very large? What if both are present? Different response rates? Different sample sizes?
+
+## Week 8
+
+### For discussion
+- Interactive tool for visualisation; generate lottery -> store lottery -> input a seed number -> generate associated panel -> visualise panel against population
+- Thinking ahead to generalisation; in real world, we won't have access to rich intersection data--think census; only have age, gender, tenure, education disjointly
+    - My thinking is that we suggest using the survey intersection representation as a proxy for the population intersection representation; though, with particularly small datasets, this could skew pretty easily, but is maybe still better than absolutely nothing?
+    - Will see how closely this happens naturally within simulation, I guess
+
+### Plan
+- "Dashboard will help guide quota constraint choices and strengthen representativeness"
+- Make simulation scenario clearer; state explicit population n's and distribution shapes that will be tested
+- Fix captions to follow structure of "Relationship between [x] and [y] in the population shown as a [type of graph]. Colour indicates [z]. Width of the bars correspond to the count within the category. Every combination contains observations."
+- Add research plan timeline
+- Patchwork the pie charts; then mosaicplots if needed
+
+## Week 9
+
+### For discussion
+- Detailed enough?
+- Do I just hold response rates uniform and constant, since we aren't actually looking at the impact of surveying? Or do we just try different response rates across groups too?
+- What slides actually matter?
+
+### Plan
+- 
+
+## Week 10
+
+- Pres Prep
+
+## Week 11
+
+- Pres and no meet
+
+## Week 12
+
+### For discussion
+- Which variables do we change? How many at once?
+- Does the simulation solution work here?
+
+### Plan
 - 
