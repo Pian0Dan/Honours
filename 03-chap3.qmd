@@ -1,6 +1,6 @@
 # Methodology {#sec-methodology}
 
-## Research Question
+## Research Aims
 
 What does it mean for a panel to be "good" at being representative and are we achieving this?
 - Are current methods and algorithms, like LexiMin, performing the best they could be?
@@ -12,5 +12,3 @@ nDF suggests 10x response to panel count; not generally feasibly, more often get
 ## Research Design
 
 ## Research Plan
-
-Plan

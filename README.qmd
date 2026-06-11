@@ -121,4 +121,8 @@ format: gfm
 - Does the simulation solution work here?
 
 ### Plan
+- Research association rules (possibly Chi^2); how to evaluate which types of intersections are more important/likely to be represented within a panel of a given size
+- Shiny app research
+- Research categorical variable distributions and how this can be used to generate population distributions
+- Research how skewness, kurtosis and bimodality would be measured and seen in a categorical variable
 - 
