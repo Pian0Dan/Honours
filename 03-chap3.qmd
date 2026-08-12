@@ -11,4 +11,29 @@ nDF suggests 10x response to panel count; not generally feasibly, more often get
 
 ## Research Design
 
-## Research Plan
+- Establish simulated population datasets to investigate impacts of certain data characteristics on algorithmic performance
+    - Create datasets with different levels of skew and covariance between trait variables, to then assess whether this skew and covariance is preserved at panel level
+        - Decide marginal proportions for every possible observation for each variable, summing to one across the variable
+        - Build joint probability arrays between trait observation combinations, to establish intersections
+            - For the independent case:
+                - Multiply marginal probabilities of each trait observation to obtain probability products
+            - For covaried cases:
+                - Multiply marginal probabilities of each trait observation to start with the independent case
+                - Define an adjustment factor ("alpha") to introduce adjustment for covariance between trait variables
+                - Multiply the probability products by between 0 and 1 times the adjustment factor to boost desired intersectional probabilities
+                - Rake and rescale the new covaried probabilities to ensure they sum to the originally defined marginal probabilities, as covariance is likely to have distorted the sums
+
+To investigate how data characteristics affect algorithmic performance, simulated population datasets were constructed with varying degrees of skew and covariance among trait variables, enabling an assessment of whether these properties are preserved once a panel is selected from the population. For each variable, marginal proportions were first specified across all possible observation categories, with each set of proportions summing to one. A joint probability array was then constructed to represent the probability of every combination of trait observations. In the independent case, this array was obtained by taking the product of the marginal probabilities for each trait observation. In the covaried case, the same independent array served as a starting point, after which an adjustment factor (denoted *alpha*) was introduced to encode the desired covariance between trait variables. This factor was applied multiplicatively to selectively increase the probability of specific trait intersections, thereby introducing association beyond what independence would predict. Because this adjustment distorts the row, column, and slice totals of the array away from the originally specified marginal probabilities, the array was subsequently rescaled through iterative proportional fitting (raking), ensuring that each variable's marginal distribution was restored to its intended value while preserving the covariance structure introduced by the adjustment. Additionally, a column with a randomly observed binary variable is included to test how algorithms handle latent variables at the sampling stage.
+
+Next, as is standard in practice, a random slice of defined proportions is taken from the population, to be used as the survey sample, from which responses are drawn. To assess whether this step can reduce representativeness, the process will also be held out in stratified form. This aims to diagnose whether random sampling is sufficient for producing a suitable pool to result in a representative panel by the end.
+
+
+- Establish response rate matrices to dictate how likely certain types of individuals are to respond
+- Build the independent case, where all are equally likely to respond
+- Build case that covaries for specific observed traits
+- Build case that covaries for latent trait that is not accounted for in demographic proportions, to see how an unobserved variable might affect response rates and therefore overall panel composition
+
+Following this, response rate matrices were established to dictate how likely individuals of each type were to respond to the survey once sampled, simulating the response process. In the independent case, every individual was assigned an equal probability of responding, regardless of their trait profile, providing a baseline against which the effects of differential response could be assessed. A second case introduced covariance between response likelihood and specific observed traits, allowing individuals with particular characteristics to respond at systematically higher or lower rates. A third case introduced covariance between response likelihood and a latent trait that was not accounted for in the demographic proportions used to construct the population, in order to examine how an unobserved variable might influence response rates, and consequently the composition of the resulting panel, even when it is invisible to the algorithms drawing the sample.
+
+Following
+

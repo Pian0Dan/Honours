@@ -6,6 +6,8 @@ format: gfm
 
 # Planner
 
+# Semester 1
+
 ## Week 1
 
 - Read through Bailey's paper - Done
@@ -126,3 +128,51 @@ format: gfm
 - Research categorical variable distributions and how this can be used to generate population distributions
 - Research how skewness, kurtosis and bimodality would be measured and seen in a categorical variable
 - 
+
+## Holiday meet 1
+### Plan
+- Read about copulas, more about multinomial distributions, how to induce covariance in categorical variables
+- Take dataset
+
+- Data generation workflow: input population distribution parameters -> generate population dataset -> generate respondent dataset based on response rates -> generates "respondent.csv" -> visualise to make sure it is actually showing the expected patterns
+
+- Dashboard workflow: input categories.csv and respondent.csv -> Chi-square test of independence -> visualise respondent.csv distribution -> input panel size -> run sortition algorithm -> produce lottery.csv -> random number input -> draw a specific panel -> visualise panel.csv distribution and compare against respondent.csv distribution -> suggest whether panel is sufficiently representative give
+
+---
+
+# Semester 2
+
+## Week 1
+
+### For Discussion
+- No matter how many times I try to generate population and ensure introduction of covariance, nothing "feels right"
+- Given we're dealing with categorical variables here, especially ones that should largely be independent, I don't see the actual point of this still either. Particularly given all we are trying to test is whether the output is as good as the input anyway--rendering the actual "quality" of the input irrelevant.
+- The only way to actually covary is to have a latent score in the background, but this isn't entirely intuitive for these variables and, once again, seems to be at least partially besides the point here. What does it mean to be in the "top percentile of gender"?
+- Even if I do bin percentiles for categories, by assuming relationships between them, it makes weird and unrealistic messes anyway. E.g. If I split the latent scores into male (lowest percentile), female (middle percentile), non-binary (top percentile)--I would/could make the assumption that less older people would identify as non-binary, and so inversely correlate it with the latent scores of age. But this would then also mean older people are more likely to be men and middle-age people are more likely to be women.
+
+- Particularly given I'm working with multivariate normals, I could understand trying to do this ordinally, but with nominal demographic variables specifically, this feels a bit sanity-breaking, unless I am missing something super obvious.
+- Multimodal copulas could be an option but seem like excessive work, given the focus is assessing whether output matches input and not whether the input was "realistic".
+
+- Can I, instead, generate as purely independent and random (as I did previously), then measure level of association (covariance) with Cramer V, report this, and measure and compare against Cramer V in the following samples/panels?
+    - Though this may not even be possible either, since our intersectional slices will be pretty small by the final panel level
+
+
+### Plan
+
+- Add more covariance for gender and tenure
+
+## Week 2
+
+### For discussion
+- Are we happy with this approach?
+- Is this the type of shape we want to be seeing?
+- I am thinking that for sampling, I create a latent "interest score", then correlate that with one or more of the traits, and then set a cutoff
+
+- How do I display these intersections for the 5-variable case? Do we ditch mosaic plots for UpSet only for the larger cases? Or would double-decker maybe work?
+
+### Plan
+- Generate 4-variable population then add random fifth variable to be "latent"
+- Write down explanation of process (adjusted/reworded AI summary of steps)
+- Work on writing overall
+- Start sampling process; try both random sampling at first stage, and stratified sampling at both stages; make diagram and clear explanation of process flow
+- Try sketching user interface for AI attempt at Shiny app
