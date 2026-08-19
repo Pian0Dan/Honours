@@ -24,4 +24,10 @@ degrees: 'AMusA (AMEB), B.Bus. (Monash University)'
 
 format:
   monashthesis-html: default
-  monashthesis-pdf: default
+  monashthesis-pdf:
+    include-in-header:
+      text: |
+        \usepackage{enumitem}
+        \setlistdepth{9}
+        \renewlist{itemize}{itemize}{9}
+        \setlist[itemize]{label=\textbullet}

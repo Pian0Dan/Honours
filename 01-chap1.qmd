@@ -6,9 +6,6 @@
 library(dplyr)
 library(ggplot2)
 library(tidyr)
-library(tsibble)
-library(feasts)
-library(fable)
 ```
 
 In a social landscape where the public is growing progressively disillusioned with its representation in politics [@landemoreOpinionNoShy2026], it is important to consider ways in which we can foster more inclusive decision-making practices. One way of achieving this, adopted recently by an increasing number of institutions, including the Parisian [@ParisCreatesPermanent], Irish [@walshDissatisfiedEngagedCitizen2021], and British Columbian [@wardExperimentPoliticalCommunication2008] governments, is using sortition to create panels that are more representative of the population for political discussions and deliberations. As a result, the need for fair and representative methods of building panels is only growing, and progress is being made in improving the structure of selective algorithms. However, there are still many challenges to overcome in order to ensure that these panels consistently achieve the level of representation that they envision. And there remains little procedure on measuring representativeness beyond the "surface" marginal level of demographics. 

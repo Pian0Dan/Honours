@@ -176,3 +176,20 @@ format: gfm
 - Work on writing overall
 - Start sampling process; try both random sampling at first stage, and stratified sampling at both stages; make diagram and clear explanation of process flow
 - Try sketching user interface for AI attempt at Shiny app
+
+
+## Week 3
+
+### For discussion
+
+### Plan
+
+- All skewed but independent (explained by marginals); different samplings
+- Covaried; different samplings
+
+- Explain the dataset generation process in terms of two variables (potentially gender and age), then state that it was scaled to more variables for the project
+    - Demonstrate what this actually looks like
+    - Add numerical basis and mathematical representations
+
+- Add explanations of motivations, distributions, and combinations of interest
+- Explain graphics used, show summary plots to visualise the population used

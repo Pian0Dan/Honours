@@ -18,6 +18,11 @@ library(ggmosaic)
 # bracketed rows -- one row per variable -- so the labels stay
 # readable instead of overlapping into illegible text.
 library(legendry)
+# first_letter_labels()/abbreviate_for_plot() recode categorical
+# levels down to their first letter (extending colliding levels by
+# an extra letter) for use in plots only -- the underlying analysis
+# data keeps full level names.
+source("label_helpers.R")
 
 set.seed(13)
 
@@ -106,7 +111,12 @@ chisq.test(table(sim_data$gender, sim_data$tenure))
 # overlapping composite tick labels. guide_axis_nested() instead
 # splits the "gender:tenure" leaf label into two clean, bracketed
 # rows -- one per variable.
-ggplot(sim_data) +
+
+# Recode gender/tenure to first-letter labels for this plot only
+# (e.g. Male -> M, Rent -> R, Own -> O, Other -> Ot).
+sim_data_plot <- abbreviate_for_plot(sim_data, c("gender", "tenure"))
+
+ggplot(sim_data_plot) +
   geom_mosaic(aes(x = product(age, tenure), fill = gender)) +
   scale_x_productlist(name = NULL) +
   scale_y_productlist(name = "Age Bracket") +
@@ -262,7 +272,11 @@ chisq.test(table(sim_data_omo$gender, sim_data_omo$tenure))
 # product, and produced illegible, overlapping composite tick
 # labels. guide_axis_nested() instead splits the "gender:tenure"
 # leaf label into two clean, bracketed rows -- one per variable.
-ggplot(sim_data_omo) +
+
+# Recode gender/tenure to first-letter labels for these plots only.
+sim_data_omo_plot <- abbreviate_for_plot(sim_data_omo, c("gender", "tenure"))
+
+ggplot(sim_data_omo_plot) +
   geom_mosaic(aes(x = product(age, tenure), fill = gender)) +
   scale_x_productlist(name = NULL) +
   scale_y_productlist(name = "Age Bracket") +
@@ -277,7 +291,7 @@ ggplot(sim_data_omo) +
 # Note: labs(x=, y=) does not override geom_mosaic's product-based
 # axis titles, so scale_x_productlist()/scale_y_productlist() must
 # be used instead.
-ggplot(sim_data_omo) +
+ggplot(sim_data_omo_plot) +
   geom_mosaic(aes(x = product(gender), fill = tenure)) +
   scale_x_productlist(name = "Gender") +
   scale_y_productlist(name = "Tenure") +
@@ -442,7 +456,11 @@ chisq.test(table(sim_data_yor$gender, sim_data_yor$tenure))
 # guide_axis_nested() splits the "gender:tenure" leaf label into two
 # clean, bracketed rows -- one per variable -- instead of one
 # overlapping composite label.
-ggplot(sim_data_yor) +
+
+# Recode gender/tenure to first-letter labels for these plots only.
+sim_data_yor_plot <- abbreviate_for_plot(sim_data_yor, c("gender", "tenure"))
+
+ggplot(sim_data_yor_plot) +
   geom_mosaic(aes(x = product(age, tenure), fill = gender)) +
   scale_x_productlist(name = NULL) +
   scale_y_productlist(name = "Age Bracket") +
@@ -454,7 +472,7 @@ ggplot(sim_data_yor) +
 # are already legible on their own (no nested guide needed). Axis
 # titles below were previously mislabeled (leftover from copying the
 # plot above) -- x actually shows gender, y actually shows tenure.
-ggplot(sim_data_yor) +
+ggplot(sim_data_yor_plot) +
   geom_mosaic(aes(x = product(gender), fill = tenure)) +
   scale_x_productlist(name = "Gender") +
   scale_y_productlist(name = "Tenure") +

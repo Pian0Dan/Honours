@@ -19,6 +19,11 @@ library(ggmosaic)
 # as separate, bracketed rows -- one row per variable -- which is how
 # published double decker plots typically label their axis.
 library(legendry)
+# first_letter_labels()/abbreviate_for_plot() recode categorical
+# levels down to their first letter (extending colliding levels by
+# an extra letter, e.g. Regional -> R, Remote -> Re) for use in
+# plots only -- the underlying analysis data keeps full level names.
+source("label_helpers.R")
 
 set.seed(13)
 
@@ -95,56 +100,68 @@ combos <- expand.grid(
 )
 combos$count <- cell_counts
 
-sim_data <- combos[
+sim_data5 <- combos[
   rep(seq_len(nrow(combos)), combos$count),
   c("age", "gender", "tenure", "education", "location")
 ]
-rownames(sim_data) <- NULL
+rownames(sim_data5) <- NULL
 
 # Convert to factors with the intended level order
-sim_data$age <- factor(sim_data$age, levels = age_levels)
-sim_data$gender <- factor(sim_data$gender, levels = gender_levels)
-sim_data$tenure <- factor(sim_data$tenure, levels = tenure_levels)
-sim_data$education <- factor(sim_data$education, levels = education_levels)
-sim_data$location <- factor(sim_data$location, levels = location_levels)
+sim_data5$age <- factor(sim_data5$age, levels = age_levels)
+sim_data5$gender <- factor(sim_data5$gender, levels = gender_levels)
+sim_data5$tenure <- factor(sim_data5$tenure, levels = tenure_levels)
+sim_data5$education <- factor(sim_data5$education, levels = education_levels)
+sim_data5$location <- factor(sim_data5$location, levels = location_levels)
 
 # Add a random binary variable, independent of every other column
 # (a simple Bernoulli(0.5) draw per row).
-sim_data$Latent <- rbinom(nrow(sim_data), 1, 0.5)
+sim_data5$Latent <- rbinom(nrow(sim_data5), 1, 0.5)
 
 # --- 6. Quick checks ---
-str(sim_data)
-prop.table(table(sim_data$age))
-prop.table(table(sim_data$gender))
-prop.table(table(sim_data$tenure))
-prop.table(table(sim_data$education))
-prop.table(table(sim_data$location))
+str(sim_data5)
+prop.table(table(sim_data5$age))
+prop.table(table(sim_data5$gender))
+prop.table(table(sim_data5$tenure))
+prop.table(table(sim_data5$education))
+prop.table(table(sim_data5$location))
 
 # Chi-square tests should show no significant association
 # (occasional significant p-values are expected by chance,
 # especially with large n -- this only reflects sampling noise,
 # not a real relationship, since independence is baked into prob_vec)
-chisq.test(table(sim_data$age, sim_data$gender))
-chisq.test(table(sim_data$age, sim_data$tenure))
-chisq.test(table(sim_data$gender, sim_data$tenure))
-chisq.test(table(sim_data$education, sim_data$location))
+chisq.test(table(sim_data5$age, sim_data5$gender))
+chisq.test(table(sim_data5$age, sim_data5$tenure))
+chisq.test(table(sim_data5$gender, sim_data5$tenure))
+chisq.test(table(sim_data5$education, sim_data5$location))
 
-# Double decker plot incorporating every simulated variable except
-# Latent: age/tenure/education/location are nested as a sequence of
-# vertical spines on the x-axis (each split proportional to that
-# variable's frequency), with the final spine -- gender -- laid out
-# horizontally on the y-axis, showing its conditional proportions
-# within every x-axis combination. guide_axis_nested() renders the
-# combined "age:tenure:education:location" label as separate,
-# bracketed rows -- one row per variable -- the classic double
-# decker axis presentation.
-ggplot(sim_data) +
+# Mosaic plot without faceting: age sits purely on the y-axis via an
+# explicit divider spec (divider = c("hspine", "vspine", "hspine",
+# "hspine") for the three x-product variables age/tenure/location
+# plus the implied gender-fill split) -- ggmosaic's divider argument
+# resolves axis placement through non-obvious recursive geometry
+# rather than a simple per-variable rule, so this exact sequence was
+# found by testing combinations rather than derived analytically.
+# Gender is mapped only via `fill`, never included in the x product,
+# though its categories still surface in the x-axis composite text
+# (an unavoidable ggmosaic quirk once 3+ variables are combined).
+# guide_axis_nested() renders the combined "gender:tenure:location"
+# x-axis label as separate, bracketed rows -- one row per variable.
+# Education is not included in this plot.
+# Recode gender/tenure/location to first-letter labels for this plot
+# only (e.g. Male -> M, Own -> O, Other -> Ot, Regional -> R, Remote
+# -> Re).
+sim_data5_plot <- abbreviate_for_plot(
+  sim_data5,
+  c("gender", "tenure", "location")
+)
+
+ggplot(sim_data5_plot) +
   geom_mosaic(
-    aes(x = product(age, tenure, education, location), fill = gender),
-    divider = ddecker()
+    aes(x = product(age, tenure, location), fill = gender),
+    divider = c("hspine", "vspine", "hspine", "hspine")
   ) +
   scale_x_productlist(name = NULL) +
-  labs(fill = "Gender") +
+  labs(fill = "Gender", y = "Age Bracket") +
   theme_minimal() +
   theme(axis.text.x = element_text(size = 6)) +
   guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
@@ -311,33 +328,36 @@ combos <- expand.grid(
 )
 combos$count <- cell_counts
 
-sim_data_omo <- combos[
+sim_data5_omo <- combos[
   rep(seq_len(nrow(combos)), combos$count),
   c("age", "gender", "tenure", "education", "location")
 ]
-rownames(sim_data_omo) <- NULL
+rownames(sim_data5_omo) <- NULL
 
 # Convert to factors with the intended level order
-sim_data_omo$age <- factor(sim_data_omo$age, levels = age_levels)
-sim_data_omo$gender <- factor(sim_data_omo$gender, levels = gender_levels)
-sim_data_omo$tenure <- factor(sim_data_omo$tenure, levels = tenure_levels)
-sim_data_omo$education <- factor(
-  sim_data_omo$education,
+sim_data5_omo$age <- factor(sim_data5_omo$age, levels = age_levels)
+sim_data5_omo$gender <- factor(sim_data5_omo$gender, levels = gender_levels)
+sim_data5_omo$tenure <- factor(sim_data5_omo$tenure, levels = tenure_levels)
+sim_data5_omo$education <- factor(
+  sim_data5_omo$education,
   levels = education_levels
 )
-sim_data_omo$location <- factor(sim_data_omo$location, levels = location_levels)
+sim_data5_omo$location <- factor(
+  sim_data5_omo$location,
+  levels = location_levels
+)
 
 # Add a random binary variable, independent of every other column
 # (a simple Bernoulli(0.5) draw per row).
-sim_data_omo$Latent <- rbinom(nrow(sim_data_omo), 1, 0.5)
+sim_data5_omo$Latent <- rbinom(nrow(sim_data5_omo), 1, 0.5)
 
 # --- 6. Quick checks ---
-str(sim_data_omo)
-prop.table(table(sim_data_omo$age))
-prop.table(table(sim_data_omo$gender))
-prop.table(table(sim_data_omo$tenure))
-prop.table(table(sim_data_omo$education))
-prop.table(table(sim_data_omo$location))
+str(sim_data5_omo)
+prop.table(table(sim_data5_omo$age))
+prop.table(table(sim_data5_omo$gender))
+prop.table(table(sim_data5_omo$tenure))
+prop.table(table(sim_data5_omo$education))
+prop.table(table(sim_data5_omo$location))
 
 # Chi-square tests should now show significant association for the
 # pairs the seed array targeted (age-gender, age-tenure), since the
@@ -346,43 +366,38 @@ prop.table(table(sim_data_omo$location))
 # into gender-tenure, since both were tied to age. Education and
 # location were never targeted, so they should remain unassociated
 # with everything else (aside from sampling noise).
-chisq.test(table(sim_data_omo$age, sim_data_omo$gender))
-chisq.test(table(sim_data_omo$age, sim_data_omo$tenure))
-chisq.test(table(sim_data_omo$gender, sim_data_omo$tenure))
-chisq.test(table(sim_data_omo$education, sim_data_omo$location))
-chisq.test(table(sim_data_omo$age, sim_data_omo$education))
+chisq.test(table(sim_data5_omo$age, sim_data5_omo$gender))
+chisq.test(table(sim_data5_omo$age, sim_data5_omo$tenure))
+chisq.test(table(sim_data5_omo$gender, sim_data5_omo$tenure))
+chisq.test(table(sim_data5_omo$education, sim_data5_omo$location))
+chisq.test(table(sim_data5_omo$age, sim_data5_omo$education))
 
-# Double decker plot incorporating every simulated variable except
-# Latent: age/tenure/education/location are nested as a sequence of
-# vertical spines on the x-axis (each split proportional to that
-# variable's frequency), with the final spine -- gender -- laid out
-# horizontally on the y-axis, showing its conditional proportions
-# within every x-axis combination. guide_axis_nested() renders the
-# combined "age:tenure:education:location" label as separate,
-# bracketed rows -- one row per variable -- the classic double
-# decker axis presentation.
-ggplot(sim_data_omo) +
+# Mosaic plot without faceting: age sits purely on the y-axis via an
+# explicit divider spec found by testing combinations (ggmosaic's
+# divider argument resolves axis placement through non-obvious
+# recursive geometry, not a simple per-variable rule). Gender is
+# mapped only via `fill`, never included in the x product, though
+# its categories still surface in the x-axis composite text (an
+# unavoidable ggmosaic quirk once 3+ variables are combined).
+# guide_axis_nested() renders the combined "gender:tenure:location"
+# x-axis label as separate, bracketed rows -- one row per variable.
+# Education is not included in this plot.
+# Recode gender/tenure/location to first-letter labels for this plot
+# only.
+sim_data5_omo_plot <- abbreviate_for_plot(
+  sim_data5_omo,
+  c("gender", "tenure", "location")
+)
+
+ggplot(sim_data5_omo_plot) +
   geom_mosaic(
-    aes(x = product(age, tenure, education, location), fill = gender),
-    divider = ddecker()
+    aes(x = product(age, tenure, location), fill = gender),
+    divider = c("hspine", "vspine", "hspine", "hspine")
   ) +
   scale_x_productlist(name = NULL) +
-  labs(fill = "Gender") +
+  labs(fill = "Gender", y = "Age Bracket") +
   theme_minimal() +
-  theme(axis.text.x = element_text(size = 6)) +
-  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
-
-# Same variables and same double decker style, viewed with tenure as
-# the final (fill) spine instead of gender.
-ggplot(sim_data_omo) +
-  geom_mosaic(
-    aes(x = product(age, gender, education, location), fill = tenure),
-    divider = ddecker()
-  ) +
-  scale_x_productlist(name = NULL) +
-  labs(fill = "Tenure") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(size = 6)) +
+  theme(axis.text.x = element_text(size = 7)) +
   guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
 
 
@@ -561,33 +576,36 @@ combos <- expand.grid(
 )
 combos$count <- cell_counts
 
-sim_data_yor <- combos[
+sim_data5_yor <- combos[
   rep(seq_len(nrow(combos)), combos$count),
   c("age", "gender", "tenure", "education", "location")
 ]
-rownames(sim_data_yor) <- NULL
+rownames(sim_data5_yor) <- NULL
 
 # Convert to factors with the intended level order
-sim_data_yor$age <- factor(sim_data_yor$age, levels = age_levels)
-sim_data_yor$gender <- factor(sim_data_yor$gender, levels = gender_levels)
-sim_data_yor$tenure <- factor(sim_data_yor$tenure, levels = tenure_levels)
-sim_data_yor$education <- factor(
-  sim_data_yor$education,
+sim_data5_yor$age <- factor(sim_data5_yor$age, levels = age_levels)
+sim_data5_yor$gender <- factor(sim_data5_yor$gender, levels = gender_levels)
+sim_data5_yor$tenure <- factor(sim_data5_yor$tenure, levels = tenure_levels)
+sim_data5_yor$education <- factor(
+  sim_data5_yor$education,
   levels = education_levels
 )
-sim_data_yor$location <- factor(sim_data_yor$location, levels = location_levels)
+sim_data5_yor$location <- factor(
+  sim_data5_yor$location,
+  levels = location_levels
+)
 
 # Add a random binary variable, independent of every other column
 # (a simple Bernoulli(0.5) draw per row).
-sim_data_yor$Latent <- rbinom(nrow(sim_data_yor), 1, 0.5)
+sim_data5_yor$Latent <- rbinom(nrow(sim_data5_yor), 1, 0.5)
 
 # --- 6. Quick checks ---
-str(sim_data_yor)
-prop.table(table(sim_data_yor$age))
-prop.table(table(sim_data_yor$gender))
-prop.table(table(sim_data_yor$tenure))
-prop.table(table(sim_data_yor$education))
-prop.table(table(sim_data_yor$location))
+str(sim_data5_yor)
+prop.table(table(sim_data5_yor$age))
+prop.table(table(sim_data5_yor$gender))
+prop.table(table(sim_data5_yor$tenure))
+prop.table(table(sim_data5_yor$education))
+prop.table(table(sim_data5_yor$location))
 
 # Chi-square tests should now show significant association for the
 # pairs the seed array targeted directly (age-tenure: negative, via
@@ -597,41 +615,36 @@ prop.table(table(sim_data_yor$location))
 # tied to tenure. Education and location were never targeted, so they
 # should remain unassociated with everything else (aside from
 # sampling noise).
-chisq.test(table(sim_data_yor$age, sim_data_yor$gender))
-chisq.test(table(sim_data_yor$age, sim_data_yor$tenure))
-chisq.test(table(sim_data_yor$gender, sim_data_yor$tenure))
-chisq.test(table(sim_data_yor$education, sim_data_yor$location))
-chisq.test(table(sim_data_yor$age, sim_data_yor$education))
+chisq.test(table(sim_data5_yor$age, sim_data5_yor$gender))
+chisq.test(table(sim_data5_yor$age, sim_data5_yor$tenure))
+chisq.test(table(sim_data5_yor$gender, sim_data5_yor$tenure))
+chisq.test(table(sim_data5_yor$education, sim_data5_yor$location))
+chisq.test(table(sim_data5_yor$age, sim_data5_yor$education))
 
-# Double decker plot incorporating every simulated variable except
-# Latent: age/tenure/education/location are nested as a sequence of
-# vertical spines on the x-axis (each split proportional to that
-# variable's frequency), with the final spine -- gender -- laid out
-# horizontally on the y-axis, showing its conditional proportions
-# within every x-axis combination. guide_axis_nested() renders the
-# combined "age:tenure:education:location" label as separate,
-# bracketed rows -- one row per variable -- the classic double
-# decker axis presentation.
-ggplot(sim_data_yor) +
+# Mosaic plot without faceting: age sits purely on the y-axis via an
+# explicit divider spec found by testing combinations (ggmosaic's
+# divider argument resolves axis placement through non-obvious
+# recursive geometry, not a simple per-variable rule). Gender is
+# mapped only via `fill`, never included in the x product, though
+# its categories still surface in the x-axis composite text (an
+# unavoidable ggmosaic quirk once 3+ variables are combined).
+# guide_axis_nested() renders the combined "gender:tenure:location"
+# x-axis label as separate, bracketed rows -- one row per variable.
+# Education is not included in this plot.
+# Recode gender/tenure/location to first-letter labels for this plot
+# only.
+sim_data5_yor_plot <- abbreviate_for_plot(
+  sim_data5_yor,
+  c("gender", "tenure", "location")
+)
+
+ggplot(sim_data5_yor_plot) +
   geom_mosaic(
-    aes(x = product(age, tenure, education, location), fill = gender),
-    divider = ddecker()
+    aes(x = product(age, tenure, location), fill = gender),
+    divider = c("hspine", "vspine", "hspine", "hspine")
   ) +
   scale_x_productlist(name = NULL) +
-  labs(fill = "Gender") +
+  labs(fill = "Gender", y = "Age Bracket") +
   theme_minimal() +
-  theme(axis.text.x = element_text(size = 6)) +
-  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
-
-# Same variables and same double decker style, viewed with tenure as
-# the final (fill) spine instead of gender.
-ggplot(sim_data_yor) +
-  geom_mosaic(
-    aes(x = product(age, gender, education, location), fill = tenure),
-    divider = ddecker()
-  ) +
-  scale_x_productlist(name = NULL) +
-  labs(fill = "Tenure") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(size = 6)) +
+  theme(axis.text.x = element_text(size = 7)) +
   guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))

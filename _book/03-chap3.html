@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,7 +41,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-cc2abd4156a33054de758d89b11b67cf.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-14ccfffea835cee4fc5859a5f393a16a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-524fbef8baf2e3dab69d0bed693833d7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -157,9 +157,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title"><b>Sections</b></h2>
    
   <ul class="collapse">
-  <li><a href="#research-question" id="toc-research-question" class="nav-link active" data-scroll-target="#research-question"><span class="header-section-number">3.1</span> Research Question</a></li>
+  <li><a href="#research-aims" id="toc-research-aims" class="nav-link active" data-scroll-target="#research-aims"><span class="header-section-number">3.1</span> Research Aims</a></li>
   <li><a href="#research-design" id="toc-research-design" class="nav-link" data-scroll-target="#research-design"><span class="header-section-number">3.2</span> Research Design</a></li>
-  <li><a href="#research-plan" id="toc-research-plan" class="nav-link" data-scroll-target="#research-plan"><span class="header-section-number">3.3</span> Research Plan</a></li>
   </ul>
 </nav>
     </div>
@@ -185,17 +184,46 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="research-question" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="research-question"><span class="header-section-number">3.1</span> Research Question</h2>
+<section id="research-aims" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="research-aims"><span class="header-section-number">3.1</span> Research Aims</h2>
 <p>What does it mean for a panel to be “good” at being representative and are we achieving this? - Are current methods and algorithms, like LexiMin, performing the best they could be? - How do unobserved/unfiltered traits affect response rates, and therefore panel composition and representativeness? - How can survey non-response and other sampling-level issues bias representativeness?</p>
 <p>nDF suggests 10x response to panel count; not generally feasibly, more often get 3x. How much of a difference does this make to burden and selection likelihood?</p>
 </section>
 <section id="research-design" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="research-design"><span class="header-section-number">3.2</span> Research Design</h2>
-</section>
-<section id="research-plan" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="research-plan"><span class="header-section-number">3.3</span> Research Plan</h2>
-<p>Plan</p>
+<ul>
+<li>Establish simulated population datasets to investigate impacts of certain data characteristics on algorithmic performance
+<ul>
+<li>Create datasets with different levels of skew and covariance between trait variables, to then assess whether this skew and covariance is preserved at panel level
+<ul>
+<li>Decide marginal proportions for every possible observation for each variable, summing to one across the variable</li>
+<li>Build joint probability arrays between trait observation combinations, to establish intersections
+<ul>
+<li>For the independent case:
+<ul>
+<li>Multiply marginal probabilities of each trait observation to obtain probability products</li>
+</ul></li>
+<li>For covaried cases:
+<ul>
+<li>Multiply marginal probabilities of each trait observation to start with the independent case</li>
+<li>Define an adjustment factor (“alpha”) to introduce adjustment for covariance between trait variables</li>
+<li>Multiply the probability products by between 0 and 1 times the adjustment factor to boost desired intersectional probabilities</li>
+<li>Rake and rescale the new covaried probabilities to ensure they sum to the originally defined marginal probabilities, as covariance is likely to have distorted the sums</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>To investigate how data characteristics affect algorithmic performance, simulated population datasets were constructed with varying degrees of skew and covariance among trait variables, enabling an assessment of whether these properties are preserved once a panel is selected from the population. For each variable, marginal proportions were first specified across all possible observation categories, with each set of proportions summing to one. A joint probability array was then constructed to represent the probability of every combination of trait observations. In the independent case, this array was obtained by taking the product of the marginal probabilities for each trait observation. In the covaried case, the same independent array served as a starting point, after which an adjustment factor (denoted <em>alpha</em>) was introduced to encode the desired covariance between trait variables. This factor was applied multiplicatively to selectively increase the probability of specific trait intersections, thereby introducing association beyond what independence would predict. Because this adjustment distorts the row, column, and slice totals of the array away from the originally specified marginal probabilities, the array was subsequently rescaled through iterative proportional fitting (raking), ensuring that each variable’s marginal distribution was restored to its intended value while preserving the covariance structure introduced by the adjustment. Additionally, a column with a randomly observed binary variable is included to test how algorithms handle latent variables at the sampling stage.</p>
+<p>Next, as is standard in practice, a random slice of defined proportions is taken from the population, to be used as the survey sample, from which responses are drawn. To assess whether this step can reduce representativeness, the process will also be held out in stratified form. This aims to diagnose whether random sampling is sufficient for producing a suitable pool to result in a representative panel by the end.</p>
+<ul>
+<li>Establish response rate matrices to dictate how likely certain types of individuals are to respond</li>
+<li>Build the independent case, where all are equally likely to respond</li>
+<li>Build case that covaries for specific observed traits</li>
+<li>Build case that covaries for latent trait that is not accounted for in demographic proportions, to see how an unobserved variable might affect response rates and therefore overall panel composition</li>
+</ul>
+<p>Following this, response rate matrices were established to dictate how likely individuals of each type were to respond to the survey once sampled, simulating the response process. In the independent case, every individual was assigned an equal probability of responding, regardless of their trait profile, providing a baseline against which the effects of differential response could be assessed. A second case introduced covariance between response likelihood and specific observed traits, allowing individuals with particular characteristics to respond at systematically higher or lower rates. A third case introduced covariance between response likelihood and a latent trait that was not accounted for in the demographic proportions used to construct the population, in order to examine how an unobserved variable might influence response rates, and consequently the composition of the resulting panel, even when it is invisible to the algorithms drawing the sample.</p>
+<p>Following</p>
 
 
 </section>
