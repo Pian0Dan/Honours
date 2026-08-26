@@ -134,39 +134,51 @@ chisq.test(table(sim_data5$age, sim_data5$tenure))
 chisq.test(table(sim_data5$gender, sim_data5$tenure))
 chisq.test(table(sim_data5$education, sim_data5$location))
 
-# Mosaic plot without faceting: age sits purely on the y-axis via an
-# explicit divider spec (divider = c("hspine", "vspine", "hspine",
-# "hspine") for the three x-product variables age/tenure/location
-# plus the implied gender-fill split) -- ggmosaic's divider argument
-# resolves axis placement through non-obvious recursive geometry
-# rather than a simple per-variable rule, so this exact sequence was
-# found by testing combinations rather than derived analytically.
-# Gender is mapped only via `fill`, never included in the x product,
-# though its categories still surface in the x-axis composite text
-# (an unavoidable ggmosaic quirk once 3+ variables are combined).
-# guide_axis_nested() renders the combined "gender:tenure:location"
-# x-axis label as separate, bracketed rows -- one row per variable.
-# Education is not included in this plot.
-# Recode gender/tenure/location to first-letter labels for this plot
-# only (e.g. Male -> M, Own -> O, Other -> Ot, Regional -> R, Remote
-# -> Re).
+# Mosaic plot with age purely on the y-axis (name = "age", 5 clean
+# levels, via the explicit divider spec below -- ggmosaic's divider
+# argument resolves axis placement through non-obvious recursive
+# geometry rather than a simple per-variable rule, so this exact
+# sequence was found by testing combinations rather than derived
+# analytically), tenure/education/location on the x-axis, and gender
+# used purely as fill colour. ggmosaic's own x tick labels would
+# normally be a "gender:tenure:education:location" composite (fill
+# variables are always folded into the axis text once 3+ variables
+# are combined); strip_mosaic_fill_labels() removes gender's segment
+# from that composite before guide_axis_nested() splits the
+# remainder into three clean, bracketed rows -- one per x-product
+# variable -- so gender's categories never appear as text, only as
+# colour and in the legend.
+# Recode tenure/education/location to first-letter labels for this
+# plot only (e.g. Own -> O, Other -> Ot, Regional -> R, Remote ->
+# Re), so the dense nested x-axis text stays readable. Gender is
+# left unabbreviated since it only ever appears via fill colour and
+# the legend, never as axis text.
 sim_data5_plot <- abbreviate_for_plot(
   sim_data5,
-  c("gender", "tenure", "location")
+  c("tenure", "education", "location")
 )
 
-ggplot(sim_data5_plot) +
+sim_data5_base <- ggplot(sim_data5_plot) +
   geom_mosaic(
-    aes(x = product(age, tenure, location), fill = gender),
-    divider = c("hspine", "vspine", "hspine", "hspine")
+    aes(x = product(age, tenure, education, location), fill = gender),
+    divider = c("hspine", "vspine", "hspine", "hspine", "hspine")
+  )
+sim_data5_labels <- strip_mosaic_fill_labels(sim_data5_base)
+
+sim_data5_base +
+  scale_x_productlist(
+    name = NULL,
+    breaks = sim_data5_labels$breaks,
+    labels = sim_data5_labels$labels
   ) +
-  scale_x_productlist(name = NULL) +
-  labs(fill = "Gender", y = "Age Bracket") +
+  scale_y_productlist(name = "Age Brackets") +
+  labs(fill = "Gender") +
   theme_minimal() +
-  theme(axis.text.x = element_text(size = 6)) +
+  theme(axis.text.x = element_text(size = 5)) +
   guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
 
-# --- Older, Male, Owner Skew w/ positive cov between age and ownership ---
+
+# --- Old, Educated, Homeowner Skew w/ positive cov between age and homeownership, positive cov between non-binary and renting, positive cov between age and education, and positive cov between education and homeownership ---
 
 set.seed(13)
 
@@ -183,245 +195,10 @@ education_levels <- c(
 location_levels <- c("Metro", "Regional", "Remote") # 3 levels
 
 # --- 2. Define marginal probability vectors (each must sum to 1) ---
-p_age <- c(0.05, 0.10, 0.20, 0.40, 0.25) # Heavy older skew
-p_gender <- c(0.60, 0.30, 0.10) # e.g. Male/Female/Non-binary (skew to male)
-p_tenure <- c(0.30, 0.60, 0.10) # Rent/Own/Other (owner skew)
-p_education <- c(0.20, 0.35, 0.30, 0.15) # No Qualification/Secondary/Bachelor/Postgraduate
-p_location <- c(0.60, 0.30, 0.10) # Metro/Regional/Remote
-
-stopifnot(
-  all.equal(sum(p_age), 1),
-  all.equal(sum(p_gender), 1),
-  all.equal(sum(p_tenure), 1),
-  all.equal(sum(p_education), 1),
-  all.equal(sum(p_location), 1)
-)
-
-# --- 3. Build a joint array with the desired association, then rake it
-# so every margin matches p_age / p_gender / p_tenure / p_education /
-# p_location exactly ---
-
-# 3a. Seed array: start from independence, then multiply in an
-# association pattern (older + Male + Own co-occur more than chance).
-# Education and location are not targeted by any adjustment, so they
-# stay independent of every other variable once raked.
-# `alpha` controls the strength of the association -- 0 reduces to
-# independence; larger values create stronger covariance.
-seed_array <- outer(
-  outer(outer(outer(p_age, p_gender), p_tenure), p_education),
-  p_location
-)
-dim(seed_array) <- c(
-  length(age_levels),
-  length(gender_levels),
-  length(tenure_levels),
-  length(education_levels),
-  length(location_levels)
-)
-
-alpha <- 1.2
-age_score <- seq(0, 1, length.out = length(age_levels)) # 0 (youngest) to 1 (oldest)
-male_idx <- which(gender_levels == "Male")
-own_idx <- which(tenure_levels == "Own")
-
-for (i in seq_along(age_levels)) {
-  seed_array[i, male_idx, , , ] <- seed_array[i, male_idx, , , ] *
-    exp(alpha * age_score[i])
-  seed_array[i, , own_idx, , ] <- seed_array[i, , own_idx, , ] *
-    exp(alpha * age_score[i])
-}
-
-# 3b. Iterative proportional fitting (raking): alternately rescale each
-# margin to match the target, until convergence. This preserves the
-# association pattern above while forcing the marginals to match
-# p_age, p_gender, p_tenure, p_education, p_location exactly.
-joint_array <- seed_array
-for (iter in seq_len(100)) {
-  joint_array <- sweep(joint_array, 1, p_age / apply(joint_array, 1, sum), "*")
-  joint_array <- sweep(
-    joint_array,
-    2,
-    p_gender / apply(joint_array, 2, sum),
-    "*"
-  )
-  joint_array <- sweep(
-    joint_array,
-    3,
-    p_tenure / apply(joint_array, 3, sum),
-    "*"
-  )
-  joint_array <- sweep(
-    joint_array,
-    4,
-    p_education / apply(joint_array, 4, sum),
-    "*"
-  )
-  joint_array <- sweep(
-    joint_array,
-    5,
-    p_location / apply(joint_array, 5, sum),
-    "*"
-  )
-}
-
-stopifnot(
-  isTRUE(all.equal(
-    apply(joint_array, 1, sum),
-    p_age,
-    tolerance = 1e-8,
-    check.attributes = FALSE
-  )),
-  isTRUE(all.equal(
-    apply(joint_array, 2, sum),
-    p_gender,
-    tolerance = 1e-8,
-    check.attributes = FALSE
-  )),
-  isTRUE(all.equal(
-    apply(joint_array, 3, sum),
-    p_tenure,
-    tolerance = 1e-8,
-    check.attributes = FALSE
-  )),
-  isTRUE(all.equal(
-    apply(joint_array, 4, sum),
-    p_education,
-    tolerance = 1e-8,
-    check.attributes = FALSE
-  )),
-  isTRUE(all.equal(
-    apply(joint_array, 5, sum),
-    p_location,
-    tolerance = 1e-8,
-    check.attributes = FALSE
-  )),
-  isTRUE(all.equal(sum(joint_array), 1))
-)
-
-dimnames(joint_array) <- list(
-  age = age_levels,
-  gender = gender_levels,
-  tenure = tenure_levels,
-  education = education_levels,
-  location = location_levels
-)
-
-# Flatten to a probability vector for rmultinom().
-# as.vector() on an N-D array varies dim 1 (age) fastest, then dim 2
-# (gender), dim 3 (tenure), dim 4 (education), then dim 5 (location)
-# slowest -- expand.grid() below uses the same ordering, so the two
-# align exactly.
-prob_vec <- as.vector(joint_array)
-stopifnot(all.equal(sum(prob_vec), 1))
-
-# --- 4. Draw cell counts with a single multinomial draw ---
-n_total <- 100000 # total number of simulated records
-cell_counts <- rmultinom(n = 1, size = n_total, prob = prob_vec)[, 1]
-
-# --- 5. Expand cell counts into an individual-level data frame ---
-combos <- expand.grid(
-  age = age_levels,
-  gender = gender_levels,
-  tenure = tenure_levels,
-  education = education_levels,
-  location = location_levels
-)
-combos$count <- cell_counts
-
-sim_data5_omo <- combos[
-  rep(seq_len(nrow(combos)), combos$count),
-  c("age", "gender", "tenure", "education", "location")
-]
-rownames(sim_data5_omo) <- NULL
-
-# Convert to factors with the intended level order
-sim_data5_omo$age <- factor(sim_data5_omo$age, levels = age_levels)
-sim_data5_omo$gender <- factor(sim_data5_omo$gender, levels = gender_levels)
-sim_data5_omo$tenure <- factor(sim_data5_omo$tenure, levels = tenure_levels)
-sim_data5_omo$education <- factor(
-  sim_data5_omo$education,
-  levels = education_levels
-)
-sim_data5_omo$location <- factor(
-  sim_data5_omo$location,
-  levels = location_levels
-)
-
-# Add a random binary variable, independent of every other column
-# (a simple Bernoulli(0.5) draw per row).
-sim_data5_omo$Latent <- rbinom(nrow(sim_data5_omo), 1, 0.5)
-
-# --- 6. Quick checks ---
-str(sim_data5_omo)
-prop.table(table(sim_data5_omo$age))
-prop.table(table(sim_data5_omo$gender))
-prop.table(table(sim_data5_omo$tenure))
-prop.table(table(sim_data5_omo$education))
-prop.table(table(sim_data5_omo$location))
-
-# Chi-square tests should now show significant association for the
-# pairs the seed array targeted (age-gender, age-tenure), since the
-# association was baked into joint_array before raking. Raking
-# preserves the marginals exactly but can also leak some association
-# into gender-tenure, since both were tied to age. Education and
-# location were never targeted, so they should remain unassociated
-# with everything else (aside from sampling noise).
-chisq.test(table(sim_data5_omo$age, sim_data5_omo$gender))
-chisq.test(table(sim_data5_omo$age, sim_data5_omo$tenure))
-chisq.test(table(sim_data5_omo$gender, sim_data5_omo$tenure))
-chisq.test(table(sim_data5_omo$education, sim_data5_omo$location))
-chisq.test(table(sim_data5_omo$age, sim_data5_omo$education))
-
-# Mosaic plot without faceting: age sits purely on the y-axis via an
-# explicit divider spec found by testing combinations (ggmosaic's
-# divider argument resolves axis placement through non-obvious
-# recursive geometry, not a simple per-variable rule). Gender is
-# mapped only via `fill`, never included in the x product, though
-# its categories still surface in the x-axis composite text (an
-# unavoidable ggmosaic quirk once 3+ variables are combined).
-# guide_axis_nested() renders the combined "gender:tenure:location"
-# x-axis label as separate, bracketed rows -- one row per variable.
-# Education is not included in this plot.
-# Recode gender/tenure/location to first-letter labels for this plot
-# only.
-sim_data5_omo_plot <- abbreviate_for_plot(
-  sim_data5_omo,
-  c("gender", "tenure", "location")
-)
-
-ggplot(sim_data5_omo_plot) +
-  geom_mosaic(
-    aes(x = product(age, tenure, location), fill = gender),
-    divider = c("hspine", "vspine", "hspine", "hspine")
-  ) +
-  scale_x_productlist(name = NULL) +
-  labs(fill = "Gender", y = "Age Bracket") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(size = 7)) +
-  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
-
-
-# --- Young, Renter Skew w/ negative cov between age and renting and positive cov between non-binary and renting ---
-
-set.seed(13)
-
-# --- 1. Define levels for each variable ---
-age_levels <- c("18-34", "35-44", "45-54", "55-64", "65+") # 5 levels
-gender_levels <- c("Male", "Female", "Non-binary") # 3 levels
-tenure_levels <- c("Rent", "Own", "Other") # 3 levels
-education_levels <- c(
-  "No Qualification",
-  "Secondary",
-  "Bachelor",
-  "Postgraduate"
-) # 4 levels
-location_levels <- c("Metro", "Regional", "Remote") # 3 levels
-
-# --- 2. Define marginal probability vectors (each must sum to 1) ---
-p_age <- c(0.30, 0.25, 0.20, 0.15, 0.10) # Heavy older skew
+p_age <- c(0.10, 0.15, 0.20, 0.25, 0.30) # Heavy older skew
 p_gender <- c(0.45, 0.45, 0.10) # e.g. Male/Female/Non-binary (skew to Non-binary)
-p_tenure <- c(0.60, 0.30, 0.10) # Rent/Own/Other (renter skew)
-p_education <- c(0.20, 0.35, 0.30, 0.15) # No Qualification/Secondary/Bachelor/Postgraduate
+p_tenure <- c(0.30, 0.60, 0.10) # Rent/Own/Other (homeowner skew)
+p_education <- c(0.10, 0.20, 0.30, 0.40) # No Qualification/Secondary/Bachelor/Postgraduate (educated skew)
 p_location <- c(0.60, 0.30, 0.10) # Metro/Regional/Remote
 
 stopifnot(
@@ -438,12 +215,20 @@ stopifnot(
 
 # 3a. Seed array: start from independence, then multiply in an
 # association pattern with:
-#  - NEGATIVE covariance between age and renting (younger people rent
-#    more than chance; older people rent less than chance)
+#  - POSITIVE covariance between age and homeownership (older people
+#    own more than chance; younger people own less than chance)
 #  - POSITIVE covariance between "Non-binary" gender and renting (renters
 #    skew toward the "Non-binary" gender category)
-# Education and location are not targeted by any adjustment, so they
-# stay independent of every other variable once raked.
+#  - POSITIVE covariance between age and education (older people skew
+#    toward higher education levels than chance), implemented as a
+#    linear-by-linear ordinal association: the boost applied to each
+#    (age, education) combination scales with the product of their
+#    ordinal scores, so higher age and higher education reinforce
+#    each other smoothly
+#  - POSITIVE covariance between education and homeownership (people
+#    with higher education levels own more than chance)
+# Location is not targeted by any adjustment, so it stays independent
+# of every other variable once raked.
 # `alpha` controls the strength of each association -- 0 reduces to
 # independence; larger values create stronger covariance.
 seed_array <- outer(
@@ -458,16 +243,21 @@ dim(seed_array) <- c(
   length(location_levels)
 )
 
-alpha_age_rent <- 1.2
+alpha_age_own <- 1.2
 alpha_gender_rent <- 1.2
+alpha_age_education <- 1.2
+alpha_education_own <- 1.2
 age_score <- seq(0, 1, length.out = length(age_levels)) # 0 (youngest) to 1 (oldest)
+education_score <- seq(0, 1, length.out = length(education_levels)) # 0 (least) to 1 (most educated)
 nonbinary_idx <- which(gender_levels == "Non-binary")
+own_idx <- which(tenure_levels == "Own")
 rent_idx <- which(tenure_levels == "Rent")
 
 for (i in seq_along(age_levels)) {
-  # Older ages rent less -> negative covariance between age and renting
-  seed_array[i, , rent_idx, , ] <- seed_array[i, , rent_idx, , ] *
-    exp(-alpha_age_rent * age_score[i])
+  # Older ages own more -> positive covariance between age and
+  # homeownership
+  seed_array[i, , own_idx, , ] <- seed_array[i, , own_idx, , ] *
+    exp(alpha_age_own * age_score[i])
 }
 
 # "Non-binary" gender rents more -> positive covariance between
@@ -478,6 +268,24 @@ seed_array[, nonbinary_idx, rent_idx, , ] <- seed_array[,
   ,
 ] *
   exp(alpha_gender_rent)
+
+for (i in seq_along(age_levels)) {
+  for (j in seq_along(education_levels)) {
+    # Older ages skew toward higher education -> positive covariance
+    # between age and education (score product keeps the boost
+    # ordinal, rather than targeting a single category of either
+    # variable)
+    seed_array[i, , , j, ] <- seed_array[i, , , j, ] *
+      exp(alpha_age_education * age_score[i] * education_score[j])
+  }
+}
+
+for (j in seq_along(education_levels)) {
+  # Higher education levels own more -> positive covariance between
+  # education and homeownership
+  seed_array[,, own_idx, j, ] <- seed_array[,, own_idx, j, ] *
+    exp(alpha_education_own * education_score[j])
+}
 
 # 3b. Iterative proportional fitting (raking): alternately rescale each
 # margin to match the target, until convergence. This preserves the
@@ -576,75 +384,85 @@ combos <- expand.grid(
 )
 combos$count <- cell_counts
 
-sim_data5_yor <- combos[
+sim_data5_oeh <- combos[
   rep(seq_len(nrow(combos)), combos$count),
   c("age", "gender", "tenure", "education", "location")
 ]
-rownames(sim_data5_yor) <- NULL
+rownames(sim_data5_oeh) <- NULL
 
 # Convert to factors with the intended level order
-sim_data5_yor$age <- factor(sim_data5_yor$age, levels = age_levels)
-sim_data5_yor$gender <- factor(sim_data5_yor$gender, levels = gender_levels)
-sim_data5_yor$tenure <- factor(sim_data5_yor$tenure, levels = tenure_levels)
-sim_data5_yor$education <- factor(
-  sim_data5_yor$education,
+sim_data5_oeh$age <- factor(sim_data5_oeh$age, levels = age_levels)
+sim_data5_oeh$gender <- factor(sim_data5_oeh$gender, levels = gender_levels)
+sim_data5_oeh$tenure <- factor(sim_data5_oeh$tenure, levels = tenure_levels)
+sim_data5_oeh$education <- factor(
+  sim_data5_oeh$education,
   levels = education_levels
 )
-sim_data5_yor$location <- factor(
-  sim_data5_yor$location,
+sim_data5_oeh$location <- factor(
+  sim_data5_oeh$location,
   levels = location_levels
 )
 
 # Add a random binary variable, independent of every other column
 # (a simple Bernoulli(0.5) draw per row).
-sim_data5_yor$Latent <- rbinom(nrow(sim_data5_yor), 1, 0.5)
+sim_data5_oeh$Latent <- rbinom(nrow(sim_data5_oeh), 1, 0.5)
 
 # --- 6. Quick checks ---
-str(sim_data5_yor)
-prop.table(table(sim_data5_yor$age))
-prop.table(table(sim_data5_yor$gender))
-prop.table(table(sim_data5_yor$tenure))
-prop.table(table(sim_data5_yor$education))
-prop.table(table(sim_data5_yor$location))
+str(sim_data5_oeh)
+prop.table(table(sim_data5_oeh$age))
+prop.table(table(sim_data5_oeh$gender))
+prop.table(table(sim_data5_oeh$tenure))
+prop.table(table(sim_data5_oeh$education))
+prop.table(table(sim_data5_oeh$location))
 
 # Chi-square tests should now show significant association for the
-# pairs the seed array targeted directly (age-tenure: negative, via
-# renting more often at younger ages; gender-tenure: positive, via
-# "Non-binary" renting more often). Raking preserves the marginals exactly
-# but can also leak some association into age-gender, since both are
-# tied to tenure. Education and location were never targeted, so they
-# should remain unassociated with everything else (aside from
-# sampling noise).
-chisq.test(table(sim_data5_yor$age, sim_data5_yor$gender))
-chisq.test(table(sim_data5_yor$age, sim_data5_yor$tenure))
-chisq.test(table(sim_data5_yor$gender, sim_data5_yor$tenure))
-chisq.test(table(sim_data5_yor$education, sim_data5_yor$location))
-chisq.test(table(sim_data5_yor$age, sim_data5_yor$education))
+# pairs the seed array targeted directly: age-tenure (positive, via
+# homeownership increasing with age), gender-tenure (positive, via
+# "Non-binary" renting more often), age-education (positive, via
+# higher education levels becoming more likely with age), and
+# tenure-education (positive, via homeownership increasing with
+# education). Raking preserves the marginals exactly but can also
+# leak association into pairs that were not directly targeted (e.g.
+# age-gender, since both are tied to tenure). Location was never
+# targeted, so it should remain unassociated with everything else
+# (aside from sampling noise).
+chisq.test(table(sim_data5_oeh$age, sim_data5_oeh$gender))
+chisq.test(table(sim_data5_oeh$age, sim_data5_oeh$tenure))
+chisq.test(table(sim_data5_oeh$gender, sim_data5_oeh$tenure))
+chisq.test(table(sim_data5_oeh$age, sim_data5_oeh$education))
+chisq.test(table(sim_data5_oeh$tenure, sim_data5_oeh$education))
+chisq.test(table(sim_data5_oeh$education, sim_data5_oeh$location))
 
-# Mosaic plot without faceting: age sits purely on the y-axis via an
-# explicit divider spec found by testing combinations (ggmosaic's
-# divider argument resolves axis placement through non-obvious
-# recursive geometry, not a simple per-variable rule). Gender is
-# mapped only via `fill`, never included in the x product, though
-# its categories still surface in the x-axis composite text (an
-# unavoidable ggmosaic quirk once 3+ variables are combined).
-# guide_axis_nested() renders the combined "gender:tenure:location"
-# x-axis label as separate, bracketed rows -- one row per variable.
-# Education is not included in this plot.
-# Recode gender/tenure/location to first-letter labels for this plot
-# only.
-sim_data5_yor_plot <- abbreviate_for_plot(
-  sim_data5_yor,
-  c("gender", "tenure", "location")
+# Mosaic plot with age purely on the y-axis, tenure/education/
+# location on the x-axis, and gender used purely as fill colour (see
+# the note on the sim_data5 plot above for why
+# strip_mosaic_fill_labels() is used instead of ggmosaic's automatic
+# tick labels -- it removes gender's segment from the composite
+# "gender:tenure:education:location" label before guide_axis_nested()
+# splits the remainder into three clean, bracketed rows).
+# Recode tenure/education/location to first-letter labels for this
+# plot only. Gender is left unabbreviated (see note on the sim_data5
+# plot above).
+sim_data5_oeh_plot <- abbreviate_for_plot(
+  sim_data5_oeh,
+  c("tenure", "education", "location")
 )
 
-ggplot(sim_data5_yor_plot) +
+sim_data5_oeh_base <- ggplot(sim_data5_oeh_plot) +
   geom_mosaic(
-    aes(x = product(age, tenure, location), fill = gender),
-    divider = c("hspine", "vspine", "hspine", "hspine")
+    aes(x = product(age, tenure, education, location), fill = gender),
+    divider = c("hspine", "vspine", "hspine", "hspine", "hspine")
+  )
+sim_data5_oeh_labels <- strip_mosaic_fill_labels(sim_data5_oeh_base)
+
+sim_data5_oeh_base +
+  scale_x_productlist(
+    name = NULL,
+    breaks = sim_data5_oeh_labels$breaks,
+    labels = sim_data5_oeh_labels$labels
   ) +
-  scale_x_productlist(name = NULL) +
-  labs(fill = "Gender", y = "Age Bracket") +
+  scale_y_productlist(name = "Age Brackets") +
+  labs(fill = "Gender") +
   theme_minimal() +
-  theme(axis.text.x = element_text(size = 7)) +
+  theme(axis.text.x = element_text(size = 5)) +
   guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))

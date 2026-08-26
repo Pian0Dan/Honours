@@ -16,8 +16,8 @@ age_levels <- c("18-34", "35-44", "45-54", "55-64", "65+") # 5 levels
 tenure_levels <- c("Rent", "Own", "Other") # 3 levels
 
 # --- 2. Define marginal probability vectors (each must sum to 1) ---
-p_age <- c(0.20, 0.20, 0.20, 0.20, 0.20) # uniform across age groups
-p_tenure <- c(0.30, 0.40, 0.30) # Rent/Own/Other
+p_age <- c(0.15, 0.20, 0.25, 0.25, 0.15) # uniform across age groups
+p_tenure <- c(0.30, 0.50, 0.20) # Rent/Own/Other
 
 stopifnot(
   all.equal(sum(p_age), 1),
@@ -63,6 +63,10 @@ rownames(sim_data2) <- NULL
 sim_data2$age <- factor(sim_data2$age, levels = age_levels)
 sim_data2$tenure <- factor(sim_data2$tenure, levels = tenure_levels)
 
+# Add a random binary variable, independent of every other column
+# (a simple Bernoulli(0.5) draw per row). Not included in any plot.
+sim_data2$Latent <- rbinom(nrow(sim_data2), 1, 0.5)
+
 # --- 6. Quick checks ---
 str(sim_data2)
 prop.table(table(sim_data2$age))
@@ -91,8 +95,8 @@ age_levels <- c("18-34", "35-44", "45-54", "55-64", "65+") # 5 levels
 tenure_levels <- c("Rent", "Own", "Other") # 3 levels
 
 # --- 2. Define marginal probability vectors (each must sum to 1) ---
-p_age <- c(0.20, 0.20, 0.20, 0.20, 0.20) # uniform across age groups
-p_tenure <- c(0.30, 0.40, 0.30) # Rent/Own/Other
+p_age <- c(0.15, 0.20, 0.25, 0.25, 0.15) # uniform across age groups
+p_tenure <- c(0.30, 0.50, 0.20) # Rent/Own/Other
 
 stopifnot(
   all.equal(sum(p_age), 1),
@@ -180,6 +184,10 @@ rownames(sim_data2_cov) <- NULL
 # Convert to factors with the intended level order
 sim_data2_cov$age <- factor(sim_data2_cov$age, levels = age_levels)
 sim_data2_cov$tenure <- factor(sim_data2_cov$tenure, levels = tenure_levels)
+
+# Add a random binary variable, independent of every other column
+# (a simple Bernoulli(0.5) draw per row). Not included in any plot.
+sim_data2_cov$Latent <- rbinom(nrow(sim_data2_cov), 1, 0.5)
 
 # --- 6. Quick checks ---
 str(sim_data2_cov)

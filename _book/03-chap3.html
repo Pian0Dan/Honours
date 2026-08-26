@@ -74,6 +74,49 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather|Source Code Pro" rel="stylesheet">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -214,7 +257,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul></li>
 </ul>
-<p>To investigate how data characteristics affect algorithmic performance, simulated population datasets were constructed with varying degrees of skew and covariance among trait variables, enabling an assessment of whether these properties are preserved once a panel is selected from the population. For each variable, marginal proportions were first specified across all possible observation categories, with each set of proportions summing to one. A joint probability array was then constructed to represent the probability of every combination of trait observations. In the independent case, this array was obtained by taking the product of the marginal probabilities for each trait observation. In the covaried case, the same independent array served as a starting point, after which an adjustment factor (denoted <em>alpha</em>) was introduced to encode the desired covariance between trait variables. This factor was applied multiplicatively to selectively increase the probability of specific trait intersections, thereby introducing association beyond what independence would predict. Because this adjustment distorts the row, column, and slice totals of the array away from the originally specified marginal probabilities, the array was subsequently rescaled through iterative proportional fitting (raking), ensuring that each variable’s marginal distribution was restored to its intended value while preserving the covariance structure introduced by the adjustment. Additionally, a column with a randomly observed binary variable is included to test how algorithms handle latent variables at the sampling stage.</p>
+<p>To investigate how data characteristics affect algorithmic performance, simulated population datasets were constructed with varying degrees of skew and association among trait variables, enabling an assessment of whether these properties are preserved once a panel is selected from the population. For each variable, marginal proportions were first specified across all possible observation categories, with each set of proportions summing to one. A joint probability array was then constructed to represent the probability of every combination of trait observations. In the independent case, this array was obtained by taking the product of the marginal probabilities for each trait observation. In the associated case, the same independent array served as a starting point, after which an adjustment factor (denoted <em>alpha</em>) was introduced to encode the desired association between trait variables. This factor was applied multiplicatively to selectively increase the probability of specific trait intersections, thereby introducing association beyond what independence would predict. Because this adjustment distorts the row, column, and slice totals of the array away from the originally specified marginal probabilities, the array was subsequently rescaled through iterative proportional fitting (raking), ensuring that each variable’s marginal distribution was restored to its intended value while preserving the association structure introduced by the adjustment. Additionally, a column with a randomly observed binary variable is included to test how algorithms handle latent variables at the sampling stage.</p>
 <p>Next, as is standard in practice, a random slice of defined proportions is taken from the population, to be used as the survey sample, from which responses are drawn. To assess whether this step can reduce representativeness, the process will also be held out in stratified form. This aims to diagnose whether random sampling is sufficient for producing a suitable pool to result in a representative panel by the end.</p>
 <ul>
 <li>Establish response rate matrices to dictate how likely certain types of individuals are to respond</li>
@@ -223,7 +266,64 @@ ul.task-list li input[type="checkbox"] {
 <li>Build case that covaries for latent trait that is not accounted for in demographic proportions, to see how an unobserved variable might affect response rates and therefore overall panel composition</li>
 </ul>
 <p>Following this, response rate matrices were established to dictate how likely individuals of each type were to respond to the survey once sampled, simulating the response process. In the independent case, every individual was assigned an equal probability of responding, regardless of their trait profile, providing a baseline against which the effects of differential response could be assessed. A second case introduced covariance between response likelihood and specific observed traits, allowing individuals with particular characteristics to respond at systematically higher or lower rates. A third case introduced covariance between response likelihood and a latent trait that was not accounted for in the demographic proportions used to construct the population, in order to examine how an unobserved variable might influence response rates, and consequently the composition of the resulting panel, even when it is invisible to the algorithms drawing the sample.</p>
-<p>Following</p>
+<hr>
+<p>This thesis hoped to investigate the impacts of data complexity and construction on algorithmic performance. To test this, populations of varying intersectional complexity (three and five categories) and varying associations (independent and associated) were simulated. Categories used were inspired by demographic variables often used for sortition in industry. In the three categorical variable case, these were age (taking values of 18-34, 35-44, 45-54, 55-64, 65+), gender (taking values of male, female, non-binary) and tenure (taking values of rent, own, other). The five variable case took the initial three variables from the previous case, but then also added the variables education (no qualification, secondary, bachelor, postgraduate) and location (metro, regional, remote). The combinations of these variables were then used to produce the simulated datasets for the panel sampling process.</p>
+<p>To illustrate the general procedure concretely at a minimal scale, a simplified two-variable example was constructed using only age and tenure. Age is denoted <span class="math inline">A</span>, taking one of <span class="math inline">L_A = 5</span> ordered levels <span class="math inline">a \in \{1, \dots, 5\}</span> (18-34 through 65+), as previously stated, and tenure is denoted <span class="math inline">T</span>, taking one of <span class="math inline">L_T = 3</span> levels <span class="math inline">t \in \{1, \dots, 3\}</span> (Rent, Own, Other). Marginal probability vectors were first defined for each variable,</p>
+<p><span class="math display">
+\mathbf{p}^A = \left(p^A_1, \dots, p^A_5\right), \qquad \mathbf{p}^T = \left(p^T_1, p^T_2, p^T_3\right), \qquad \sum_{a=1}^{5} p^A_a = 1, \qquad \sum_{t=1}^{3} p^T_t = 1,
+</span></p>
+<p>with <span class="math inline">\mathbf p^A = (0.15, 0.20, 0.25, 0.25, 0.15)</span> specified as a mild skew toward the upper-middle age brackets, and <span class="math inline">\mathbf p^T = (0.30, 0.50, 0.20)</span> specified with a moderate skew toward home ownership. The same marginal targets <span class="math inline">\mathbf p^A</span> and <span class="math inline">\mathbf p^T</span> are used for both the independent and associated populations described below, so that any difference between them is attributable solely to the association introduced, rather than to a difference in either variable’s marginal distribution.</p>
+<p>An independent population (<code>sim_data2</code>) was generated by taking the outer product of these two marginals to form a joint probability array,</p>
+<p><span class="math display">
+P^{(0)}(a, t) \;=\; p^A_a \, p^T_t, \qquad \mathbf{P}^{(0)} \;=\; \mathbf{p}^A \mathbf{p}^{T\top} \;\in\; \mathbb{R}^{5 \times 3},
+</span></p>
+<p>a <span class="math inline">5 \times 3</span> matrix whose row sums equal <span class="math inline">\mathbf p^A</span> and column sums equal <span class="math inline">\mathbf p^T</span> by construction, so that <span class="math inline">A \perp T</span>. This array was flattened into a probability vector and cell counts were drawn from a single multinomial trial before being expanded into individual-level records, as described in full below.</p>
+<p>A second, associated population (<code>sim_data2_cov</code>) was then generated using the same marginal targets, but with a negative association deliberately introduced between age and renting. This required an ordinal score for age,</p>
+<p><span class="math display">
+s(a) = \frac{a - 1}{5 - 1} \in [0, 1],
+</span></p>
+<p>running from <span class="math inline">0</span> for the youngest bracket to <span class="math inline">1</span> for the oldest, which was used to seed the independent array <span class="math inline">\mathbf P^{(0)}</span> with an exponential adjustment factor targeting only the “Rent” level of tenure,</p>
+<p><span class="math display">
+\tilde{P}(a, t) \;=\; P^{(0)}(a, t) \cdot \exp\!\Big(-\alpha \, s(a) \cdot \mathbb{1}[t = \text{Rent}]\Big), \qquad \alpha = 1.2,
+</span></p>
+<p>so that the probability of renting is scaled down by a factor of <span class="math inline">e^{-\alpha s(a)}</span> that grows with age, while the probability of owning or other tenure is left unchanged. Because this adjustment is applied only to the “Rent” column, the row and column sums of <span class="math inline">\tilde{\mathbf P}</span> no longer equal <span class="math inline">\mathbf p^A</span> and <span class="math inline">\mathbf p^T</span>, so the array was subsequently rescaled through iterative proportional fitting (raking) so that the age and tenure marginals were restored exactly to their specified targets. Initialising <span class="math inline">P^{(0)}_{\text{rake}} = \tilde P</span>, each raking iteration <span class="math inline">r = 0, 1, 2, \dots</span> performs two rescaling passes,</p>
+<p><span class="math display">
+P^{(r + 1/2)}(a, t) \;=\; P^{(r)}_{\text{rake}}(a, t) \cdot \frac{p^A_a}{\sum_{t'} P^{(r)}_{\text{rake}}(a, t')}, \qquad
+P^{(r+1)}_{\text{rake}}(a, t) \;=\; P^{(r+1/2)}(a, t) \cdot \frac{p^T_t}{\sum_{a'} P^{(r+1/2)}(a', t)},
+</span></p>
+<p>first rescaling every row to sum to <span class="math inline">p^A_a</span>, then every column to sum to <span class="math inline">p^T_t</span>. Repeating this pair of passes for <span class="math inline">R = 100</span> iterations (well past convergence for a <span class="math inline">5 \times 3</span> table) yields the raked array <span class="math inline">P^\star</span>, satisfying</p>
+<p><span class="math display">
+\sum_{t} P^\star(a, t) = p^A_a \; \text{ for all } a, \qquad \sum_{a} P^\star(a, t) = p^T_t \; \text{ for all } t,
+</span></p>
+<p>to numerical tolerance, while retaining the negative age-renting association introduced by the exponential seeding step – this is the sense in which raking restores the specified marginals while preserving the association structure introduced by the adjustment.</p>
+<p>Both populations were sampled the same way, differing only in which array was used. The relevant array (<span class="math inline">\mathbf P^{(0)}</span> for the independent case, or the raked <span class="math inline">P^\star</span> for the associated case) was flattened into a probability vector <span class="math inline">\mathbf p^\star \in \mathbb R^{15}</span> (age varying fastest), and cell counts were drawn from a single multinomial trial,</p>
+<p><span class="math display">
+(n_1, \dots, n_{15}) \sim \text{Multinomial}\!\left(n_{\text{total}}, \, \mathbf p^\star\right), \qquad n_{\text{total}} = 100{,}000,
+</span></p>
+<p>with each cell <span class="math inline">j</span>, corresponding to one <span class="math inline">(a, t)</span> combination, expanded into <span class="math inline">n_j</span> individual-level records sharing that age and tenure. Comparing the two resulting populations demonstrates the core logic of the simulation framework in its simplest form: a chi-squared test of association between age and tenure is non-significant in the independent population but highly significant in the associated population, with the conditional probability of renting falling steadily from around 44% among 18-34 year olds to around 18% among those aged 65 and over, even though both populations share identical marginal distributions for age and tenure individually. This confirms that the seeding-and-raking procedure successfully introduces a targeted association between variables without disturbing their overall marginal proportions. This will allow for testing of the algorithm’s ability to preserve sample intersection structures, beyond a purely marginal level.</p>
+<p>Both populations also include an additional binary variable, generated independently of age and tenure for each simulated individual <span class="math inline">i</span> via</p>
+<p><span class="math display">
+Z_i \;\overset{\text{i.i.d.}}{\sim}\; \text{Bernoulli}(0.5),
+</span></p>
+<p>drawn after the population has been expanded to individual level, so that <span class="math inline">Z_i</span> is uncorrelated with age and tenure by construction. This variable is deliberately excluded from all visualisations, representing an unobserved (latent) trait whose presence is known to the simulation but not exposed to any downstream algorithm. This was used to test whether unobserved traits can bias panel composition even when they play no role in the population’s observed demographic structure.</p>
+<p>Next, as is standard in practice, a random slice of defined proportions (in this case 10%) is taken from the population, to be used as the survey sample, from which responses are drawn. Concretely, from a population of <span class="math inline">n_{\text{total}}</span> individuals, a survey sample <span class="math inline">\mathcal{S}</span> of size <span class="math inline">n_{\mathcal S} = \lfloor 0.10 \, n_{\text{total}} \rceil</span> (so <span class="math inline">n_{\mathcal S} = 10{,}000</span> for the two-variable example, drawn uniformly at random without replacement) is taken as the pool of individuals invited to respond, before any response behaviour is simulated. Whether each invited individual <span class="math inline">i \in \mathcal S</span> actually responds is then modelled as an independent Bernoulli trial,</p>
+<p><span class="math display">
+R_i \;\overset{\text{ind.}}{\sim}\; \text{Bernoulli}(\pi_i),
+</span></p>
+<p>where the response probability <span class="math inline">\pi_i</span> is assigned according to one of three cases, mirroring the independent, observed-trait, and latent-trait cases described above for the population itself.</p>
+<p>In the <em>independent</em> case, every invited individual is equally likely to respond regardless of their trait profile,</p>
+<p><span class="math display">
+\pi_i = \pi_0, \qquad \pi_0 = 0.30,
+</span></p>
+<p>providing a baseline against which the effects of differential response can be compared – a chi-squared test confirms no significant association between <span class="math inline">A</span> and <span class="math inline">R</span> under this case, as expected. In the <em>age-covaried</em> case, response likelihood increases with age, reusing the same ordinal score <span class="math inline">s(a)</span> defined above,</p>
+<p><span class="math display">
+\pi_i = \pi_1 \exp\!\big(\alpha_R \, s(a_i)\big), \qquad \pi_1 = 0.20, \quad \alpha_R = 1.0,
+</span></p>
+<p>so that the response rate rises from around 20% among the youngest bracket to over 50% among the oldest, and the association between <span class="math inline">A</span> and <span class="math inline">R</span> is now highly significant. In the <em>latent-covaried</em> case, response likelihood instead increases with the unobserved trait <span class="math inline">Z_i</span> rather than with any observed trait,</p>
+<p><span class="math display">
+\pi_i = \pi_1 \exp\!\big(\alpha_Z \, Z_i\big), \qquad \pi_1 = 0.20, \quad \alpha_Z = 0.8,
+</span></p>
+<p>giving a response rate of approximately 20% for <span class="math inline">Z_i = 0</span> and 44% for <span class="math inline">Z_i = 1</span>. Critically, while the association between <span class="math inline">Z</span> and <span class="math inline">R</span> is highly significant under this case, the association between <span class="math inline">A</span> (or <span class="math inline">T</span>) and <span class="math inline">R</span> remains non-significant, exactly as it was in the independent case. This is the central diagnostic point of the latent-covaried case: an unobserved trait can systematically bias who responds to a survey, and therefore who is available for panel selection, without ever manifesting as a detectable association in any of the demographic variables an algorithm can actually observe.</p>
 
 
 </section>

@@ -44,7 +44,7 @@ The contribution in @sec-litreview of this thesis was presented in the Internati
 
 #### Reproducibility statement
 
-This thesis is written using Quarto with renv [@renv] to create a reproducible environment. All materials (including the data sets and source files) required to reproduce this document can be found at the Github repository [`github.com/SusanSu/thesis`](https://github.com/SusanSu/thesis).
+This thesis is written using Quarto with renv [@renv] to create a reproducible environment. All materials (including the data sets and source files) required to reproduce this document can be found at the Github repository [`github.com/SusanSu/thesis`](https://github.com/SusanSu/thesis). Analysis and simulation were carried out in R [@R-base], making use of the ggplot2 [@R-ggplot2], ggmosaic [@R-ggmosaic], legendry [@R-legendry], dplyr [@R-dplyr], tidyr [@R-tidyr], tidyverse [@R-tidyverse], knitr [@R-knitr], kableExtra [@R-kableExtra], and shiny [@R-shiny] packages.
 
 This work is licensed under a [Creative Commons  Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
 

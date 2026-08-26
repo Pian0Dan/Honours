@@ -193,3 +193,17 @@ format: gfm
 
 - Add explanations of motivations, distributions, and combinations of interest
 - Explain graphics used, show summary plots to visualise the population used
+
+## Week 4
+
+### Plan
+
+### Discussion
+
+
+
+## Week 5
+
+### Plan
+
+### Discussion
