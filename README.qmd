@@ -207,3 +207,50 @@ format: gfm
 ### Plan
 
 ### Discussion
+
+- Simple random seems to have preserved intersections sufficiently pre-survey response
+
+- Decide on metric to assess representativeness when algorithm is run; do we just take the top "n" intersection types by proportion of population and then assess whether they have been captured?
+    - How do we decide on this "n"?
+    - What "n" is reasonable before it becomes infeasible?
+    - Is there a visual way to highlight these intersections, or is tabulation best?
+    - What is our tolerance for dropping minority intersections?
+
+    - Chi-square to assess whether association has been maintained
+    - Minorities and some intersections will not be represented; this should be flagged in some way--ultimately still up to practitioner to assess
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Week 6
+
+### Plan
+
+- Change notations to subscript (p_A1 etc.)
+
+- Build data structure for each of populations:
+    - ID
+    - Age
+    - Tenure
+    - Included? (whether in slice or not)
+    - Responded1 (equal chance)
+    - Responded2 (associated)
+
+- Represent response rates through double-decker:
+    - Age and tenure as x-axis labels
+    - Response as colour
+
+- Signpost simulation design
+
+- Create flowchart to demonstrate the sortition process more clearly?
+    - Explain that through this simulation and the different cases, we are effectively adding noise and assessing the impact this has
+    - Goal of framework and evaluation is to check whether the output is at the very least not worse than its most direct input

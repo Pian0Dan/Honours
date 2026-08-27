@@ -297,3 +297,60 @@ ggplot(age_composition_long, aes(x = "", y = Freq, fill = age)) +
     axis.ticks = element_blank(),
     panel.grid = element_blank()
   )
+
+# --- 8. Mosaic plots of respondents under each sampling assumption
+# ---
+# For each response-rate case, restrict to just the individuals who
+# responded, and build the exact same age x tenure (fill = gender)
+# mosaic plot used for the populations themselves in simdata3.R,
+# including mosaic_axis_breaks() so only "Rent"/"Own"/"Other" ever
+# appears as x-axis text, with gender conveyed solely via fill
+# colour and the legend.
+plot_respondents <- function(data, responded_col, title) {
+  responded <- data[data[[responded_col]] == 1, ]
+  base <- ggplot(responded) +
+    geom_mosaic(aes(x = product(age, tenure), fill = gender))
+  breaks <- mosaic_axis_breaks(base, "tenure")
+
+  base +
+    scale_x_productlist(
+      name = "Tenure",
+      breaks = breaks$x,
+      labels = breaks$label
+    ) +
+    scale_y_productlist(name = "Age Bracket") +
+    labs(fill = "Gender", title = title) +
+    theme_minimal()
+}
+
+plot_respondents(
+  sim_data_sample,
+  "responded_indep",
+  "Respondents (independent case): sim_data_sample"
+)
+plot_respondents(
+  sim_data_sample,
+  "responded_age",
+  "Respondents (age-covaried case): sim_data_sample"
+)
+plot_respondents(
+  sim_data_sample,
+  "responded_latent",
+  "Respondents (latent-covaried case): sim_data_sample"
+)
+
+plot_respondents(
+  sim_data_oho_sample,
+  "responded_indep",
+  "Respondents (independent case): sim_data_oho_sample"
+)
+plot_respondents(
+  sim_data_oho_sample,
+  "responded_age",
+  "Respondents (age-covaried case): sim_data_oho_sample"
+)
+plot_respondents(
+  sim_data_oho_sample,
+  "responded_latent",
+  "Respondents (latent-covaried case): sim_data_oho_sample"
+)

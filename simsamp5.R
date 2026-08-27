@@ -344,3 +344,72 @@ ggplot(age_composition_long, aes(x = "", y = Freq, fill = age)) +
     axis.ticks = element_blank(),
     panel.grid = element_blank()
   )
+
+# --- 8. Mosaic plots of respondents under each sampling assumption
+# ---
+# For each response-rate case, restrict to just the individuals who
+# responded, and build the exact same five-variable mosaic plot used
+# for the populations themselves in simdata5.R: age purely on the
+# y-axis (via the same explicit divider spec), tenure/education/
+# location nested on the x-axis, and gender used purely as fill
+# colour. strip_mosaic_fill_labels() removes gender's segment from
+# the composite "gender:tenure:education:location" label before
+# guide_axis_nested() splits the remainder into three clean,
+# bracketed rows.
+plot_respondents <- function(data, responded_col, title) {
+  responded <- data[data[[responded_col]] == 1, ]
+  responded_plot <- abbreviate_for_plot(
+    responded,
+    c("tenure", "education", "location")
+  )
+  base <- ggplot(responded_plot) +
+    geom_mosaic(
+      aes(x = product(age, tenure, education, location), fill = gender),
+      divider = c("hspine", "vspine", "hspine", "hspine", "hspine")
+    )
+  labels <- strip_mosaic_fill_labels(base)
+
+  base +
+    scale_x_productlist(
+      name = NULL,
+      breaks = labels$breaks,
+      labels = labels$labels
+    ) +
+    scale_y_productlist(name = "Age Brackets") +
+    labs(fill = "Gender", title = title) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(size = 5)) +
+    guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
+}
+
+plot_respondents(
+  sim_data5_sample,
+  "responded_indep",
+  "Respondents (independent case): sim_data5_sample"
+)
+plot_respondents(
+  sim_data5_sample,
+  "responded_age",
+  "Respondents (age-covaried case): sim_data5_sample"
+)
+plot_respondents(
+  sim_data5_sample,
+  "responded_latent",
+  "Respondents (latent-covaried case): sim_data5_sample"
+)
+
+plot_respondents(
+  sim_data5_oeh_sample,
+  "responded_indep",
+  "Respondents (independent case): sim_data5_oeh_sample"
+)
+plot_respondents(
+  sim_data5_oeh_sample,
+  "responded_age",
+  "Respondents (age-covaried case): sim_data5_oeh_sample"
+)
+plot_respondents(
+  sim_data5_oeh_sample,
+  "responded_latent",
+  "Respondents (latent-covaried case): sim_data5_oeh_sample"
+)
