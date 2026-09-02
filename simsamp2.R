@@ -1,45 +1,38 @@
 # ---------------------------------------------------------------
-# Sampling process for simdata2.R: from each simulated population
-# (the independent `sim_data2` and covaried `sim_data2_cov`
-# age x tenure populations), first draw a random 10% survey sample
-# (the "invited" pool), then simulate which of those invited
-# individuals actually respond, under three response-rate cases:
+# Individual-level data structures for simdata2.R: for each of the
+# two populations (independent `sim_data2`, associated
+# `sim_data2_cov`), build a single tidy data frame with one row per
+# individual, tracking:
 #
-#  1. Independent: everyone in the sample is equally likely to
-#     respond, regardless of age or tenure.
-#  2. Age-covaried: response likelihood increases with age (an
-#     observed trait).
-#  3. Latent-covaried: response likelihood increases with the
-#     unobserved binary `Latent` trait, which is not accounted for
-#     in the population's demographic structure -- illustrating how
-#     an unobserved variable can bias who responds (and therefore
-#     panel composition) without ever showing up as an association
-#     with age or tenure.
+#   - ID:         unique individual identifier
+#   - Age:        the individual's age bracket
+#   - Tenure:     the individual's tenure status
+#   - Included:   whether this individual was drawn into the 10%
+#                 survey sample (the "invited" pool)
+#   - Responded1: whether this individual would respond under the
+#                 independent ("equal chance") response-rate case
+#   - Responded2: whether this individual would respond under the
+#                 associated (age-associated) response-rate case
 #
-# Response rate "matrices" (or lookup vectors, for the latent case)
-# do not need to sum to 1 -- each cell/lookup value is simply a
-# probability in [0, 1], used to draw one Bernoulli response trial
-# per sampled individual.
+# Responded1/Responded2 are only meaningful (non-NA) for included
+# individuals, since responses are only ever drawn from those
+# actually invited to the survey.
 # ---------------------------------------------------------------
 
 source("simdata2.R")
+# legendry provides guide_axis_nested(), used below to split each
+# double decker plot's combined "Age:Tenure" x-axis label into two
+# clean, bracketed rows -- one per variable.
+library(legendry)
 
 set.seed(13)
 
-# --- 1. Draw a random 10% survey sample from a population ---
-# This is the "invited" pool from which responses are then drawn,
-# taken before any response-rate case is applied.
-draw_survey_sample <- function(data, frac = 0.10) {
-  n_sample <- round(nrow(data) * frac)
-  data[sample.int(nrow(data), n_sample), , drop = FALSE]
-}
+# --- 1. Response rate case builders ---
+# Same exponential-adjustment construction used to seed the
+# association in simdata2.R itself.
 
-# --- 2. Response rate case builders ---
-
-# Case 1 (independent): a flat response rate applied uniformly
-# across every age x tenure combination, providing a baseline
-# against which the effects of differential response (cases 2 and
-# 3) can be compared.
+# Case 1 ("equal chance" / independent): a flat response rate
+# applied uniformly across every age x tenure combination.
 build_response_matrix_indep <- function(rate = 0.30) {
   array(
     rate,
@@ -48,11 +41,9 @@ build_response_matrix_indep <- function(rate = 0.30) {
   )
 }
 
-# Case 2 (age-covaried): response rate increases with age, using
-# the same ordinal-score-and-exponential-adjustment construction
-# used to seed covariance in simdata2.R itself. `alpha` controls the
-# strength of the association -- 0 reduces to a flat rate; larger
-# values create a steeper increase with age.
+# Case 2 ("associated"): response rate increases with age. `alpha`
+# controls the strength of the association -- 0 reduces to a flat
+# rate; larger values create a steeper increase with age.
 build_response_matrix_age <- function(base_rate = 0.20, alpha = 1.0) {
   age_score <- seq(0, 1, length.out = length(age_levels)) # 0 (youngest) to 1 (oldest)
   rate_by_age <- base_rate * exp(alpha * age_score)
@@ -64,18 +55,8 @@ build_response_matrix_age <- function(base_rate = 0.20, alpha = 1.0) {
   )
 }
 
-# Case 3 (latent-covaried): response rate increases with the
-# unobserved `Latent` trait rather than with any observed trait.
-# Same exponential construction as case 2, but indexed by Latent
-# (0/1) instead of age.
-build_response_rate_latent <- function(base_rate = 0.20, alpha = 0.8) {
-  rate <- base_rate * exp(alpha * c(0, 1))
-  names(rate) <- c("0", "1")
-  rate
-}
-
-# --- 3. Apply a response rate case to a sampled population ---
-# For each individual in the sample, look up their response rate
+# --- 2. Apply a response rate case to a data frame ---
+# For each individual, look up their age x tenure response rate
 # under the given case and draw a single Bernoulli trial to decide
 # whether they respond.
 apply_matrix_response <- function(data, response_matrix) {
@@ -86,206 +67,189 @@ apply_matrix_response <- function(data, response_matrix) {
   rbinom(nrow(data), 1, response_matrix[idx])
 }
 
-apply_latent_response <- function(data, rate_by_latent) {
-  rbinom(nrow(data), 1, rate_by_latent[as.character(data$Latent)])
-}
-
-# --- 4. Build the three response rate cases ---
 response_matrix_indep <- build_response_matrix_indep()
 response_matrix_age <- build_response_matrix_age()
-response_rate_latent <- build_response_rate_latent()
 
 response_matrix_indep
 response_matrix_age
-response_rate_latent
 
-# --- 5. Draw survey samples and simulate responses for each
-# population ---
-# Both the independent (sim_data2) and covaried (sim_data2_cov)
-# populations from simdata2.R are put through the same sampling and
-# response process, so the effect of each response-rate case can be
-# examined independently of which population it is applied to.
-sim_data2_sample <- draw_survey_sample(sim_data2)
-sim_data2_cov_sample <- draw_survey_sample(sim_data2_cov)
+# --- 3. Build the ID / Age / Tenure / Included / Responded1 /
+# Responded2 structure for a population ---
+# A random 10% of individuals are marked Included (the survey
+# sample); Responded1 and Responded2 are then simulated only for
+# those included individuals, leaving NA for everyone else. ID is
+# carried over from the population itself (assigned in simdata2.R
+# when each individual was generated), so the same individual can be
+# followed through both the population and this sampling/response
+# structure by ID.
+build_population_structure <- function(population, frac = 0.10) {
+  n <- nrow(population)
+  n_included <- round(n * frac)
+  included <- logical(n)
+  included[sample.int(n, n_included)] <- TRUE
 
-for (sample_name in c("sim_data2_sample", "sim_data2_cov_sample")) {
-  sample_df <- get(sample_name)
+  structure_df <- data.frame(
+    ID = population$ID,
+    Age = population$age,
+    Tenure = population$tenure,
+    Included = included,
+    Responded1 = NA_integer_,
+    Responded2 = NA_integer_
+  )
 
-  sample_df$responded_indep <- apply_matrix_response(
-    sample_df,
+  structure_df$Responded1[included] <- apply_matrix_response(
+    population[included, , drop = FALSE],
     response_matrix_indep
   )
-  sample_df$responded_age <- apply_matrix_response(
-    sample_df,
+  structure_df$Responded2[included] <- apply_matrix_response(
+    population[included, , drop = FALSE],
     response_matrix_age
   )
-  sample_df$responded_latent <- apply_latent_response(
-    sample_df,
-    response_rate_latent
-  )
 
-  assign(sample_name, sample_df)
+  structure_df
 }
 
-# --- 6. Quick checks ---
-# Sample sizes should be ~10% of each population.
-nrow(sim_data2_sample)
-nrow(sim_data2_cov_sample)
+sim_data2_structure <- build_population_structure(sim_data2)
+sim_data2_cov_structure <- build_population_structure(sim_data2_cov)
 
-# Case 1 (independent): realized response rate should be close to
-# 0.30, with no meaningful association between responding and age
-# in either sample, since the matrix is flat.
-mean(sim_data2_sample$responded_indep)
-chisq.test(table(sim_data2_sample$age, sim_data2_sample$responded_indep))
-mean(sim_data2_cov_sample$responded_indep)
+# --- 4. Quick checks ---
+str(sim_data2_structure)
+str(sim_data2_cov_structure)
+
+# Included should be ~10% TRUE in both populations.
+mean(sim_data2_structure$Included)
+mean(sim_data2_cov_structure$Included)
+
+# Among included individuals in the independent population
+# (sim_data2): Responded1 (equal chance) should show no meaningful
+# association with Age; Responded2 (associated) should show a
+# significant, increasing-with-age association.
 chisq.test(table(
-  sim_data2_cov_sample$age,
-  sim_data2_cov_sample$responded_indep
-))
-
-# Case 2 (age-covaried): response rate should rise with age, and
-# the association between age and responding should now be
-# significant in both samples.
-tapply(sim_data2_sample$responded_age, sim_data2_sample$age, mean)
-chisq.test(table(sim_data2_sample$age, sim_data2_sample$responded_age))
-tapply(sim_data2_cov_sample$responded_age, sim_data2_cov_sample$age, mean)
-chisq.test(table(sim_data2_cov_sample$age, sim_data2_cov_sample$responded_age))
-
-# Case 3 (latent-covaried): response rate should be higher for
-# Latent = 1 than Latent = 0, with a significant association between
-# Latent and responding, but -- crucially -- no significant
-# association between age (or tenure) and responding, since the bias
-# is tied entirely to the unobserved trait rather than to any
-# variable an algorithm could actually see.
-tapply(sim_data2_sample$responded_latent, sim_data2_sample$Latent, mean)
-chisq.test(table(sim_data2_sample$Latent, sim_data2_sample$responded_latent))
-chisq.test(table(sim_data2_sample$age, sim_data2_sample$responded_latent))
-
-tapply(sim_data2_cov_sample$responded_latent, sim_data2_cov_sample$Latent, mean)
-chisq.test(table(
-  sim_data2_cov_sample$Latent,
-  sim_data2_cov_sample$responded_latent
+  sim_data2_structure$Age[sim_data2_structure$Included],
+  sim_data2_structure$Responded1[sim_data2_structure$Included]
 ))
 chisq.test(table(
-  sim_data2_cov_sample$age,
-  sim_data2_cov_sample$responded_latent
+  sim_data2_structure$Age[sim_data2_structure$Included],
+  sim_data2_structure$Responded2[sim_data2_structure$Included]
 ))
+tapply(
+  sim_data2_structure$Responded2[sim_data2_structure$Included],
+  sim_data2_structure$Age[sim_data2_structure$Included],
+  mean
+)
 
-# --- 7. Visualise how the sample's age composition shifts under
-# each response-rate case ---
-# For a given sample, compute the age composition of (a) everyone
-# invited (the full 10% sample, before any response is simulated),
-# and (b) just those who responded under each of the three cases.
-# Comparing these age distributions side by side shows whether -- and
-# how much -- each response-rate case skews who ends up responding,
-# relative to who was originally invited.
-age_composition <- function(sample_df) {
-  rbind(
-    data.frame(
-      case = "Sample (invited)",
-      prop.table(table(age = sample_df$age))
-    ),
-    data.frame(
-      case = "Independent response",
-      prop.table(table(age = sample_df$age[sample_df$responded_indep == 1]))
-    ),
-    data.frame(
-      case = "Age-covaried response",
-      prop.table(table(age = sample_df$age[sample_df$responded_age == 1]))
-    ),
-    data.frame(
-      case = "Latent-covaried response",
-      prop.table(table(age = sample_df$age[sample_df$responded_latent == 1]))
-    )
+# Same checks for the associated population (sim_data2_cov) -- the
+# Responded1/Responded2 pattern should hold regardless of the
+# underlying population's own age-tenure association.
+chisq.test(table(
+  sim_data2_cov_structure$Age[sim_data2_cov_structure$Included],
+  sim_data2_cov_structure$Responded1[sim_data2_cov_structure$Included]
+))
+chisq.test(table(
+  sim_data2_cov_structure$Age[sim_data2_cov_structure$Included],
+  sim_data2_cov_structure$Responded2[sim_data2_cov_structure$Included]
+))
+tapply(
+  sim_data2_cov_structure$Responded2[sim_data2_cov_structure$Included],
+  sim_data2_cov_structure$Age[sim_data2_cov_structure$Included],
+  mean
+)
+
+# --- 5. Tidy tables for mosaic plots of response rate by category
+# ---
+# Reshape each population's structure down to just the individuals
+# sliced into the survey sample (Included == TRUE) -- one row per
+# ID, with Responded1 and Responded2 as separate Yes/No columns
+# (rather than long format), giving exactly 10,000 rows per
+# population. This is the shape geom_mosaic() needs to plot response
+# rate by category -- x = product(Age, Tenure), fill = Responded1 or
+# Responded2. Two separate tables are built (one per population).
+build_response_table <- function(structure_df) {
+  response_table <- structure_df[
+    structure_df$Included,
+    c("ID", "Age", "Tenure", "Responded1", "Responded2")
+  ]
+  response_table$Responded1 <- factor(
+    response_table$Responded1,
+    levels = c(0, 1),
+    labels = c("No", "Yes")
   )
+  response_table$Responded2 <- factor(
+    response_table$Responded2,
+    levels = c(0, 1),
+    labels = c("No", "Yes")
+  )
+  rownames(response_table) <- NULL
+  response_table
 }
 
-age_composition_long <- rbind(
-  cbind(
-    population = "sim_data2 (independent)",
-    age_composition(sim_data2_sample)
-  ),
-  cbind(
-    population = "sim_data2_cov (covaried)",
-    age_composition(sim_data2_cov_sample)
-  )
-)
-age_composition_long$case <- factor(
-  age_composition_long$case,
-  levels = c(
-    "Sample (invited)",
-    "Independent response",
-    "Age-covaried response",
-    "Latent-covaried response"
-  ),
-  labels = c("Sample", "Independent", "Age-covaried", "Latent-covaried")
+sim_data2_response_table <- build_response_table(sim_data2_structure)
+sim_data2_cov_response_table <- build_response_table(sim_data2_cov_structure)
+
+str(sim_data2_response_table)
+str(sim_data2_cov_response_table)
+nrow(sim_data2_response_table)
+nrow(sim_data2_cov_response_table)
+table(sim_data2_response_table$Responded1, sim_data2_response_table$Responded2)
+table(
+  sim_data2_cov_response_table$Responded1,
+  sim_data2_cov_response_table$Responded2
 )
 
-# Rendered as pie charts (one per population x response-rate case)
-# rather than grouped bars, since pie charts are the more common
-# convention for showing a single categorical variable's composition
-# as a share of a whole -- each slice is age's share of that
-# particular sample/case, and the grid of pies lets the shift in age
-# composition be compared case by case.
-ggplot(age_composition_long, aes(x = "", y = Freq, fill = age)) +
-  geom_col(width = 1) +
-  coord_polar(theta = "y") +
-  facet_grid(population ~ case) +
+# --- 6. Double decker plots of response rate by category, for each
+# population and each response case separately ---
+# Age and tenure are both nested on the x-axis (via divider =
+# ddecker(), the double decker template: a sequence of spines in the
+# same direction -- here age nested within tenure -- with the final
+# spine, response status, laid out in the opposite direction),
+# giving the y-axis its usual double decker role as the conditional
+# proportion of Yes/No responses within every age x tenure
+# combination. Response status is shown both as that y-axis split
+# and as fill colour, matching the classic double decker
+# presentation. guide_axis_nested() splits the combined "Age:Tenure"
+# x-axis label into two clean, bracketed rows -- one per variable.
+ggplot(sim_data2_response_table) +
+  geom_mosaic(
+    aes(x = product(Age, Tenure), fill = Responded1),
+    divider = ddecker()
+  ) +
+  labs(fill = "Responded", title = "sim_data2: Responded1 (equal chance)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 7)) +
+  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
+
+ggplot(sim_data2_response_table) +
+  geom_mosaic(
+    aes(x = product(Age, Tenure), fill = Responded2),
+    divider = ddecker()
+  ) +
+  labs(fill = "Responded", title = "sim_data2: Responded2 (associated)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 7)) +
+  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
+
+ggplot(sim_data2_cov_response_table) +
+  geom_mosaic(
+    aes(x = product(Age, Tenure), fill = Responded1),
+    divider = ddecker()
+  ) +
   labs(
-    fill = "Age bracket",
-    title = "Age composition of the invited sample vs. respondents under each response-rate case"
+    fill = "Responded",
+    title = "sim_data2_cov: Responded1 (equal chance)"
   ) +
   theme_minimal() +
-  theme(
-    axis.title = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    panel.grid = element_blank()
-  )
+  theme(axis.text.x = element_text(size = 7)) +
+  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
 
-# --- 8. Mosaic plots of respondents under each sampling assumption
-# ---
-# For each response-rate case, restrict to just the individuals who
-# responded, and build the exact same age x tenure mosaic plot used
-# for the populations themselves in simdata2.R (no fill, since
-# simdata2.R's populations have no third variable).
-plot_respondents <- function(data, responded_col, title) {
-  ggplot(data[data[[responded_col]] == 1, ]) +
-    geom_mosaic(aes(x = product(age, tenure))) +
-    scale_x_productlist(name = "Tenure") +
-    scale_y_productlist(name = "Age Bracket") +
-    labs(title = title) +
-    theme_minimal()
-}
-
-plot_respondents(
-  sim_data2_sample,
-  "responded_indep",
-  "Respondents (independent case): sim_data2_sample"
-)
-plot_respondents(
-  sim_data2_sample,
-  "responded_age",
-  "Respondents (age-covaried case): sim_data2_sample"
-)
-plot_respondents(
-  sim_data2_sample,
-  "responded_latent",
-  "Respondents (latent-covaried case): sim_data2_sample"
-)
-
-plot_respondents(
-  sim_data2_cov_sample,
-  "responded_indep",
-  "Respondents (independent case): sim_data2_cov_sample"
-)
-plot_respondents(
-  sim_data2_cov_sample,
-  "responded_age",
-  "Respondents (age-covaried case): sim_data2_cov_sample"
-)
-plot_respondents(
-  sim_data2_cov_sample,
-  "responded_latent",
-  "Respondents (latent-covaried case): sim_data2_cov_sample"
-)
+ggplot(sim_data2_cov_response_table) +
+  geom_mosaic(
+    aes(x = product(Age, Tenure), fill = Responded2),
+    divider = ddecker()
+  ) +
+  labs(
+    fill = "Responded",
+    title = "sim_data2_cov: Responded2 (associated)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 7)) +
+  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))

@@ -59,6 +59,12 @@ sim_data2 <- combos[
 ]
 rownames(sim_data2) <- NULL
 
+# Assign each population member a unique ID as soon as they are
+# generated, so downstream scripts (e.g. simsamp2.R) can track the
+# same individual through sampling and response simulation, rather
+# than re-deriving an ID from row position later on.
+sim_data2$ID <- seq_len(nrow(sim_data2))
+
 # Convert to factors with the intended level order
 sim_data2$age <- factor(sim_data2$age, levels = age_levels)
 sim_data2$tenure <- factor(sim_data2$tenure, levels = tenure_levels)
@@ -180,6 +186,10 @@ sim_data2_cov <- combos[
   c("age", "tenure")
 ]
 rownames(sim_data2_cov) <- NULL
+
+# Assign each population member a unique ID as soon as they are
+# generated (see the note on sim_data2 above).
+sim_data2_cov$ID <- seq_len(nrow(sim_data2_cov))
 
 # Convert to factors with the intended level order
 sim_data2_cov$age <- factor(sim_data2_cov$age, levels = age_levels)

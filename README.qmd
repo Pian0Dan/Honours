@@ -220,17 +220,6 @@ format: gfm
     - Minorities and some intersections will not be represented; this should be flagged in some way--ultimately still up to practitioner to assess
 
 
-
-
-
-
-
-
-
-
-
-
-
 ## Week 6
 
 ### Plan
@@ -254,3 +243,5 @@ format: gfm
 - Create flowchart to demonstrate the sortition process more clearly?
     - Explain that through this simulation and the different cases, we are effectively adding noise and assessing the impact this has
     - Goal of framework and evaluation is to check whether the output is at the very least not worse than its most direct input
+
+- Attempt creating csvs and feeding into algorithm

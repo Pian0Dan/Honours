@@ -42,3 +42,11 @@ colnames(sim_cat2) <- c("category", "feature", "min", "max")
 
 # Save as CSV
 write.csv(sim_cat2, "sim_cat2.csv", row.names = FALSE)
+
+# -------
+
+# Population matrix
+
+sim_data2
+
+write.csv(sim_data2, "sim_data2.csv", row.names = FALSE)
