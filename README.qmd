@@ -245,3 +245,43 @@ format: gfm
     - Goal of framework and evaluation is to check whether the output is at the very least not worse than its most direct input
 
 - Attempt creating csvs and feeding into algorithm
+
+### Discussion
+
+- Built the dataframes
+- Built the double-decker; should this have had frequency on y-axis or the response case?
+- Made mock-up flowchart
+
+- What is best next move?
+
+## Week 7
+
+### Plan
+
+Priority:
+
+- Create mosaic plots of just those who responded for each population and response case
+    - Structure this to be like the new simdata2.R mosaic plots (Age on x, Tenure as fill)
+
+- Use Panelot to generate lottery csv
+    - Have a look at some panel outputs and their shapes on Mosaic plot
+
+- Adjust capitalisation
+
+- Sub-subscripts for math explanation: p_A_1
+
+- Make simple example mosaic plots for methodology to explain how to read them (2 x 2)
+
+---
+
+Consider how to structure:
+
+- Take many draws of panel from lottery csv
+- Create filter cases where only IDs that were selected get plotted
+- Assess chi-sq for each of the panels generated against the respondents, the sample from which they were drawn, and the original population
+
+---
+
+Leximin packag-ification ?
+
+### Discussion
