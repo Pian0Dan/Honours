@@ -90,6 +90,12 @@ ggplot(sim_data2) +
   scale_y_productlist(name = "Age Bracket") +
   theme_minimal()
 
+ggplot(sim_data2) +
+  geom_mosaic(aes(x = product(age), fill = tenure)) +
+  scale_x_productlist(name = "Age Bracket") +
+  scale_y_productlist(name = "Tenure") +
+  theme_minimal()
+
 # --- Covaried case: negative covariance between age and renting ---
 # (younger people rent more than chance; older people rent less
 # than chance)
@@ -210,7 +216,7 @@ prop.table(table(sim_data2_cov$tenure))
 chisq.test(table(sim_data2_cov$age, sim_data2_cov$tenure))
 
 ggplot(sim_data2_cov) +
-  geom_mosaic(aes(x = product(age, tenure))) +
-  scale_x_productlist(name = "Tenure") +
-  scale_y_productlist(name = "Age Bracket") +
+  geom_mosaic(aes(x = product(age), fill = tenure)) +
+  scale_x_productlist(name = "Age Bracket") +
+  scale_y_productlist(name = "Tenure") +
   theme_minimal()

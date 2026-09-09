@@ -38,15 +38,59 @@ sim_cat2 <- matrix(
   byrow = TRUE
 )
 
-colnames(sim_cat2) <- c("category", "feature", "min", "max")
+colnames(sim_cat2) <- c("category", "name", "min", "max")
 
 # Save as CSV
 write.csv(sim_cat2, "sim_cat2.csv", row.names = FALSE)
 
 # -------
 
-# Population matrix
+# ---------------------------------------------------------------
+# Respondent CSV exports for simsamp2.R: for each of the two
+# populations (independent `sim_data2`, associated `sim_data2_cov`)
+# and each of the two response-rate cases (Responded1 "equal
+# chance", Responded2 "associated"), write a CSV containing only the
+# individuals who actually responded to the survey, with:
+#
+#   - pool_member_identifier: the individual's ID, carried over from
+#     the population (see simdata2.R, where ID is first assigned)
+#   - age
+#   - tenure
+# ---------------------------------------------------------------
 
-sim_data2
+source("simsamp2yes.R") # also sources simsamp2.R and simdata2.R
 
-write.csv(sim_data2, "sim_data2.csv", row.names = FALSE)
+# --- Build and write a respondents-only CSV from a "*_yes" table ---
+build_respondent_csv <- function(data, file) {
+  respondents <- data.frame(
+    pool_member_identifier = data$ID,
+    age = data$Age,
+    tenure = data$Tenure
+  )
+  write.csv(respondents, file, row.names = FALSE)
+  respondents
+}
+
+sim_data2_responded1_csv <- build_respondent_csv(
+  sim_data2_responded1_yes,
+  "sim_data2_responded1.csv"
+)
+sim_data2_responded2_csv <- build_respondent_csv(
+  sim_data2_responded2_yes,
+  "sim_data2_responded2.csv"
+)
+sim_data2_cov_responded1_csv <- build_respondent_csv(
+  sim_data2_cov_responded1_yes,
+  "sim_data2_cov_responded1.csv"
+)
+sim_data2_cov_responded2_csv <- build_respondent_csv(
+  sim_data2_cov_responded2_yes,
+  "sim_data2_cov_responded2.csv"
+)
+
+# --- Quick checks ---
+nrow(sim_data2_responded1_csv)
+nrow(sim_data2_responded2_csv)
+nrow(sim_data2_cov_responded1_csv)
+nrow(sim_data2_cov_responded2_csv)
+head(sim_data2_responded1_csv)

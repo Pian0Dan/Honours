@@ -272,6 +272,11 @@ Priority:
 
 - Make simple example mosaic plots for methodology to explain how to read them (2 x 2)
 
+- Make sure plots have been integrated into PDF (results section); use source() like in Di's lectures
+- Example plot in methodology section
+
+- Writing!!
+
 ---
 
 Consider how to structure:
@@ -283,5 +288,15 @@ Consider how to structure:
 ---
 
 Leximin packag-ification ?
+
+### Discussion
+
+- Panelot website comments on "restrictiveness" of quota constraints and its impact on selection likelihoods; how should this influence procedure? Do we stick to rigid min-max?
+
+
+## Week 8
+
+### Plan
+
 
 ### Discussion
