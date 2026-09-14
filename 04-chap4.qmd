@@ -2,4 +2,130 @@
 
 ## Visualisations
 
+### Population simulation
+
+```{r}
+#| label: fig-pop2-ind-plot
+#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated independently, with age brackets on the x-axis and tenure categories on the y-axis and fill."
+# source() only suppresses console output for print.eval-gated
+# top-level expressions; simdata2.R's str() calls write directly to
+# the console regardless, so capture.output() is used to discard
+# everything the sourced script prints, leaving only pop2_ind_plot
+# itself to render below.
+invisible(capture.output(source("scripts/simdata2.R")))
+
+pop2_ind_plot
+```
+
+@fig-pop2-ind-plot shows ...
+
+```{r}
+#| label: fig-pop2-cov-plot
+#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting. Age brackets shown on the x-axis and tenure categories on the y-axis and fill."
+# source() only suppresses console output for print.eval-gated
+# top-level expressions; simdata2.R's str() calls write directly to
+# the console regardless, so capture.output() is used to discard
+# everything the sourced script prints, leaving only pop2_ind_plot
+# itself to render below.
+invisible(capture.output(source("scripts/simdata2.R")))
+
+pop2_cov_plot
+```
+
+@fig-pop2-cov-plot shows ...
+
+### Sample construction
+
+```{r}
+#| label: fig-pop2-ind-slice-plot
+#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated independently for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
+# source() only suppresses console output for print.eval-gated
+# top-level expressions; simdata2.R's str() calls write directly to
+# the console regardless, so capture.output() is used to discard
+# everything the sourced script prints, leaving only pop2_ind_plot
+# itself to render below.
+invisible(capture.output(source("scripts/simsamp2.R")))
+
+pop2_ind_slice_plot
+```
+
+@fig-pop2-ind-slice-plot shows ...
+
+```{r}
+#| label: fig-pop2-cov-slice-plot
+#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
+# source() only suppresses console output for print.eval-gated
+# top-level expressions; simdata2.R's str() calls write directly to
+# the console regardless, so capture.output() is used to discard
+# everything the sourced script prints, leaving only pop2_ind_plot
+# itself to render below.
+invisible(capture.output(source("scripts/simsamp2.R")))
+
+pop2_cov_slice_plot
+```
+
+@fig-pop2-cov-slice-plot shows ...
+
+### Respondent simulation
+
+```{r}
+#| label: fig-pop2-ind-eq-plot
+#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
+# source() only suppresses console output for print.eval-gated
+# top-level expressions; simdata2.R's str() calls write directly to
+# the console regardless, so capture.output() is used to discard
+# everything the sourced script prints, leaving only pop2_ind_plot
+# itself to render below.
+invisible(capture.output(source("scripts/simsamp2.R")))
+
+pop2_ind_eq_plot
+```
+
+@fig-pop2-ind-eq-plot
+
+```{r}
+#| label: fig-pop2-ind-ass-plot
+#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
+# source() only suppresses console output for print.eval-gated
+# top-level expressions; simdata2.R's str() calls write directly to
+# the console regardless, so capture.output() is used to discard
+# everything the sourced script prints, leaving only pop2_ind_plot
+# itself to render below.
+invisible(capture.output(source("scripts/simsamp2.R")))
+
+pop2_ind_ass_plot
+```
+
+@fig-pop2-ind-ass-plot
+
+```{r}
+#| label: fig-pop2-cov-eq-plot
+#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
+# source() only suppresses console output for print.eval-gated
+# top-level expressions; simdata2.R's str() calls write directly to
+# the console regardless, so capture.output() is used to discard
+# everything the sourced script prints, leaving only pop2_ind_plot
+# itself to render below.
+invisible(capture.output(source("scripts/simsamp2.R")))
+
+pop2_cov_eq_plot
+```
+
+@fig-pop2-cov-eq-plot
+
+```{r}
+#| label: fig-pop2-cov-ass-plot
+#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
+# source() only suppresses console output for print.eval-gated
+# top-level expressions; simdata2.R's str() calls write directly to
+# the console regardless, so capture.output() is used to discard
+# everything the sourced script prints, leaving only pop2_ind_plot
+# itself to render below.
+invisible(capture.output(source("scripts/simsamp2.R")))
+
+pop2_cov_ass_plot
+```
+
+@fig-pop2-cov-ass-plot
+
 ## Panel Construction

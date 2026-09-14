@@ -84,13 +84,14 @@ prop.table(table(sim_data2$tenure))
 # not a real relationship, since independence is baked into prob_vec)
 chisq.test(table(sim_data2$age, sim_data2$tenure))
 
-ggplot(sim_data2) +
-  geom_mosaic(aes(x = product(age, tenure))) +
-  scale_x_productlist(name = "Tenure") +
-  scale_y_productlist(name = "Age Bracket") +
-  theme_minimal()
+# ggplot(sim_data2) +
+#geom_mosaic(aes(x = product(age, tenure))) +
+#scale_x_productlist(name = "Tenure") +
+#scale_y_productlist(name = "Age Bracket") +
+#theme_minimal()
 
-ggplot(sim_data2) +
+pop2_ind_plot <-
+  ggplot(sim_data2) +
   geom_mosaic(aes(x = product(age), fill = tenure)) +
   scale_x_productlist(name = "Age Bracket") +
   scale_y_productlist(name = "Tenure") +
@@ -215,7 +216,8 @@ prop.table(table(sim_data2_cov$tenure))
 # before raking. Raking preserves the marginals exactly.
 chisq.test(table(sim_data2_cov$age, sim_data2_cov$tenure))
 
-ggplot(sim_data2_cov) +
+pop2_cov_plot <-
+  ggplot(sim_data2_cov) +
   geom_mosaic(aes(x = product(age), fill = tenure)) +
   scale_x_productlist(name = "Age Bracket") +
   scale_y_productlist(name = "Tenure") +
