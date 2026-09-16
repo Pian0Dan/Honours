@@ -95,6 +95,7 @@ pop2_ind_plot <-
   geom_mosaic(aes(x = product(age), fill = tenure)) +
   scale_x_productlist(name = "Age Bracket") +
   scale_y_productlist(name = "Tenure") +
+  labs(fill = "Tenure") +
   theme_minimal()
 
 # --- Covaried case: negative covariance between age and renting ---
@@ -221,4 +222,5 @@ pop2_cov_plot <-
   geom_mosaic(aes(x = product(age), fill = tenure)) +
   scale_x_productlist(name = "Age Bracket") +
   scale_y_productlist(name = "Tenure") +
+  labs(fill = "Tenure") +
   theme_minimal()

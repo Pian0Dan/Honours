@@ -140,7 +140,7 @@ ul.task-list li input[type="checkbox"] {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title"><b>Sections</b></h2>
    
   <ul class="collapse">
-<li><a href="#visualisations" id="toc-visualisations" class="nav-link active" data-scroll-target="#visualisations"><span class="header-section-number">4.1</span> Visualisations</a></li>
+<li><a href="#variable-visualisations" id="toc-variable-visualisations" class="nav-link active" data-scroll-target="#variable-visualisations"><span class="header-section-number">4.1</span> 2-variable visualisations</a></li>
   <li><a href="#panel-construction" id="toc-panel-construction" class="nav-link" data-scroll-target="#panel-construction"><span class="header-section-number">4.2</span> Panel Construction</a></li>
   </ul></nav>
     </div>
@@ -160,8 +160,8 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header><section id="visualisations" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="visualisations">
-<span class="header-section-number">4.1</span> Visualisations</h2>
+</header><section id="variable-visualisations" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="variable-visualisations">
+<span class="header-section-number">4.1</span> 2-variable visualisations</h2>
 <section id="population-simulation" class="level3"><h3 class="anchored" data-anchor-id="population-simulation">Population simulation</h3>
 <div class="cell">
 <div class="cell-output-display">
@@ -175,7 +175,7 @@ Figure&nbsp;4.1: Mosaic plot showing the intersection of age and tenure categori
 </div>
 </div>
 </div>
-<p><a href="#fig-pop2-ind-plot" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> shows …</p>
+<p><a href="#fig-pop2-ind-plot" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> shows the intersectional proportions of the age and tenure categories for the independently generated population. There is skew towards upper middle age and higher frequency of homeowners (compared to other categories), but no visible association between categories. As such, the probability of any intersection is explained purely by the margins.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-pop2-cov-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -188,7 +188,7 @@ Figure&nbsp;4.2: Mosaic plot showing the intersection of age and tenure categori
 </div>
 </div>
 </div>
-<p><a href="#fig-pop2-cov-plot" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> shows …</p>
+<p><a href="#fig-pop2-cov-plot" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> shows the intersectional proportions of the age and tenure categories for the population generated with association. There is skew towards upper middle age and higher frequency of homeowners (compared to other categories), and visible negative association between age and renting. The probability of an indivual renting in this population decreases as age increases.</p>
 </section><section id="sample-construction" class="level3"><h3 class="anchored" data-anchor-id="sample-construction">Sample construction</h3>
 <div class="cell">
 <div class="cell-output-display">
@@ -202,7 +202,7 @@ Figure&nbsp;4.3: Mosaic plot showing the intersection of age and tenure categori
 </div>
 </div>
 </div>
-<p><a href="#fig-pop2-ind-slice-plot" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> shows …</p>
+<p><a href="#fig-pop2-ind-slice-plot" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> shows a random 10% (10000-individual) slice of the independent population, replicating the mailout process of expressions of interest. The independent structure is largely preserved, with very slight deviations in younger and older “Other Tenure” proportions.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-pop2-cov-slice-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -215,7 +215,7 @@ Figure&nbsp;4.4: Mosaic plot showing the intersection of age and tenure categori
 </div>
 </div>
 </div>
-<p><a href="#fig-pop2-cov-slice-plot" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> shows …</p>
+<p><a href="#fig-pop2-cov-slice-plot" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> shows a random 10% (10000-individual) slice of the associated population, replicating the mailout process of expressions of interest. The associated structure is preserved in the slice.</p>
 </section><section id="respondent-simulation" class="level3"><h3 class="anchored" data-anchor-id="respondent-simulation">Respondent simulation</h3>
 <div class="cell">
 <div class="cell-output-display">
@@ -229,7 +229,7 @@ Figure&nbsp;4.5: Mosaic plot showing the intersection of age and tenure categori
 </div>
 </div>
 </div>
-<p><a href="#fig-pop2-ind-eq-plot" class="quarto-xref">Figure&nbsp;<span>4.5</span></a></p>
+<p><a href="#fig-pop2-ind-eq-plot" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> shows the intersections of the simulated respondents of the expression of interest survey, assuming an indepedently generated population and equal chance of response across traits.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-pop2-ind-ass-plot" class="quarto-float quarto-figure quarto-figure-center anchored">

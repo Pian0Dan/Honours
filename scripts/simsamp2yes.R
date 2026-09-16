@@ -11,7 +11,7 @@
 # already responded (there is no "No" category left to colour by).
 # ---------------------------------------------------------------
 
-source("simsamp2.R")
+source("scripts/simsamp2.R")
 
 # --- 1. Restrict each response table to respondents only ---
 sim_data2_responded1_yes <- sim_data2_response_table[
@@ -41,26 +41,26 @@ plot_respondents_only <- function(data, title) {
     geom_mosaic(aes(x = product(Age), fill = Tenure)) +
     scale_x_productlist(name = "Age Bracket") +
     scale_y_productlist(name = "Tenure") +
-    labs(title = title) +
+    labs(title = title, fill = "Tenure") +
     theme_minimal()
 }
 
-plot_respondents_only(
+pop2_ind_eq_plot <- plot_respondents_only(
   sim_data2_responded1_yes,
   "sim_data2: respondents under Responded1 (equal chance)"
 )
 
-plot_respondents_only(
+pop2_ind_ass_plot <- plot_respondents_only(
   sim_data2_responded2_yes,
   "sim_data2: respondents under Responded2 (associated)"
 )
 
-plot_respondents_only(
+pop2_cov_eq_plot <- plot_respondents_only(
   sim_data2_cov_responded1_yes,
   "sim_data2_cov: respondents under Responded1 (equal chance)"
 )
 
-plot_respondents_only(
+pop2_cov_ass_plot <- plot_respondents_only(
   sim_data2_cov_responded2_yes,
   "sim_data2_cov: respondents under Responded2 (associated)"
 )

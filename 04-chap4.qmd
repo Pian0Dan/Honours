@@ -1,6 +1,6 @@
 # Results {#sec-results}
 
-## Visualisations
+## 2-variable visualisations
 
 ### Population simulation
 
@@ -17,7 +17,7 @@ invisible(capture.output(source("scripts/simdata2.R")))
 pop2_ind_plot
 ```
 
-@fig-pop2-ind-plot shows ...
+@fig-pop2-ind-plot shows the intersectional proportions of the age and tenure categories for the independently generated population. There is skew towards upper middle age and higher frequency of homeowners (compared to other categories), but no visible association between categories. As such, the probability of any intersection is explained purely by the margins.
 
 ```{r}
 #| label: fig-pop2-cov-plot
@@ -32,7 +32,7 @@ invisible(capture.output(source("scripts/simdata2.R")))
 pop2_cov_plot
 ```
 
-@fig-pop2-cov-plot shows ...
+@fig-pop2-cov-plot shows the intersectional proportions of the age and tenure categories for the population generated with association. There is skew towards upper middle age and higher frequency of homeowners (compared to other categories), and visible negative association between age and renting. The probability of an indivual renting in this population decreases as age increases.
 
 ### Sample construction
 
@@ -49,7 +49,7 @@ invisible(capture.output(source("scripts/simsamp2.R")))
 pop2_ind_slice_plot
 ```
 
-@fig-pop2-ind-slice-plot shows ...
+@fig-pop2-ind-slice-plot shows a random 10% (10000-individual) slice of the independent population, replicating the mailout process of expressions of interest. The independent structure is largely preserved, with very slight deviations in younger and older "Other Tenure" proportions.
 
 ```{r}
 #| label: fig-pop2-cov-slice-plot
@@ -64,7 +64,7 @@ invisible(capture.output(source("scripts/simsamp2.R")))
 pop2_cov_slice_plot
 ```
 
-@fig-pop2-cov-slice-plot shows ...
+@fig-pop2-cov-slice-plot shows a random 10% (10000-individual) slice of the associated population, replicating the mailout process of expressions of interest. The associated structure is preserved in the slice.
 
 ### Respondent simulation
 
@@ -76,12 +76,12 @@ pop2_cov_slice_plot
 # the console regardless, so capture.output() is used to discard
 # everything the sourced script prints, leaving only pop2_ind_plot
 # itself to render below.
-invisible(capture.output(source("scripts/simsamp2.R")))
+invisible(capture.output(source("scripts/simsamp2yes.R")))
 
 pop2_ind_eq_plot
 ```
 
-@fig-pop2-ind-eq-plot
+@fig-pop2-ind-eq-plot shows the intersections of the simulated respondents of the expression of interest survey, assuming an indepedently generated population and equal chance of response across traits.
 
 ```{r}
 #| label: fig-pop2-ind-ass-plot
@@ -91,7 +91,7 @@ pop2_ind_eq_plot
 # the console regardless, so capture.output() is used to discard
 # everything the sourced script prints, leaving only pop2_ind_plot
 # itself to render below.
-invisible(capture.output(source("scripts/simsamp2.R")))
+invisible(capture.output(source("scripts/simsamp2yes.R")))
 
 pop2_ind_ass_plot
 ```
@@ -106,7 +106,7 @@ pop2_ind_ass_plot
 # the console regardless, so capture.output() is used to discard
 # everything the sourced script prints, leaving only pop2_ind_plot
 # itself to render below.
-invisible(capture.output(source("scripts/simsamp2.R")))
+invisible(capture.output(source("scripts/simsamp2yes.R")))
 
 pop2_cov_eq_plot
 ```
@@ -121,7 +121,7 @@ pop2_cov_eq_plot
 # the console regardless, so capture.output() is used to discard
 # everything the sourced script prints, leaving only pop2_ind_plot
 # itself to render below.
-invisible(capture.output(source("scripts/simsamp2.R")))
+invisible(capture.output(source("scripts/simsamp2yes.R")))
 
 pop2_cov_ass_plot
 ```

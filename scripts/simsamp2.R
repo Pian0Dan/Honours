@@ -54,7 +54,7 @@ pop2_ind_slice_plot <-
   geom_mosaic(aes(x = product(age), fill = tenure)) +
   scale_x_productlist(name = "Age Bracket") +
   scale_y_productlist(name = "Tenure") +
-  labs(title = "sim_data2: 10,000-person slice") +
+  labs(title = "sim_data2: 10,000-person slice", fill = "Tenure") +
   theme_minimal()
 
 pop2_cov_slice_plot <-
@@ -62,7 +62,7 @@ pop2_cov_slice_plot <-
   geom_mosaic(aes(x = product(age), fill = tenure)) +
   scale_x_productlist(name = "Age Bracket") +
   scale_y_productlist(name = "Tenure") +
-  labs(title = "sim_data2_cov: 10,000-person slice") +
+  labs(title = "sim_data2_cov: 10,000-person slice", fill = "Tenure") +
   theme_minimal()
 
 pop2_ind_slice_plot
