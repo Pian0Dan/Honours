@@ -379,15 +379,3 @@ run_leximin <- function(data_dir, output_csv = NULL, panel_output_csv = NULL,
   }
   probabilities
 }
-
-
-data_dir <- "data/example_small_20"
-output_csv <- 'example_small_20_output.csv'
-panel_output_csv <- 'example_small_20_panel_output.csv'
-
-#data_dir <- "data/example_large_200"  # This will take a few hours
-#output_csv <- 'example_large_200_output.csv'
-#panel_output_csv <- 'example_large_200_panel_output.csv'
-k <- 200 # k is panel size, if not found it will try to read it from the data_dir
-output_flag = 1
-run_leximin(data_dir,output_csv, panel_output_csv, k, output_flag = output_flag )
