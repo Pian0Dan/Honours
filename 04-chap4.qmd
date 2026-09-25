@@ -17,7 +17,7 @@ invisible(capture.output(source("scripts/simdata2.R")))
 pop2_ind_plot
 ```
 
-@fig-pop2-ind-plot shows the intersectional proportions of the age and tenure categories for the independently generated population. There is skew towards upper middle age and higher frequency of homeowners (compared to other categories), but no visible association between categories. As such, the probability of any intersection is explained purely by the margins.
+
 
 ```{r}
 #| label: fig-pop2-cov-plot
@@ -32,7 +32,7 @@ invisible(capture.output(source("scripts/simdata2.R")))
 pop2_cov_plot
 ```
 
-@fig-pop2-cov-plot shows the intersectional proportions of the age and tenure categories for the population generated with association. There is skew towards upper middle age and higher frequency of homeowners (compared to other categories), and visible negative association between age and renting. The probability of an indivual renting in this population decreases as age increases.
+@fig-pop2-ind-plot and @fig-pop2-cov-plot show the intersectional proportions of the age and tenure categories for the independently and associatively generated populations, respectively. Both skew towards upper middle age and higher frequency of homeowners (compared to other categories). But whilst there is no visible association between categories in @fig-pop2-ind-plot, @fig-pop2-cov-plot contains a negative association between age and renting. As such, the probability of any intersection in @fig-pop2-ind-plot is explained purely by the margins, and @fig-pop2-cov-plot probabilities vary by category.
 
 ### Sample construction
 
@@ -49,8 +49,6 @@ invisible(capture.output(source("scripts/simsamp2.R")))
 pop2_ind_slice_plot
 ```
 
-@fig-pop2-ind-slice-plot shows a random 10% (10000-individual) slice of the independent population, replicating the mailout process of expressions of interest. The independent structure is largely preserved, with very slight deviations in younger and older "Other Tenure" proportions.
-
 ```{r}
 #| label: fig-pop2-cov-slice-plot
 #| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
@@ -64,7 +62,7 @@ invisible(capture.output(source("scripts/simsamp2.R")))
 pop2_cov_slice_plot
 ```
 
-@fig-pop2-cov-slice-plot shows a random 10% (10000-individual) slice of the associated population, replicating the mailout process of expressions of interest. The associated structure is preserved in the slice.
+@fig-pop2-ind-slice-plot and @fig-pop2-cov-slice-plot show random 10% (10000-individual) slices of the independent and associated populations respectively, replicating the mailout process of expressions of interest. @fig-pop2-ind-slice-plot shows @fig-pop2-ind-plot 's indepedendent structure is largely preserved through slicing, with very slight deviations in younger and older "Other Tenure" proportions. @fig-pop2-cov-slice-plot shows @fig-pop2-cov-plot 's associated structure is also preserved through slicing, with relative proportions maintained.
 
 ### Respondent simulation
 
@@ -81,7 +79,6 @@ invisible(capture.output(source("scripts/simsamp2yes.R")))
 pop2_ind_eq_plot
 ```
 
-@fig-pop2-ind-eq-plot shows the intersections of the simulated respondents of the expression of interest survey, assuming an indepedently generated population and equal chance of response across traits.
 
 ```{r}
 #| label: fig-pop2-ind-ass-plot
@@ -96,7 +93,9 @@ invisible(capture.output(source("scripts/simsamp2yes.R")))
 pop2_ind_ass_plot
 ```
 
-@fig-pop2-ind-ass-plot
+@fig-pop2-ind-eq-plot and @fig-pop2-ind-ass-plot show the intersections of the simulated respondents of the expression of interest survey, assuming an indepedently generated population, with equal chance and positive associations.
+
+
 
 ```{r}
 #| label: fig-pop2-cov-eq-plot
@@ -129,3 +128,6 @@ pop2_cov_ass_plot
 @fig-pop2-cov-ass-plot
 
 ## Panel Construction
+
+
+## Framework and recommendations
