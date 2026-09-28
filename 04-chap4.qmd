@@ -93,7 +93,7 @@ invisible(capture.output(source("scripts/simsamp2yes.R")))
 pop2_ind_ass_plot
 ```
 
-@fig-pop2-ind-eq-plot and @fig-pop2-ind-ass-plot show the intersections of the simulated respondents of the expression of interest survey, assuming an indepedently generated population, with equal chance and positive associations.
+@fig-pop2-ind-eq-plot and @fig-pop2-ind-ass-plot show the intersections of the simulated respondents of the expression of interest survey, assuming an indepedently generated population. @fig-pop2-ind-eq-plot simulates responses with equal chance, while @fig-pop2-ind-ass-plot positive associations.
 
 
 
@@ -127,7 +127,11 @@ pop2_cov_ass_plot
 
 @fig-pop2-cov-ass-plot
 
-## Panel Construction
+## Panel construction
 
+
+### Association preservation
+
+It is found that 100% of panels have a significantly different association level than exists
 
 ## Framework and recommendations
