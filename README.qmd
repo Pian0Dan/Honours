@@ -298,12 +298,12 @@ Leximin packag-ification ?
 
 ### Plan
 
-- Clump figure explanations by stage to avoid repetition.
+- Clump figure explanations by stage to avoid repetition. x
 - Add more detail about what would be expected to be seen and why (should they be the same? Why or why not?)
 
 - Mosaic plots of Response vs Age and Response vs Tenure for both associated response cases to illustrate new associations forming
 
-- Write mosaic plot explanation in chap3; width of bars displays proportion of x category responses conditional on y, and height of bars displays proportion of y category responses conditional on x.
+- Write mosaic plot explanation in chap3; width of bars displays proportion of x category responses conditional on y, and height of bars displays proportion of y category responses conditional on x. x
 
 - Caveat that level of association will influence the level of difference between stages (lesser association could lead to less difference between plots)
 
