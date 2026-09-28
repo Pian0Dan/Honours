@@ -94,6 +94,49 @@ div.csl-indent {
 }</script>
 <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather|Source Code Pro" rel="stylesheet">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -256,9 +299,75 @@ div.csl-indent {
 <p>Bringing us to the supposed current gold standard: the aptly named “Goldilocks” sortition algorithm. Goldilocks is structured in such a way that it simultaneously attempts to maximise minimum selection probabilities (improve fairness) and minimise maximum selection probabilities (improve robustness), providing a “best of both worlds” solution to the problem by averaging outcomes.</p>
 </section>
 </section>
+<section id="leximin-approach-flanigan2021fairaf" class="level3">
+<h3 class="anchored" data-anchor-id="leximin-approach-flanigan2021fairaf">LexiMin Approach <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></h3>
+<p>LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.</p>
+<p>Each feasible panel is assigned a probability.</p>
+<p>These probabilities must be non-negative and must add up to 1.</p>
+<p>For each individual, we then calculate their overall probability of being selected by adding up the probabilities of all feasible panels that include that individual.</p>
+<p>Next, we sort the individual selection probabilities from smallest to largest.</p>
+<p>The LexiMin rule works by first making the smallest selection probability as large as possible. Subject to that, it makes the second-smallest as large as possible. It then does the same for the third-smallest, and continues in this way.</p>
+</section>
+<section id="formal-representation" class="level3">
+<h3 class="anchored" data-anchor-id="formal-representation">Formal Representation</h3>
+<p>Let p_S be the probability assigned to panel S.</p>
+<p>These probabilities satisfy:</p>
+<p><span class="math display">
+p_S \ge 0
+</span></p>
+<p>and</p>
+<p><span class="math display">
+\sum_{S \in K} p_S = 1
+</span></p>
+<p>The selection probability for individual i is:</p>
+<p><span class="math display">
+\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
+</span></p>
+<p>This gives the vector of individual selection probabilities:</p>
+<p><span class="math display">
+\pi(p) = (\pi_1(p), \pi_2(p), ..., \pi_n(p))
+</span></p>
+<p>Sort these from smallest to largest:</p>
+<p><span class="math display">
+\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
+</span></p>
+<p>LexiMin chooses p so that this sorted vector is maximised in order.</p>
+</section>
+<section id="algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="algorithm">Algorithm</h3>
+<ol type="1">
+<li><p>List all feasible panels in K.</p></li>
+<li><p>Consider all possible probability distributions over those panels.</p></li>
+<li><p>For each distribution, compute:</p></li>
+</ol>
+<p><span class="math display">
+\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
+</span></p>
+<ol start="4" type="1">
+<li>Sort the selection probabilities:</li>
+</ol>
+<p><span class="math display">
+\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
+</span></p>
+<ol start="5" type="1">
+<li><p>Choose the distribution that maximises the smallest selection probability.</p></li>
+<li><p>If more than one distribution still remains, choose the one that maximises the second-smallest selection probability.</p></li>
+<li><p>Continue in this way until the distribution is determined.</p></li>
+<li><p>Sample a final panel according to that distribution.</p></li>
+</ol>
+</section>
+<section id="logic" class="level3">
+<h3 class="anchored" data-anchor-id="logic">Logic</h3>
+<p>LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. Then it improves the next-lowest probabilities, and so on.</p>
+<p>This makes the selection probabilities as equal as possible while still respecting the panel constraints.</p>
+</section>
+<section id="discussion" class="level3">
+<h3 class="anchored" data-anchor-id="discussion">Discussion</h3>
+<p>This approach to the problem of panel selection is elegant and has some nice properties. It ensures that the selection probabilities are as equal as possible, which can help to create a more representative panel. However, it does not give a way to introduce specific joint trait requirements for subsets of the population, which is something that may be desirable in certain situations. For example, if there is a need to ensure that a certain combination of traits is represented in the panel, then this approach may not be able to accommodate that requirement without reintroducing representative burden.</p>
+</section>
 <section id="new-investigation" class="level3">
 <h3 class="anchored" data-anchor-id="new-investigation">New Investigation</h3>
-<p>Across all of these previous algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs–focusing instead purely on affecting individual selection chances based on quotas of each demographic trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g.&nbsp;supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be beneficial, or even necessary, to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. Though this limitation is generally mitigated in practice by bringing in “specialist speakers” to talk to the panel during their deliberation processes <span class="citation" data-cites="redmanHowRecruitParticipants">(<a href="refs.html#ref-redmanHowRecruitParticipants" role="doc-biblioref">Redman and Carson n.d.</a>)</span>, this still is not the same type of inclusion by nature, as being directly part of the panel and decision-making process.</p>
+<p>Across all algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs–focusing instead purely on affecting individual selection chances based on quotas of each demographic trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g.&nbsp;supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be beneficial, or even necessary, to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. Though this limitation is generally mitigated in practice by bringing in “specialist speakers” to talk to the panel during their deliberation processes <span class="citation" data-cites="redmanHowRecruitParticipants">(<a href="refs.html#ref-redmanHowRecruitParticipants" role="doc-biblioref">Redman and Carson n.d.</a>)</span>, this still is not the same type of inclusion by nature, as being directly part of the panel and decision-making process.</p>
 <p>The extent to which intersectional inclusion happens naturally through current methods will be evaluated in the later simulations. We will then also test the effects of further imposing combinational quotas on the representative burden, and on the selection probabilities of different individuals, to see whether this is a feasible way to ensure the representation of intersectional minorities in situations where it is deemed necessary.</p>
 </section>
 </section>
