@@ -294,7 +294,7 @@ Leximin packag-ification ?
 - Panelot website comments on "restrictiveness" of quota constraints and its impact on selection likelihoods; how should this influence procedure? Do we stick to rigid min-max?
 
 
-## Week 8
+## Week 9
 
 ### Plan
 
@@ -318,8 +318,37 @@ Write!!!
 
 - Refresh intro
 
+- Add toggleable disclaimer to highlight missing intersections within the panel to the Shiny
+
 *Fixing Leximin*:
 
 - Remove the hard coded directories at the end of leximin.R
 
 ### Discussion
+
+- How should I write about the Shiny app?
+- What results actually make sense to report?
+- Should we keep it at the two-variable scale, since results are already clear at that level?
+
+- Do the results suggest that setting marginal constraints may actually be diminishing the overall representativeness compared to full random, at least from intersectional perspective?
+
+
+This feels like atypical report findings/structure, so I don't know what would make sense to write about and how.
+
+## Week 10
+
+### Plan
+
+- Explain the Shiny app dashboard; just mention what it is used for, who would use it, what they get out of it as a separate chapter
+
+- Add bar charts for marginal distributions of traits across panel and sample data
+- Flip so the plots are shown sample -> panel
+- Add panel-associated p-value note to visualisation
+
+- Potential change of process
+    - Instead of Leximin on what we have, assess quality of respondent sample and deem whether they are proportionately representative of the population (based on existing demographics)
+    - If roughly similar proportions/intersection trends, then random may perform better for preserving these, as it doesn't introduce distortion through quota constraints
+    - Future work should focus on
+
+
+
