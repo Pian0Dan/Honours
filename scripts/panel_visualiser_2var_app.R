@@ -175,60 +175,25 @@ get_panel_members_generic <- function(sample_df, member_ids) {
 }
 
 # --- 2. Mosaic plot of exactly two trait columns: a single axis
-# variable and a single fill variable ---
+# variable, always on the x-axis, and a single fill variable, always
+# on the y-axis ---
 # x_vars is always length 2 here: c(axis_var, fill_var), both
 # (sanitised, safe) column names selected via the two dropdowns
-# below. Passed through to ggmosaic's product() exactly as
-# panel_visualiser_prac_app.R's more general version does, with the
-# *last* entry of x_vars (fill_var) used as the fill (colour)
-# variable -- with only two variables this is just a standard
-# two-way mosaic plot (divider = ddecker() still applies, but
-# reduces to one spine split by axis_var, then split again and
-# coloured by fill_var). var_labels maps every (safe) trait column
-# name to its original, human-readable header (see
-# read_sample_upload()).
-#
-# ggmosaic labels multi-variable axes by concatenating every
-# variable's level with ":" (e.g. "1st:Male"), which gets unreadable
-# fast with 2+ layers. Rather than a per-axis variable name (which
-# can't be predicted in advance -- seee the note below), every ":" is
-# replaced with a line break, so each layer's level prints on its own
-# line underneath the axis (e.g. "1st" above "Male") -- this needs a
-# throwaway ggplot_build() of the plot first, because
-# scale_x_productlist()/scale_y_productlist() silently ignore a
-# user-supplied *function* for `labels` (ggmosaic's internal training
-# step overwrites any labels *function* with its own computed one),
-# so the labels have to be supplied as an already-computed, modified
-# character vector instead.
-#
-# Both axis titles are set to the same combined list of every
-# selected variable's display label, since ggmosaic's own spine-
-# building algorithm (not anything controlled here) decides which
-# variables actually end up on the x axis versus the y axis once
-# there are more than 2.
-clean_productlist_axis_labels <- function(p, combined_label) {
-  built <- ggplot2::ggplot_build(p)
-  x_scale <- built$layout$panel_scales_x[[1]]
-  y_scale <- built$layout$panel_scales_y[[1]]
-
-  p <- p +
-    scale_x_productlist(
-      name = combined_label,
-      breaks = x_scale$get_breaks(),
-      labels = gsub(":", "\n", x_scale$get_labels(), fixed = TRUE)
-    )
-  y_breaks <- y_scale$get_breaks()
-  if (!is.null(y_breaks)) {
-    p <- p +
-      scale_y_productlist(
-        name = combined_label,
-        breaks = y_breaks,
-        labels = gsub(":", "\n", y_scale$get_labels(), fixed = TRUE)
-      )
-  }
-  p
-}
-
+# below. Earlier revisions passed both variables into one
+# product(!!!rlang::syms(x_vars)) with divider = ddecker(), but
+# ggmosaic's own spine-building algorithm then decided for itself
+# which variable ended up on which axis -- fine for an arbitrary
+# number of double-decker layers (see
+# panel_visualiser_prac_app.R), but for exactly two variables here it
+# meant axis_var and fill_var could swap axes depending on their
+# level counts, which is confusing when the UI explicitly labels one
+# dropdown "Axis variable" and the other "Fill variable". Only
+# axis_var is put in the x product() here; fill_var is left purely as
+# the fill aesthetic (not also multiplied into the product), which is
+# what fixes it to the y-axis -- the same convention
+# panel_visualiser.R's original, hardcoded Age x Tenure mosaic plot
+# used. var_labels maps every (safe) trait column name to its
+# original, human-readable header (see read_sample_upload()).
 plot_mosaic_generic <- function(
   df,
   x_vars,
@@ -236,18 +201,20 @@ plot_mosaic_generic <- function(
   subtitle = NULL,
   var_labels = setNames(x_vars, x_vars)
 ) {
-  fill_var <- x_vars[length(x_vars)]
-  combined_label <- paste(var_labels[x_vars], collapse = " \u00d7 ")
+  axis_var <- x_vars[1]
+  fill_var <- x_vars[2]
 
   p <- ggplot(df) +
-    geom_mosaic(
-      aes(x = product(!!!rlang::syms(x_vars)), fill = !!rlang::sym(fill_var)),
-      divider = ddecker()
-    ) +
+    geom_mosaic(aes(
+      x = product(!!rlang::sym(axis_var)),
+      fill = !!rlang::sym(fill_var)
+    )) +
+    scale_x_productlist(name = var_labels[[axis_var]]) +
+    scale_y_productlist(name = var_labels[[fill_var]]) +
     labs(fill = var_labels[[fill_var]], title = title, subtitle = subtitle) +
     theme_minimal()
 
-  clean_productlist_axis_labels(p, combined_label)
+  p
 }
 
 # Survey-sample mosaic plot alongside the selected panel's, sample on
