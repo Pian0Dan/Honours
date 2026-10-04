@@ -22,7 +22,7 @@ library(legendry)
 # levels down to their first letter (extending colliding levels by
 # an extra letter) for use in plots only -- the underlying analysis
 # data keeps full level names.
-source("label_helpers.R")
+source("scripts/label_helpers.R")
 
 set.seed(13)
 

@@ -33,10 +33,12 @@
 #       variable.
 #
 # Unlike panel_visualiser_app.R (exactly two traits, Age and Tenure,
-# known in advance), this app lets the user pick which two of the
-# uploaded sample's trait columns to use as the mosaic plot's x-axis
-# and fill -- every trait column, not just those two, still appears
-# in the marginal bar chart below.
+# known in advance), this app lets the user pick any number of the
+# uploaded sample's trait columns, shown as a double-decker mosaic
+# plot (see plot_mosaic_generic() below) -- selection order matters,
+# since the last variable picked is always the one used for fill
+# colour. Every trait column, not just the selected ones, still
+# appears in the marginal bar chart below.
 #
 # Run with shiny::runApp("scripts/panel_visualiser_prac_app.R") (or
 # the editor's "Run App" button). Unlike panel_visualiser_app.R, this
@@ -161,30 +163,81 @@ get_panel_members_generic <- function(sample_df, member_ids) {
   sample_df[sample_df$ID %in% member_ids, ]
 }
 
-# --- 2. Mosaic plots, for whichever two trait columns are selected
-# ---
-# var1/var2 are the sanitised (safe) column names actually present in
-# df; var1_label/var2_label are the original, human-readable headers
-# shown on the axes/legend (see read_sample_upload() above for why
-# these can differ).
+# --- 2. Mosaic plots, as a double-decker, for however many trait
+# columns are selected ---
+# x_vars is a character vector of one or more (sanitised, safe)
+# column names, in the order the user selected them, all plotted
+# together via ggmosaic's product(). The *last* entry of x_vars is
+# always used as the fill (colour) variable too -- a double decker
+# plot is, by definition, a sequence of same-direction spines (the
+# "layers") with the final split in the opposite direction, coloured
+# by that final variable (divider = ddecker(), ggmosaic's own
+# built-in template for exactly this layout; see
+# `?ggmosaic::ddecker`) -- so fixing the fill to the last-selected
+# variable isn't an arbitrary restriction, it's what a double decker
+# plot *is*. var_labels maps every (safe) trait column name to its
+# original, human-readable header (see read_sample_upload()).
+#
+# ggmosaic labels multi-variable axes by concatenating every
+# variable's level with ":" (e.g. "1st:Male"), which gets unreadable
+# fast with 2+ layers. Rather than a per-axis variable name (which
+# can't be predicted in advance -- seee the note below), every ":" is
+# replaced with a line break, so each layer's level prints on its own
+# line underneath the axis (e.g. "1st" above "Male") -- this needs a
+# throwaway ggplot_build() of the plot first, because
+# scale_x_productlist()/scale_y_productlist() silently ignore a
+# user-supplied *function* for `labels` (ggmosaic's internal training
+# step overwrites any labels *function* with its own computed one),
+# so the labels have to be supplied as an already-computed, modified
+# character vector instead.
+#
+# Both axis titles are set to the same combined list of every
+# selected variable's display label, since ggmosaic's own spine-
+# building algorithm (not anything controlled here) decides which
+# variables actually end up on the x axis versus the y axis once
+# there are more than 2.
+clean_productlist_axis_labels <- function(p, combined_label) {
+  built <- ggplot2::ggplot_build(p)
+  x_scale <- built$layout$panel_scales_x[[1]]
+  y_scale <- built$layout$panel_scales_y[[1]]
+
+  p <- p +
+    scale_x_productlist(
+      name = combined_label,
+      breaks = x_scale$get_breaks(),
+      labels = gsub(":", "\n", x_scale$get_labels(), fixed = TRUE)
+    )
+  y_breaks <- y_scale$get_breaks()
+  if (!is.null(y_breaks)) {
+    p <- p +
+      scale_y_productlist(
+        name = combined_label,
+        breaks = y_breaks,
+        labels = gsub(":", "\n", y_scale$get_labels(), fixed = TRUE)
+      )
+  }
+  p
+}
+
 plot_mosaic_generic <- function(
   df,
-  var1,
-  var2,
+  x_vars,
   title,
   subtitle = NULL,
-  var1_label = var1,
-  var2_label = var2
+  var_labels = setNames(x_vars, x_vars)
 ) {
-  ggplot(df) +
-    geom_mosaic(aes(
-      x = product(!!rlang::sym(var1)),
-      fill = !!rlang::sym(var2)
-    )) +
-    scale_x_productlist(name = var1_label) +
-    scale_y_productlist(name = var2_label) +
-    labs(fill = var2_label, title = title, subtitle = subtitle) +
+  fill_var <- x_vars[length(x_vars)]
+  combined_label <- paste(var_labels[x_vars], collapse = " \u00d7 ")
+
+  p <- ggplot(df) +
+    geom_mosaic(
+      aes(x = product(!!!rlang::syms(x_vars)), fill = !!rlang::sym(fill_var)),
+      divider = ddecker()
+    ) +
+    labs(fill = var_labels[[fill_var]], title = title, subtitle = subtitle) +
     theme_minimal()
+
+  clean_productlist_axis_labels(p, combined_label)
 }
 
 # Survey-sample mosaic plot alongside the selected panel's, sample on
@@ -194,17 +247,14 @@ plot_mosaic_generic <- function(
 plot_sample_vs_panel_generic <- function(
   sample_df,
   panel_df,
-  var1,
-  var2,
+  x_vars,
   panel_label,
   vs_sample_p,
-  var1_label = var1,
-  var2_label = var2
+  var_labels = setNames(x_vars, x_vars)
 ) {
   panel_pane <- plot_mosaic_generic(
     panel_df,
-    var1,
-    var2,
+    x_vars,
     title = panel_label,
     subtitle = paste0(
       "n = ",
@@ -212,17 +262,14 @@ plot_sample_vs_panel_generic <- function(
       "\nassociation vs. sample: p = ",
       signif(vs_sample_p, 3)
     ),
-    var1_label = var1_label,
-    var2_label = var2_label
+    var_labels = var_labels
   )
   sample_pane <- plot_mosaic_generic(
     sample_df,
-    var1,
-    var2,
+    x_vars,
     title = "Survey sample",
     subtitle = paste0("n = ", nrow(sample_df)),
-    var1_label = var1_label,
-    var2_label = var2_label
+    var_labels = var_labels
   )
 
   sample_pane + panel_pane + plot_layout(guides = "collect")
@@ -291,52 +338,81 @@ plot_trait_bars_generic <- function(
 }
 
 # --- 4. Homogeneity test (panel vs. sample association), generalised
-# to whichever two trait columns are selected for the mosaic plot ---
-# Same age:tenure:group three-way-interaction logic (and the same
-# glm.fit()-based speedup) as panel_visualiser_app.R's
-# test_group_vs_sample(), but with the contingency table's dimensions
-# -- and therefore the design matrix -- rebuilt from the selected
-# variables' own observed levels instead of a fixed 5 x 3 Age x
-# Tenure table.
-build_homogeneity_design <- function(sample_df, var1, var2) {
-  template <- expand.grid(
-    V1 = levels(sample_df[[var1]]),
-    V2 = levels(sample_df[[var2]]),
-    Group = c("Rest", "Group")
-  )
-  list(
-    X_reduced = model.matrix(
-      ~ V1 * V2 + V1 * Group + V2 * Group,
-      data = template
+# to however many trait columns are selected for the mosaic plot ---
+# Generalises panel_visualiser_app.R's test_group_vs_sample() (a
+# fixed Age:Tenure:Group three-way interaction) to an arbitrary
+# number of trait variables k: build the fully saturated design over
+# all k trait variables plus Group (every interaction up to the
+# (k+1)-way term), then drop *only* the single highest-order term
+# that spans all k trait variables and Group -- the remaining model
+# allows every trait's own association with every other trait, and
+# with Group, to differ freely, but assumes the full k-way
+# intersectional pattern itself is the same for the panel as for the
+# rest of the sample. A significant goodness-of-fit failure of that
+# reduced model means the panel's specific intersectional composition
+# (across all of the selected trait variables, taken together)
+# differs from the sample's. With k = 2 this reduces to exactly the
+# fixed Age x Tenure version above; with k = 1 it reduces to a plain
+# trait-vs-Group independence test.
+#
+# Every additional trait variable multiplies the contingency table's
+# cell count (by that variable's number of levels), so this becomes
+# increasingly sparse -- and the resulting p-values increasingly
+# unstable -- the more variables are selected relative to panel size.
+build_homogeneity_design <- function(sample_df, trait_vars) {
+  template <- do.call(
+    expand.grid,
+    c(
+      setNames(
+        lapply(trait_vars, function(v) levels(sample_df[[v]])),
+        trait_vars
+      ),
+      list(Group = c("Rest", "Group"))
     )
+  )
+
+  full_vars <- c(trait_vars, "Group")
+  full_formula <- as.formula(paste0(
+    "~ (",
+    paste(full_vars, collapse = " + "),
+    ")^",
+    length(full_vars)
+  ))
+  term_labels <- attr(terms(full_formula, data = template), "term.labels")
+  # The one term spanning every trait variable *and* Group -- the
+  # only difference between the saturated model and this reduced one.
+  top_term <- which(lengths(strsplit(term_labels, ":")) == length(full_vars))
+  reduced_formula <- as.formula(paste(
+    "~",
+    paste(term_labels[-top_term], collapse = " + ")
+  ))
+
+  list(
+    trait_vars = trait_vars,
+    X_reduced = model.matrix(reduced_formula, data = template)
   )
 }
 
-test_group_vs_sample_generic <- function(
-  group_ids,
-  sample_df,
-  var1,
-  var2,
-  design
-) {
+test_group_vs_sample_generic <- function(group_ids, sample_df, design) {
   Group <- factor(
     ifelse(sample_df$ID %in% group_ids, "Group", "Rest"),
     levels = c("Rest", "Group")
   )
-  y <- as.vector(table(
-    V1 = sample_df[[var1]],
-    V2 = sample_df[[var2]],
-    Group = Group
-  ))
+  tab_args <- setNames(
+    lapply(design$trait_vars, function(v) sample_df[[v]]),
+    design$trait_vars
+  )
+  tab_args$Group <- Group
+  y <- as.vector(do.call(table, tab_args))
   fit <- glm.fit(design$X_reduced, y, family = poisson())
   pchisq(fit$deviance, df = fit$df.residual, lower.tail = FALSE)
 }
 
 # --- 5. Order every unique panel by how much its association (over
-# the two selected trait columns) differs from the survey sample's,
-# from most similar (rank 1) to most different (the last rank) --
-# same logic as panel_visualiser_app.R's compute_panel_order(). ---
-compute_panel_order_generic <- function(sample_df, lottery_df, var1, var2) {
+# the selected trait columns) differs from the survey sample's, from
+# most similar (rank 1) to most different (the last rank) -- same
+# logic as panel_visualiser_app.R's compute_panel_order(). ---
+compute_panel_order_generic <- function(sample_df, lottery_df, trait_vars) {
   signature <- vapply(
     lottery_df$member_ids,
     function(ids) paste(sort(ids), collapse = ","),
@@ -344,15 +420,13 @@ compute_panel_order_generic <- function(sample_df, lottery_df, var1, var2) {
   )
   lottery_df <- lottery_df[!duplicated(signature), ]
 
-  design <- build_homogeneity_design(sample_df, var1, var2)
+  design <- build_homogeneity_design(sample_df, trait_vars)
   vs_sample_p <- vapply(
     seq_len(nrow(lottery_df)),
     function(i) {
       test_group_vs_sample_generic(
         lottery_df$member_ids[[i]],
         sample_df,
-        var1,
-        var2,
         design
       )
     },
@@ -440,42 +514,38 @@ server <- function(input, output, session) {
     trait_cols <- attr(df, "trait_cols")
     trait_labels <- attr(df, "trait_labels")
     # Named vector: displayed label (original column header) -> value
-    # actually passed to the server as input$var1/input$var2 (the
+    # actually passed to the server as input$mosaic_vars (the
     # sanitised column name) -- so the dropdown shows the user's own
     # header text even though the plotting code operates on the safe
     # name underneath.
     choices <- setNames(trait_cols, trait_labels[trait_cols])
-    tagList(
-      selectInput(
-        "var1",
-        "Mosaic plot: x-axis variable",
-        choices = choices,
-        selected = trait_cols[1]
+    default_vars <- trait_cols[seq_len(min(2, length(trait_cols)))]
+    selectInput(
+      "mosaic_vars",
+      paste0(
+        "Mosaic plot: variables, as double-decker layers ",
+        "(selection order matters -- the last one picked is the ",
+        "fill colour)"
       ),
-      selectInput(
-        "var2",
-        "Mosaic plot: fill variable",
-        choices = choices,
-        selected = trait_cols[min(2, length(trait_cols))]
-      )
+      choices = choices,
+      selected = default_vars,
+      multiple = TRUE
     )
   })
 
   # --- Every unique panel, ordered from most similar to the sample's
-  # association (var1 x var2) to most different -- recomputed only
-  # when the files or the chosen variables actually change, not on
-  # every slider move ---
+  # association (across every selected mosaic variable) to most
+  # different -- recomputed only when the files or the chosen
+  # variables actually change, not on every slider move ---
   panel_order <- reactive({
-    req(input$var1, input$var2)
     validate(need(
-      input$var1 != input$var2,
-      "Choose two different variables for the mosaic plot's x-axis and fill."
+      length(input$mosaic_vars) >= 1,
+      "Select at least one variable for the mosaic plot."
     ))
     compute_panel_order_generic(
       sample_df(),
       lottery_df(),
-      input$var1,
-      input$var2
+      input$mosaic_vars
     )
   })
   safe_panel_order <- function() {
@@ -486,7 +556,11 @@ server <- function(input, output, session) {
   # in sync with whichever lottery/sample files (and variables) are
   # currently selected.
   observeEvent(
-    list(input$lottery_upload, input$sample_upload, input$var1, input$var2),
+    list(
+      input$lottery_upload,
+      input$sample_upload,
+      input$mosaic_vars
+    ),
     {
       ps <- safe_lottery_df()
       po <- safe_panel_order()
@@ -598,12 +672,10 @@ server <- function(input, output, session) {
         plot_sample_vs_panel_generic(
           sdf,
           panel_members,
-          input$var1,
-          input$var2,
+          input$mosaic_vars,
           paste0("Panel ", cp$panel_id),
           cp$vs_sample_p,
-          var1_label = trait_labels[[input$var1]],
-          var2_label = trait_labels[[input$var2]]
+          var_labels = trait_labels
         )
       },
       error = function(e) e
