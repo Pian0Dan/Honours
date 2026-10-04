@@ -24,7 +24,82 @@ if (!dir.exists("scripts") && dir.exists("../scripts")) {
   setwd("..")
 }
 
-source("scripts/panel_visualiser.R") # lottery_files, load_panel_source, plot_panel_vs_sample
+source("scripts/panel_visualiser.R") # lottery_files, load_panel_source, get_panel_members, plot_panel_mosaic, plot_sample_mosaic
+
+# --- Survey-sample mosaic plot with the selected panel's mosaic
+# plot placed alongside it, for direct visual comparison ---
+# Local to this app -- sample on the left, panel on the right --
+# rather than reusing plot_panel_vs_sample() from
+# scripts/panel_visualiser.R (panel on the left, sample on the
+# right), which other scripts (e.g. 05-panel-association-skeleton.qmd)
+# still rely on in its original order.
+plot_sample_vs_panel <- function(panel_source, panel_id) {
+  plot_sample_mosaic(panel_source) +
+    plot_panel_mosaic(panel_source, panel_id) +
+    plot_layout(guides = "collect") +
+    plot_annotation(title = basename(panel_source$file))
+}
+
+# --- Proportions of one trait's levels, across the panel and survey
+# sample panes ---
+# One row per (group, level) combination -- proportions (each pane's
+# counts divided by that pane's own total) rather than raw counts, so
+# the panel and the (typically much larger) survey sample are
+# comparable on the same y-axis. Independent of the other trait
+# (unlike the mosaic plot above, which shows their joint Age x
+# Tenure composition).
+trait_proportions <- function(values_by_group, levels) {
+  rows <- lapply(names(values_by_group), function(group) {
+    data.frame(
+      group = group,
+      level = factor(as.character(values_by_group[[group]]), levels = levels)
+    )
+  })
+  combined <- do.call(rbind, rows)
+
+  tab <- as.data.frame(table(group = combined$group, level = combined$level))
+  tab$total <- ave(tab$Freq, tab$group, FUN = sum)
+  tab$prop <- tab$Freq / tab$total
+  tab
+}
+
+# --- Grouped bar charts of each trait's (Age, Tenure) proportions,
+# independently, across the panel and survey sample panes ---
+# One facet per trait, with bars grouped (dodged) by pane within each
+# trait's levels.
+plot_trait_bars <- function(panel_members, sample_members) {
+  group_levels <- c("Survey sample", "Panel")
+
+  age_props <- trait_proportions(
+    list(Panel = panel_members$Age, `Survey sample` = sample_members$Age),
+    age_levels
+  )
+  age_props$trait <- "Age"
+
+  tenure_props <- trait_proportions(
+    list(Panel = panel_members$Tenure, `Survey sample` = sample_members$Tenure),
+    tenure_levels
+  )
+  tenure_props$trait <- "Tenure"
+
+  bar_df <- rbind(age_props, tenure_props)
+  bar_df$group <- factor(bar_df$group, levels = group_levels)
+  bar_df$level <- factor(
+    as.character(bar_df$level),
+    levels = c(age_levels, tenure_levels)
+  )
+
+  ggplot(bar_df, aes(x = level, y = prop, fill = group)) +
+    geom_col(position = "dodge") +
+    facet_wrap(~trait, scales = "free_x") +
+    labs(
+      x = NULL,
+      y = "Proportion of pane",
+      fill = NULL,
+      title = "Marginal trait distributions"
+    ) +
+    theme_minimal()
+}
 
 ui <- page_sidebar(
   title = "Panel composition explorer",
@@ -51,6 +126,12 @@ ui <- page_sidebar(
     height = "650px",
     card_header("Panel vs. survey sample"),
     plotOutput("panel_plot", height = "550px")
+  ),
+  card(
+    full_screen = TRUE,
+    height = "450px",
+    card_header("Marginal trait distributions (Age, Tenure)"),
+    plotOutput("trait_bars_plot", height = "350px")
   )
 )
 
@@ -123,7 +204,24 @@ server <- function(input, output, session) {
     # unrecognised/missing lottery file, or an out-of-range
     # panel_id) instead of leaving it silently blank.
     result <- tryCatch(
-      plot_panel_vs_sample(panel_source(), input$panel_id),
+      plot_sample_vs_panel(panel_source(), input$panel_id),
+      error = function(e) e
+    )
+    if (inherits(result, "error")) {
+      validate(conditionMessage(result))
+    }
+    result
+  })
+
+  output$trait_bars_plot <- renderPlot({
+    result <- tryCatch(
+      {
+        ps <- panel_source()
+        plot_trait_bars(
+          get_panel_members(ps, input$panel_id),
+          ps$survey_sample
+        )
+      },
       error = function(e) e
     )
     if (inherits(result, "error")) {
