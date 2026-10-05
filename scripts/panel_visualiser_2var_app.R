@@ -584,7 +584,30 @@ app_theme <- bs_theme(
   ),
   code_font = font_collection(font_google("Fira Code"), "monospace"),
   "border-radius" = "0.5rem",
-  "card-border-radius" = "0.75rem"
+  "card-border-radius" = "0.75rem",
+  # Bootstrap 5's own color-contrast() Sass function (used to
+  # auto-derive button text, "-subtle" backgrounds, and
+  # "-text-emphasis" colors for every theme color) unconditionally
+  # @warns -- with no flag to suppress it -- whenever it can't find a
+  # candidate clearing its $min-contrast-ratio (4.5, i.e. WCAG AA for
+  # normal text) against a given background. The "shiny" preset's
+  # own extended palette (the plain named colors like blue/orange/
+  # teal that back its auto-generated gradient/background utility
+  # classes, not just the bg/fg/primary/etc. set above) happens to
+  # fall short of 4.5 against both white and black for several
+  # entries, so customizing *any* theme color here -- which forces
+  # Bootstrap to actually recompute those derived colors rather than
+  # reuse its own pre-validated unmodified defaults -- surfaces a
+  # wall of "Found no color leading to 4.5:1 contrast ratio..."
+  # warnings at every theme compile, none of which are about text
+  # this app actually displays. Lowering the threshold to 3 (as
+  # several official Bootswatch themes -- e.g. "solar", "united" --
+  # already do for the same reason, and Bootstrap 4's own former
+  # default) resolves it at the source rather than just hiding the
+  # symptom, at the cost of a slightly less strict contrast guarantee
+  # for Bootstrap's own auto-derived (not independently chosen) text
+  # colors elsewhere in the framework.
+  "min-contrast-ratio" = 3
 ) |>
   bs_add_rules(
     "
@@ -1077,8 +1100,8 @@ server <- function(input, output, session) {
         style = "width: 100%;",
         tags$thead(
           tags$tr(
-            tags$th(axis_label),
-            tags$th(fill_label),
+            tags$th(tags$strong(axis_label)),
+            tags$th(tags$strong(fill_label)),
             tags$th("Status"),
             tags$th("Sample probability"),
             tags$th("Expected n (panel)"),
@@ -1108,18 +1131,18 @@ server <- function(input, output, session) {
         cp$panel_id,
         " -- missing & under-represented intersections"
       ),
-      tags$p(paste0(
+      tags$p(
         "Combinations of ",
-        axis_label,
+        tags$strong(axis_label),
         " \u00d7 ",
-        fill_label,
+        tags$strong(fill_label),
         " that occur in the sample but are either entirely missing ",
         "from this panel, or present at under ",
         input$underrep_threshold,
         "% of the share their sample probability would predict for a ",
         "panel of this size -- ranked worst-first (missing ",
         "combinations always lead, as the extreme case)."
-      )),
+      ),
       body,
       easyClose = TRUE,
       size = "l",
