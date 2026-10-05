@@ -260,7 +260,8 @@ plot_sample_vs_panel_generic <- function(
       "n = ",
       nrow(panel_df),
       "\nassociation vs. sample: p = ",
-      signif(vs_sample_p, 3)
+      signif(vs_sample_p, 3),
+      " (higher is more similar to the sample)"
     ),
     var_labels = var_labels
   )

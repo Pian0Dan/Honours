@@ -41,7 +41,8 @@ plot_sample_vs_panel <- function(panel_source, panel_id, vs_sample_p) {
   panel_pane$labels$subtitle <- paste0(
     panel_pane$labels$subtitle,
     "\nassociation vs. sample: p = ",
-    signif(vs_sample_p, 3)
+    signif(vs_sample_p, 3),
+    " (higher is more similar to the sample)"
   )
 
   plot_sample_mosaic(panel_source) +

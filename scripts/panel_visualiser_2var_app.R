@@ -247,7 +247,11 @@ plot_sample_vs_panel_generic <- function(
     if (!is.na(return_probability)) {
       paste0("return probability = ", signif(return_probability, 3))
     },
-    paste0("association vs. sample: p = ", signif(vs_sample_p, 3))
+    paste0(
+      "association vs. sample: p = ",
+      signif(vs_sample_p, 3),
+      " (higher is more similar to the sample)"
+    )
   )
   panel_pane <- plot_mosaic_generic(
     panel_df,
@@ -432,6 +436,98 @@ compute_panel_order_generic <- function(sample_df, lottery_df, trait_vars) {
   )
 }
 
+# --- 6. Missing & under-represented intersections: which
+# (axis_var, fill_var) combinations occur at least once in the full
+# sample but are either entirely absent from a specific panel, or
+# present at far lower a rate than the panel's own size would predict
+# given that combination's share of the sample ---
+# This flags exactly the kind of intersectional gap a quota-based
+# lottery mechanism can produce (see build_homogeneity_design()
+# above, and test_group_vs_sample_generic()'s significance tests): a
+# panel can satisfy every individual trait's own margin while still
+# under-representing, or missing outright, entire joint combinations
+# the sample itself contains.
+#
+# A combination's *expected* count in the panel, were the panel a
+# perfectly proportional miniature of the sample, is
+# sample_prop * nrow(panel_df); ratio is the panel's *actual* count
+# divided by that expectation -- 0 for a combination missing
+# outright, 1 for a combination appearing exactly as often as
+# expected, and anywhere in between for a combination that's present
+# but under-represented. underrepresentation_threshold (0-1) sets how
+# far below 1 that ratio has to fall before a present-but-thin
+# combination is flagged alongside the always-flagged, entirely
+# missing ones -- e.g. the default of 0.5 flags combinations
+# appearing at less than half their expected share.
+#
+# This is a simple, *descriptive* ratio, not a significance test --
+# small panels make small counts noisy by nature (a combination
+# expected ~2 times can easily land on 0 or 1 purely by chance,
+# without any real distortion), so a flagged row here is best read as
+# "worth a second look", not as a formal claim of bias the way
+# test_group_vs_sample_generic()'s hypothesis test is. Combinations
+# the sample itself never contains are excluded regardless of
+# threshold -- a panel can't be expected to represent an intersection
+# that doesn't exist to begin with.
+#
+# Sorted worst-ratio-first (so entirely missing combinations, at
+# ratio 0, always lead), with ties broken by the more common (in the
+# sample) combination first, since an equally bad shortfall is more
+# concerning for a combination that's common in the sample than one
+# that's already rare.
+#
+# expand.grid()'s default column order (first argument varying
+# fastest) is deliberately matched to table()'s own array layout (its
+# first dimension varying fastest) so sample_tab/panel_tab can be
+# flattened with a plain as.vector() rather than an explicit lookup
+# per row.
+compute_underrepresented_intersections <- function(
+  sample_df,
+  panel_df,
+  axis_var,
+  fill_var,
+  underrepresentation_threshold = 0.5
+) {
+  axis_levels <- levels(sample_df[[axis_var]])
+  fill_levels <- levels(sample_df[[fill_var]])
+
+  sample_tab <- table(
+    factor(sample_df[[axis_var]], levels = axis_levels),
+    factor(sample_df[[fill_var]], levels = fill_levels)
+  )
+  panel_tab <- table(
+    factor(panel_df[[axis_var]], levels = axis_levels),
+    factor(panel_df[[fill_var]], levels = fill_levels)
+  )
+
+  combos <- expand.grid(
+    axis_level = axis_levels,
+    fill_level = fill_levels,
+    stringsAsFactors = FALSE
+  )
+  combos$sample_count <- as.vector(sample_tab)
+  combos$panel_count <- as.vector(panel_tab)
+  combos$sample_prop <- combos$sample_count / sum(combos$sample_count)
+  combos$expected_count <- combos$sample_prop * nrow(panel_df)
+  combos$ratio <- ifelse(
+    combos$expected_count > 0,
+    combos$panel_count / combos$expected_count,
+    0
+  )
+
+  flagged <- combos[
+    combos$sample_count > 0 &
+      (combos$panel_count == 0 | combos$ratio < underrepresentation_threshold),
+  ]
+  flagged$status <- ifelse(
+    flagged$panel_count == 0,
+    "Missing",
+    "Under-represented"
+  )
+
+  flagged[order(flagged$ratio, -flagged$sample_prop), ]
+}
+
 # Small JS helper backing the "Copy to clipboard" button in the
 # member-ID modal below (see observeEvent(input$copy_member_ids, ...)
 # in the server) -- registered once, here, at the top level of the
@@ -450,9 +546,76 @@ Shiny.addCustomMessageHandler('copy-to-clipboard', function(text) {
 });
 "
 
+# --- 7. App theme ---
+# Built on bslib's "shiny" preset (the default for Bootstrap 5, and
+# already a more polished starting point than vanilla Bootstrap)
+# rather than a Bootswatch theme, since the app's own content --
+# mosaic plots, data tables -- benefits more from calm, readable
+# chrome than from a strong stylistic statement. A slate-blue primary
+# (used for the sidebar's active states, buttons, and links) is
+# chosen to read as "data tool" rather than "warning"/"danger", and
+# Inter/Fira Code (both widely available, legible at small sizes --
+# relevant for the sidebar's many compact controls) replace
+# Bootstrap's system-font default. font_collection() lists system
+# fallbacks after each Google font so the page still renders sensibly
+# before (or without) a successful font download.
+app_theme <- bs_theme(
+  version = 5,
+  bg = "#FBFCFE",
+  fg = "#1B2430",
+  primary = "#3A5A9B",
+  secondary = "#56677F",
+  success = "#2F9E6E",
+  warning = "#D98E04",
+  danger = "#C94949",
+  base_font = font_collection(
+    font_google("Inter", wght = c(400, 500, 600)),
+    "-apple-system",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif"
+  ),
+  heading_font = font_collection(
+    font_google("Inter", wght = c(600, 700)),
+    "-apple-system",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif"
+  ),
+  code_font = font_collection(font_google("Fira Code"), "monospace"),
+  "border-radius" = "0.5rem",
+  "card-border-radius" = "0.75rem"
+) |>
+  bs_add_rules(
+    "
+    .card {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+      border: none;
+    }
+    .card-header {
+      font-weight: 600;
+      background-color: mix($body-bg, $primary, 92%);
+    }
+    .btn-default, .btn-secondary {
+      border-radius: $border-radius;
+    }
+    .form-select, .form-control {
+      border-radius: $border-radius;
+    }
+    .modal-content {
+      border-radius: $card-border-radius;
+    }
+    table.table th {
+      font-weight: 600;
+      color: $primary;
+    }
+  "
+  )
+
 ui <- page_sidebar(
-  title = "Panel vs. sample explorer -- axis x fill (upload your own files)",
-  theme = bs_theme(version = 5),
+  title = "Intersection Inspector -- axis x fill (upload your own files)",
+  theme = app_theme,
+  class = "bslib-page-dashboard",
   # A <script> tag runs wherever it's placed in the page, regardless
   # of visual layout, so this just rides along as an (invisible) part
   # of page_sidebar()'s main content rather than needing a dedicated
@@ -495,7 +658,24 @@ ui <- page_sidebar(
     # that doesn't exist isn't meaningful, so the button itself isn't
     # either.
     uiOutput("weighted_random_ui"),
-    actionButton("show_ids", "Show panel member IDs")
+    actionButton("show_ids", "Show panel member IDs"),
+    # Read by observeEvent(input$show_missing_intersections, ...)
+    # below -- see compute_underrepresented_intersections()'s
+    # underrepresentation_threshold argument for exactly what this
+    # controls.
+    sliderInput(
+      "underrep_threshold",
+      "Flag intersections below this % of their expected share",
+      min = 10,
+      max = 90,
+      value = 50,
+      step = 5,
+      post = "%"
+    ),
+    actionButton(
+      "show_missing_intersections",
+      "Show missing & under-represented intersections"
+    )
   ),
   card(
     full_screen = TRUE,
@@ -847,6 +1027,104 @@ server <- function(input, output, session) {
       type = "message",
       duration = 3
     )
+  })
+
+  # Pops up every (axis_var, fill_var) combination that occurs in the
+  # sample but is either entirely missing from the displayed panel,
+  # or present at less than input$underrep_threshold% of the share
+  # its sample probability would predict -- see
+  # compute_underrepresented_intersections() above for exactly what
+  # "expected share" means and why this is a descriptive flag, not a
+  # significance test. Uses the same axis_var/fill_var currently
+  # selected for the mosaic plot, so what's reported here always
+  # matches what's visually being compared.
+  observeEvent(input$show_missing_intersections, {
+    cp <- tryCatch(current_panel(), error = function(e) NULL)
+    if (is.null(cp)) {
+      showNotification(
+        "No panel is currently displayed.",
+        type = "warning",
+        duration = 4
+      )
+      return()
+    }
+    sdf <- sample_df()
+    ldf <- lottery_df()
+    member_ids <- ldf$member_ids[[cp$panel_id]]
+    panel_members <- get_panel_members_generic(sdf, member_ids)
+    trait_labels <- attr(sdf, "trait_labels")
+    axis_label <- trait_labels[[input$axis_var]]
+    fill_label <- trait_labels[[input$fill_var]]
+
+    flagged_df <- compute_underrepresented_intersections(
+      sdf,
+      panel_members,
+      input$axis_var,
+      input$fill_var,
+      underrepresentation_threshold = input$underrep_threshold / 100
+    )
+
+    body <- if (nrow(flagged_df) == 0) {
+      tags$p(
+        "No missing or severely under-represented intersections -- ",
+        "every sample intersection appears in this panel at or above ",
+        input$underrep_threshold,
+        "% of its expected share."
+      )
+    } else {
+      tags$table(
+        class = "table table-sm table-striped",
+        style = "width: 100%;",
+        tags$thead(
+          tags$tr(
+            tags$th(axis_label),
+            tags$th(fill_label),
+            tags$th("Status"),
+            tags$th("Sample probability"),
+            tags$th("Expected n (panel)"),
+            tags$th("Actual n (panel)"),
+            tags$th("% of expected")
+          )
+        ),
+        tags$tbody(
+          lapply(seq_len(nrow(flagged_df)), function(i) {
+            tags$tr(
+              tags$td(as.character(flagged_df$axis_level[i])),
+              tags$td(as.character(flagged_df$fill_level[i])),
+              tags$td(flagged_df$status[i]),
+              tags$td(paste0(signif(flagged_df$sample_prop[i] * 100, 3), "%")),
+              tags$td(signif(flagged_df$expected_count[i], 3)),
+              tags$td(flagged_df$panel_count[i]),
+              tags$td(paste0(signif(flagged_df$ratio[i] * 100, 3), "%"))
+            )
+          })
+        )
+      )
+    }
+
+    showModal(modalDialog(
+      title = paste0(
+        "Panel ",
+        cp$panel_id,
+        " -- missing & under-represented intersections"
+      ),
+      tags$p(paste0(
+        "Combinations of ",
+        axis_label,
+        " \u00d7 ",
+        fill_label,
+        " that occur in the sample but are either entirely missing ",
+        "from this panel, or present at under ",
+        input$underrep_threshold,
+        "% of the share their sample probability would predict for a ",
+        "panel of this size -- ranked worst-first (missing ",
+        "combinations always lead, as the extreme case)."
+      )),
+      body,
+      easyClose = TRUE,
+      size = "l",
+      footer = modalButton("Close")
+    ))
   })
 
   output$panel_plot <- renderPlot({
