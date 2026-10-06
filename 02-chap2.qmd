@@ -145,7 +145,7 @@ This makes the selection probabilities as equal as possible while still respecti
 
 ### Discussion
 
-This approach to the problem of panel selection is elegant and has some nice properties. It ensures that the selection probabilities are as equal as possible, which can help to create a more representative panel. However, it does not give a way to introduce specific joint trait requirements for subsets of the population, which is something that may be desirable in certain situations. For example, if there is a need to ensure that a certain combination of traits is represented in the panel, then this approach may not be able to accommodate that requirement without reintroducing representative burden.
+This approach to the problem of panel selection has been shown to be effective for ensuring maximally equal selection probabilities, which can help to make sortition as a process fairer (reducing situations where specific individuals are massively disadvantaged and less likely to be selected). However, it does not give a way to introduce specific joint trait requirements for subsets of the population, which may be a necessity for accurate representation of community groups. Additionally, as a whole, this limitation can violate representativeness as a goal, considering the motivation for sortitioned panels in the first place--filling a room with individuals who accurately and descriptively represent the a community's population diversity and characteristics.
 
 ### New Investigation
 

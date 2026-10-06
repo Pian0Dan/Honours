@@ -647,13 +647,13 @@ ui <- page_sidebar(
   sidebar = sidebar(
     width = 320,
     fileInput(
-      "lottery_upload",
-      "Lottery file (Panelot lottery.csv)",
+      "sample_upload",
+      "Sample (csv of Respondent Pool)",
       accept = ".csv"
     ),
     fileInput(
-      "sample_upload",
-      "Sample / respondent-pool file",
+      "lottery_upload",
+      "Lottery file (csv of Possible Panels)",
       accept = ".csv"
     ),
     uiOutput("var_selectors"),
