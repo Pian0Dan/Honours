@@ -120,6 +120,16 @@
     ]
   },
   {
+    "objectID": "05-chap5.html",
+    "href": "05-chap5.html",
+    "title": "5  Application",
+    "section": "",
+    "text": "App functions:\n\nTakes a lottery file and sample file\nGenerates mosaic plots to show intersections of categories within lottery and sample\nGenerates bar charts of trait proportions to show the relative marginal presence of traits between the panel and sample\nCalculates the level of similarity of associations/general shape present within the sample and panels\nOrders the panels based on their level of similarity in association to the sample, by using the calculated p-values\nDisplays size of sample and panel, as well as selection probability of each panel and their level of association preservation compared to sample (as p-value, with interpretation of “significance level of difference”)\nAllows the user to slide across these to compare as they worsen\nAllows the user to jump to a fully random panel, just to assess its level of representation\nAllows the user to input a specific panel ID, if they want to inspect it in particular\nAllows the user to jump to probability-weighted random panels (if probability exists within the lottery file), side-stepping the need for external RNG to select a panel\nAllows the user to inspect and copy panel member IDs to clipboard, to continue with workflow\nAllows the user to check missing and under-represented intersections (compared to sample) at different representation thresholds",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Application</span>"
+    ]
+  },
+  {
     "objectID": "refs.html",
     "href": "refs.html",
     "title": "Bibliography",
