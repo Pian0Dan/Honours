@@ -2,6 +2,11 @@
 
 ## Research Aims
 
+This thesis aimed to:
+- Assess whether current algorithmic methods are achieving representative panels
+- Diagnose whether association trends are preserved through the algorithmic sortition process
+- Provide a framework through which practitioners can make more informed and standardised decisions
+
 What does it mean for a panel to be "good" at being representative and are we achieving this?
 - Are current methods and algorithms, like LexiMin, performing the best they could be?
 - How do unobserved/unfiltered traits affect response rates, and therefore panel composition and representativeness?

@@ -139,9 +139,7 @@ $$
 
 ### Logic
 
-LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. Then it improves the next-lowest probabilities, and so on.
-
-This makes the selection probabilities as equal as possible while still respecting the panel constraints.
+LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. It then iteratively improves the next-lowest probabilities, until it hits optimal values. This makes the selection probabilities as equal as possible while still respecting the panel constraints.
 
 ### Discussion
 
@@ -151,11 +149,11 @@ This approach to the problem of panel selection has been shown to be effective f
 
 Across all algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs--focusing instead purely on affecting individual selection chances based on quotas of each demographic trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g. supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be beneficial, or even necessary, to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. Though this limitation is generally mitigated in practice by bringing in "specialist speakers" to talk to the panel during their deliberation processes [@redmanHowRecruitParticipants], this still is not the same type of inclusion by nature, as being directly part of the panel and decision-making process.
 
-The extent to which intersectional inclusion happens naturally through current methods will be evaluated in the later simulations. We will then also test the effects of further imposing combinational quotas on the representative burden, and on the selection probabilities of different individuals, to see whether this is a feasible way to ensure the representation of intersectional minorities in  situations where it is deemed necessary.
+The extent to which intersectional inclusion happens naturally through current methods was evaluated in the later simulations. We then also establish a means to measure the level of intersectionality and association preserved throughout the selection process.
 
 ## Visualisation Methods
 
-In order to evaluate the representativeness of selected panels, we will use a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: bar charts, mosaic plots, double decker plots, UpSet plots and parallel coordinate plots.
+In order to evaluate the representativeness of selected panels, we used a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the sample from which it was pulled, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: bar charts, mosaic plots, double decker plots, UpSet plots and parallel coordinate plots.
 
 First, it will be of use to just do some illustrative graphing to show densities within the distribution across traits, in the form of bar charts. These will give a rough visual idea of the breakdown of the population and samples within the simulation, setting up some expectations for how representation should look in further visualisations. From there, either mosaic or double decker plots will be useful for depicting the proportion of given demographic traits that are selected for the panels. Finally, UpSet plots [@conwayUpSetRPackageVisualization2017] will be an effective way to showcase the intersections that exist in generated panels, as they offer a visual link between demographic variables, as well as frequency counts to highlight how often these occur within a given panel.
 
