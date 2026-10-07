@@ -1,4 +1,15 @@
-# Application {#sec-application}
+# Introducing Intersection Inspector {#sec-application}
+
+Having flagged the issues present with current sortitioning methods and process, the second gap sought to be addressed was the absence of a tool for practitioners to assess the viability and intersectionality of panels before engaging in deliberative processes. As such, a Shiny app was developed. Even within current practice, the LexiMin lottery and panel selection process took two steps: 1. uploading categories and trait quotas alongside a respondent pool and determining desired panel size, and 2. taking the computed panel lottery to a interactive page for random number generation to select a specific panel. The Shiny app developed as part of this thesis serves to replace this second step, with additional functionality that will benefit practitioners in smoothness of their workflow, as well as provide more confidence in the representativeness of their panels at a controllably granular level of intersectionality.
+
+## Intended workflow
+
+The app page consists of three parts: 1. a sidebar comprised of interactable buttons, toggles and sliders, 2. a window that displays mosaic plots comparing the 2-way intersections and associations present between the sample and any selected panel for any two selected category variables, and 3. a window that displays the relative proportions of every trait present in the sample and any selected panel, across all categories present within the sample's dataset. To make use of this, a practitioner is expected to follow the below procedure.
+
+### Uploading files
+
+
+
 
 App functions:
 

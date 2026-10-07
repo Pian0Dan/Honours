@@ -703,7 +703,7 @@ ui <- page_sidebar(
   card(
     full_screen = TRUE,
     height = "650px",
-    card_header("Panel vs. survey sample"),
+    card_header("Survey Sample vs. Panel"),
     plotOutput("panel_plot", height = "550px")
   ),
   card(
