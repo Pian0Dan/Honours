@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Application – Are you in the room? A framework for sortition and representation</title>
+<title>5&nbsp; Introducing Intersection Inspector – Are you in the room? A framework for sortition and representation</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -86,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-chap5.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Application</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-chap5.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introducing Intersection Inspector</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -144,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-chap5.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Application</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introducing Intersection Inspector</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -158,15 +158,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Sections</b></h2>
+   
+  <ul class="collapse">
+  <li><a href="#intended-workflow" id="toc-intended-workflow" class="nav-link active" data-scroll-target="#intended-workflow"><span class="header-section-number">5.1</span> Intended workflow</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-application" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Application</span></span></h1>
+<h1 class="title"><span id="sec-application" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introducing Intersection Inspector</span></span></h1>
 </div>
 
 
@@ -183,6 +189,12 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Having flagged the issues present with current sortitioning methods and process, the second gap sought to be addressed was the absence of a tool for practitioners to assess the viability and intersectionality of panels before engaging in deliberative processes. As such, a Shiny app was developed. Even within current practice, the LexiMin lottery and panel selection process took two steps: 1. uploading categories and trait quotas alongside a respondent pool and determining desired panel size, and 2. taking the computed panel lottery to a interactive page for random number generation to select a specific panel. The Shiny app developed as part of this thesis serves to replace this second step, with additional functionality that will benefit practitioners in smoothness of their workflow, as well as provide more confidence in the representativeness of their panels at a controllably granular level of intersectionality. This will enable practitioners to make more informed decisions about potential quota constraint adjustments and representative validity, minimising likelihood of unexpectedly poor intersectional spread and representation when panels convene.</p>
+<section id="intended-workflow" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="intended-workflow"><span class="header-section-number">5.1</span> Intended workflow</h2>
+<p>The app page consists of three parts: 1. a sidebar comprised of interactable buttons, toggles and sliders, 2. a window that displays mosaic plots comparing the 2-way intersections and associations present between the sample and any selected panel for any two selected category variables, and 3. a window that displays the relative proportions of every trait present in the sample and any selected panel, across all categories present within the sample’s dataset. To make use of this, a practitioner is expected to follow the below procedure.</p>
+<section id="uploading-files" class="level3">
+<h3 class="anchored" data-anchor-id="uploading-files">Uploading files</h3>
 <p>App functions:</p>
 <ul>
 <li>Takes a lottery file and sample file</li>
@@ -200,6 +212,8 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
