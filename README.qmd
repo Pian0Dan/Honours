@@ -350,5 +350,75 @@ This feels like atypical report findings/structure, so I don't know what would m
     - If roughly similar proportions/intersection trends, then random may perform better for preserving these, as it doesn't introduce distortion through quota constraints
     - Future work should focus on
 
+### Discussion
 
+## Week 11
+
+### Plan
+
+#### Results
+
+- At top of results: what is in this chapter?
+    - Visual summary (mosaic plots)
+    - Numerical summaries assessing association capture between steps
+    - 
+
+
+Do both populations -> slice -> equal response chance first; demonstrate that associations were preserved through random selection of 3k from 10k from 100k; nothing particularly notable in the changes in distribution
+
+Present this as patchwork of pop1 -> slice -> response1 (eq response chance) and pop2 -> slice -> response1 (eq response chance)
+
+Then do both populations to slice to associated response chances; demonstrate that associations were distorted through association of age and response when sampling 3k from 10k; this has shifted the association trends and overall intersections present within the sample
+
+- Use app to cherrypick some interesting panels to visualise
+- Paste the visualisation from the app
+- Cite whether there is distortion present when sample and panel are compared to previous population visualisation
+- Motivate this difference by stating and interpreting the significance level of difference in association (size of p-value calculated for difference in association between constructed panel and sample)
+    - Also calculate and state difference in association between panels and population associations
+
+
+
+
+#### Methodology
+
+- Add explanation of numerical summary to methodology
+
+- Add paragraph in methodology about the exact numbers of categories and sample sizes and all of those details used for the visualised simulation
+
+- Add section about population, slice, sample and panel procedure and definitions
+    - Good spot for flow diagram
+
+- Add caveat that response rates were higher than typically observed, to ensure data richness, so algorithm effectiveness could be properly assessed
+- Add caveat that level of association preservation could be affected to different extents, depending on defined association strengths
+
+
+
+##### Experimental Design
+
+- Looking at 2 populations
+
+##### Visualisation Method
+
+- State that it is a mosaic plot
+- Explain why it is relevant to the current context
+- Explain that mosaic plots
+
+
+#### App Explanation
+
+- Explain why
+
+- Explain what each of the features is, how they work, why you would use them
+
+- 
+
+
+#### Literature Review
+
+- Cite a different paper for Maximin (https://procaccia.info/wp-content/uploads/2021/05/transparent.pdf)
+- Give better motivation for Goldilocks (explaining that improves robustness and is meant to prevent manipulation of selection odds)
+- Cite GitHub repo for groupselect (https://github.com/sortitionfoundation/groupselect-app) alongside paper that mentions LEGACY, to explain that this is the previous sortition algorithm method
+
+- Talk about visualisation before discussion and knowledge gap
+- Mention that most literature focuses on optimising for fairness and making selections robust, but does not consider the validity of the resulting panels in great detail
 

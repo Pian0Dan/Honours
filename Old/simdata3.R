@@ -12,7 +12,7 @@
 # ---------------------------------------------------------------
 
 library(ggplot2)
-library(ggmosaic)
+library(ggmosaic2)
 # legendry provides guide_axis_nested(), used below to split each
 # mosaic's composite x-axis label (e.g. "Male:Rent") into separate,
 # bracketed rows -- one row per variable -- so the labels stay

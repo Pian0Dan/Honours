@@ -2,25 +2,93 @@
 
 ## Research Aims
 
-This thesis aimed to:
-- Assess whether current algorithmic methods are achieving representative panels
-- Diagnose whether association trends are preserved through the algorithmic sortition process
-- Provide a framework through which practitioners can make more informed and standardised decisions
+This thesis aimed to assess whether current algorithmic methods are achieving representative panels, to diagnose whether association trends present in a sample are preserved through the algorithmic sortition process, to demystify the sortition selection process in order to improve its transparency, and to provide a framework through which practitioners can make more informed and standardised decisions.
 
-What does it mean for a panel to be "good" at being representative and are we achieving this?
-- Are current methods and algorithms, like LexiMin, performing the best they could be?
-- How do unobserved/unfiltered traits affect response rates, and therefore panel composition and representativeness?
-- How can survey non-response and other sampling-level issues bias representativeness?
-
-nDF suggests 10x response to panel count; not generally feasibly, more often get 3x. How much of a difference does this make to burden and selection likelihood?
+Underlying these aims is a more basic question: what does it mean for a panel to be "good" at being representative, and are current methods actually achieving this? This breaks down into several more specific questions. Are current methods and algorithms, such as LexiMin, performing the best they could be? How well are intersectional associations and trends preserved throughout selection, and therefore how representative is panel composition? And how can differing levels of survey response and other sampling-level issues bias representativeness, beyond whatever the selection algorithm itself contributes?
 
 ## Research Design
 
 ### Simulation design
 
-This thesis investigates the impacts of data complexity and construction on algorithmic performance. To test this, populations of varying intersectional complexity (three and five categories) and varying associations (independent and associated) were simulated. Categories used were inspired by demographic variables often used for sortition in industry. In the three categorical variable case, these were age (taking values of 18-34, 35-44, 45-54, 55-64, 65+), gender (taking values of male, female, non-binary) and tenure (taking values of rent, own, other). The five variable case took the initial three variables from the previous case, but then also added the variables education (no qualification, secondary, bachelor, postgraduate) and location (metro, regional, remote). The combinations of these variables were then used to produce the simulated datasets for the panel sampling process.
+This thesis investigates the impacts of data complexity and construction on algorithmic performance. To test this, a population of simple intersectional complexity (two variables) and varying associations (independent and associated) was simulated. However, the findings are generalisable to cases with greater numbers of categories, and are expected to be more severe in these contexts (given the intersectional matrix would only grow in dimension, while the selected panel size would remain constant). Categories used were inspired by demographic variables often used for sortition in industry. These were age (taking values of 18-34, 35-44, 45-54, 55-64, 65+) and tenure status (taking values of rent, own and other). The combinations of these variables were then used to produce the 4 simulated datasets for the panel selection process.
 
-To illustrate the general procedure concretely at a minimal scale, a simplified two-variable example was constructed using only age and tenure. Age is denoted $A$, taking one of $L_A = 5$ ordered levels $a \in \{1, \dots, 5\}$ (18-34 through 65+), as previously stated, and tenure is denoted $T$, taking one of $L_T = 3$ levels $t \in \{1, \dots, 3\}$ (Rent, Own, Other). Marginal probability vectors were first defined for each variable,
+### Population, slice, sample and panel: procedure and definitions
+
+Every simulated dataset in this thesis moves through the same four stages, and the terms used for each are kept deliberately consistent throughout to avoid ambiguity, since "sample" in particular is used loosely (and inconsistently) in much of the sortition literature.
+
+- **Population**: the full simulated universe of individuals ($n_{\text{total}} = 100{,}000$), generated from a specified joint probability array over the category variables. This represents the entire community eligible for selection, with known marginal and joint (intersectional) distributions, since these were specified directly in the data-generating process.
+- **Slice**: a simple random sample, without replacement, of 10% of the population, drawn before any response behaviour is simulated. This represents the group of individuals actually invited to take part -- e.g. mailed a survey or invitation -- and is sometimes called the *invited pool* elsewhere. Because it is drawn uniformly at random from the population, the slice's own composition deviates from the population's only through ordinary sampling variability, not through any systematic bias.
+- **Sample**: the subset of the slice who actually respond, determined by an independent Bernoulli response trial for each invited individual, under one of the response-rate cases described below. This is the *realised* pool of individuals who are actually available for panel selection, also referred to as the *respondent pool* or *survey sample* elsewhere in this thesis, and is the benchmark against which every panel's representativeness is compared, since it -- not the full population -- is what any practical algorithm has to draw from, within current practices.
+- **Panel**: a fixed-size subset of $k$ members drawn from the sample by a selection algorithm (LexiMin, in current practice, via Panelot) subject to quota constraints on the permitted count of each category level. This is the final body that would convene to deliberate, and is the unit whose representativeness this thesis is ultimately concerned with evaluating.
+
+```{r}
+#| label: fig-population-slice-sample-panel
+#| fig-cap: "The four stages of the simulation pipeline: population, slice, sample and panel."
+#| echo: false
+library(ggplot2)
+
+box_w <- 1.45
+box_h <- 0.6
+xs <- c(0, 1.9, 3.8, 5.7)
+
+pipeline_nodes <- data.frame(
+  x = xs,
+  y = 0,
+  label = c(
+    "Population",
+    "Slice\n(invited pool)",
+    "Sample\n(respondent pool)",
+    "Panel\n(k members)"
+  )
+)
+
+pipeline_edges <- data.frame(
+  x = xs[1:3] + box_w / 2,
+  xend = xs[2:4] - box_w / 2,
+  y = 0,
+  label = c(
+    "random 10% slice",
+    "Bernoulli response\ntrials",
+    "quota-constrained\nselection algorithm"
+  )
+)
+
+ggplot() +
+  geom_rect(
+    data = pipeline_nodes,
+    aes(
+      xmin = x - box_w / 2, xmax = x + box_w / 2,
+      ymin = y - box_h / 2, ymax = y + box_h / 2
+    ),
+    fill = "grey95", colour = "black"
+  ) +
+  geom_text(
+    data = pipeline_nodes,
+    aes(x = x, y = y, label = label),
+    fontface = "bold", size = 3.4, lineheight = 0.9
+  ) +
+  geom_segment(
+    data = pipeline_edges,
+    aes(x = x, xend = xend, y = y, yend = y),
+    arrow = arrow(length = unit(0.18, "cm"), type = "closed"),
+    linewidth = 0.4
+  ) +
+  geom_text(
+    data = pipeline_edges,
+    aes(x = (x + xend) / 2, y = y + 0.4, label = label),
+    size = 2.6, lineheight = 0.9
+  ) +
+  xlim(min(xs) - box_w / 2 - 0.1, max(xs) + box_w / 2 + 0.1) +
+  ylim(-0.6, 0.8) +
+  coord_fixed(ratio = 1.1) +
+  theme_void()
+```
+
+Each stage can introduce its own departure from the population's true composition: the slice through ordinary sampling variability, the sample through differential response rates, and the panel through the selection algorithm's own quota mechanism (@sec-panel-association-methods). Distinguishing these stages explicitly makes it possible to attribute any observed distortion in a final panel to a specific stage of the pipeline, rather than to sortition "in general".
+
+### Two-variable illustrative example: age and tenure
+
+To illustrate the general procedure concretely at a minimal scale, this thesis constructs a simple two-variable example, using only age and tenure. Age is denoted $A$, taking one of $L_A = 5$ ordered levels $a \in \{1, \dots, 5\}$ (18-34 through 65+), as previously stated, and tenure is denoted $T$, taking one of $L_T = 3$ levels $t \in \{1, \dots, 3\}$ (Rent, Own, Other). Marginal probability vectors were first defined for each variable,
 
 $$
 \mathbf{p}_A = \left(p_{A_1}, \dots, p_{A_5}\right), \qquad \mathbf{p}_T = \left(p_{T_1}, p_{T_2}, p_{T_3}\right), \qquad \sum_{a=1}^{5} p_{A_a} = 1, \qquad \sum_{t=1}^{3} p_{T_t} = 1,
@@ -71,21 +139,13 @@ $$
 
 with each cell $j$, corresponding to one $(a, t)$ combination, expanded into $n_j$ individual-level records sharing that age and tenure. Comparing the two resulting populations demonstrates the core logic of the simulation framework in its simplest form: a chi-squared test of association between age and tenure is non-significant in the independent population but highly significant in the associated population, with the conditional probability of renting falling steadily from around 44% among 18-34 year olds to around 18% among those aged 65 and over, even though both populations share identical marginal distributions for age and tenure individually. This confirms that the seeding-and-raking procedure successfully introduces a targeted association between variables without disturbing their overall marginal proportions. This will allow for testing of the algorithm's ability to preserve sample intersection structures, beyond a purely marginal level.
 
-Both populations also include an additional binary variable, generated independently of age and tenure for each simulated individual $i$ via
-
-$$
-Z_i \;\overset{\text{i.i.d.}}{\sim}\; \text{Bernoulli}(0.5),
-$$
-
-drawn after the population has been expanded to individual level, so that $Z_i$ is uncorrelated with age and tenure by construction. This variable is deliberately excluded from all visualisations, representing an unobserved (latent) trait whose presence is known to the simulation but not exposed to any downstream algorithm. This was used to test whether unobserved traits can bias panel composition even when they play no role in the population's observed demographic structure.
-
 Next, as is standard in practice, a random slice of defined proportions (in this case 10%) is taken from the population, to be used as the survey sample, from which responses are drawn. Concretely, from a population of $n_{\text{total}}$ individuals, a survey sample $\mathcal{S}$ of size $n_{\mathcal S} = \lfloor 0.10 \, n_{\text{total}} \rceil$ (so $n_{\mathcal S} = 10{,}000$ for the two-variable example, drawn uniformly at random without replacement) is taken as the pool of individuals invited to respond, before any response behaviour is simulated. Whether each invited individual $i \in \mathcal S$ actually responds is then modelled as an independent Bernoulli trial,
 
 $$
 R_i \;\overset{\text{ind.}}{\sim}\; \text{Bernoulli}(\pi_i),
 $$
 
-where the response probability $\pi_i$ is assigned according to one of three cases, mirroring the independent, observed-trait, and latent-trait cases described above for the population itself.
+where the response probability $\pi_i$ is assigned according to one of two cases: an independent case, and an age-covaried case mirroring the age-renting association introduced at the population level above.
 
 In the *independent* case, every invited individual is equally likely to respond regardless of their trait profile,
 
@@ -99,17 +159,34 @@ $$
 \pi_i = \pi_1 \exp\!\big(\alpha_R \, s(a_i)\big), \qquad \pi_1 = 0.20, \quad \alpha_R = 1.0,
 $$
 
-so that the response rate rises from around 20% among the youngest bracket to over 50% among the oldest, and the association between $A$ and $R$ is now highly significant. In the *latent-covaried* case, response likelihood instead increases with the unobserved trait $Z_i$ rather than with any observed trait,
+so that the response rate rises from around 20% among the youngest bracket to over 50% among the oldest, and the association between $A$ and $R$ is now highly significant.
 
-$$
-\pi_i = \pi_1 \exp\!\big(\alpha_Z \, Z_i\big), \qquad \pi_1 = 0.20, \quad \alpha_Z = 0.8,
-$$
+### From survey sample to panel
 
-giving a response rate of approximately 20% for $Z_i = 0$ and 44% for $Z_i = 1$. Critically, while the association between $Z$ and $R$ is highly significant under this case, the association between $A$ (or $T$) and $R$ remains non-significant, exactly as it was in the independent case. This is the central diagnostic point of the latent-covaried case: an unobserved trait can systematically bias who responds to a survey, and therefore who is available for panel selection, without ever manifesting as a detectable association in any of the demographic variables an algorithm can actually observe.
+Applying the independent and age-covaried response cases to both the independent and associated populations produces four respondent-pool files -- `sim_data2_ind_eq.csv`, `sim_data2_ind_ass.csv`, `sim_data2_cov_eq.csv` and `sim_data2_cov_ass.csv` -- each containing only the individuals who actually responded under that population/response-case combination, together with their age and tenure. These file names follow the same `<ind|cov>_<eq|ass>` convention used for the lottery files below, so that a file name alone identifies both the population and response case it was drawn from. Each of these respondent pools is, in the terminology introduced above, a *sample*: the realised pool from which a panel can actually be drawn. Each respondent-pool file was then passed to Panelot's LexiMin algorithm, along with quota constraints on the permitted count of each age bracket and tenure category (based on the population's marginal distributions, with ±1 individual slack allowed for the 18-34 and 65+ brackets, as they would require non-integer solutions otherwise), to enumerate every feasible panel of $k = 50$ members, yielding four corresponding lottery files (`lottery_ind_eq.csv`, `lottery_ind_ass.csv`, `lottery_cov_eq.csv` and `lottery_cov_ass.csv`) that are evaluated in @sec-panel-association-methods.
+
+### Validating the simulation: numerical summary
+
+Alongside the mosaic plots used throughout this chapter to visually compare the age x tenure population, slice and respondent sample, each simulated dataset is also checked numerically, to confirm that the data-generating process behaved as intended before it is used for any downstream panel evaluation. Two quantities recur throughout this numerical checking, and are used again, in a more formal role, in the panel-level association testing described in @sec-panel-association-methods:
+
+- A **chi-squared test of independence**, applied to the $5 \times 3$ age-by-tenure contingency table, is used to confirm that the intended association (or lack of it) was actually realised in a given dataset. A non-significant result ($p > 0.05$) for the independent population (`sim_data2`), alongside a significant result for the associated population (`sim_data2_cov`), is the expected pattern and serves as a sanity check on the simulation code itself, rather than a substantive finding in its own right.
+- Marginal **proportion tables** (`prop.table()` applied to the age and tenure frequency tables) are used to confirm that each variable's marginal distribution matches its specified target ($\mathbf p_A$ or $\mathbf p_T$) to within sampling error, at both the population and sample level. This is particularly important for the associated population, where the raking procedure is specifically designed to restore exact marginal targets despite the association-inducing adjustment applied beforehand.
+
+Later, when panels themselves are evaluated (@sec-panel-association-methods), the same chi-squared logic is extended into a three-way log-linear homogeneity test, and supplemented with Cramer's V as an effect-size measure, so that a panel's divergence from its sample can be judged by both its statistical significance and its practical magnitude, rather than significance alone.
+
+### Method limitations and caveats
+
+The response rates used for the age x tenure pipeline -- a 30% baseline in the independent case, rising to over 50% in the age-covaried case -- are considerably higher than response rates typically reported for real-world sortition processes, where response to a civic lottery invitation is often below 10%. This was a deliberate choice rather than an oversight: response rates this low, applied to a 10,000-person slice, would in some simulated conditions leave too few respondents in individual age-by-tenure cells (of which there are 15) to reliably assess an algorithm's ability to satisfy quota constraints or preserve intersectional structure at a panel size of $k = 50$, since the algorithm would be data-starved regardless of its own effectiveness. Elevating the response rate ensured sufficient data richness to isolate the algorithm's own behaviour as the object of study. A consequence of this choice is that any representativeness issues identified in this thesis should be read as a conservative, best-case estimate: at the lower response rates typical of practice, the same mechanisms (differential non-response, quota-constrained selection leaving the joint age-tenure distribution unconstrained) would be expected to have less data to work with and correspondingly more room to produce poorly representative panels, not less.
+
+Additionally, every association deliberately introduced in the age x tenure pipeline -- the negative age-renting association at the population level ($\alpha = 1.2$), and the age-response association at the sampling level ($\alpha_R = 1.0$) -- was controlled by a single exponential strength parameter, fixed at a moderate-to-strong value chosen to make each association clearly visible in a mosaic plot and reliably detectable by a chi-squared test at this thesis's sample sizes. These particular values were not derived from any specific real-world dataset, and the extent to which the selection algorithm's representativeness or association-preservation performance degrades is unlikely to scale uniformly with the strength of the underlying association: a weaker real-world age-tenure association might be preserved adequately by the same selection process that fails to preserve the stronger one simulated here, or, conversely, a subtle association could be *more* easily disrupted by quota-constrained selection if it is based on a smaller number of affected individuals. Because this thesis's simulation uses a small number of fixed association strengths, rather than a systematic sweep across a range of values, the panel-level results in @sec-panel-association-methods should be read as demonstrating that association-preservation failures of this kind are possible and can be severe at the strength simulated, rather than as a precise, generalisable estimate of their magnitude across the full range of association strengths that might occur in real-world sortition applications.
 
 ### Visualisation methods
 
-In order to read the later mosaic plots, a simpler plot can first be introduced.
+The choice of visualisation used throughout this thesis follows directly from the nature of the data being examined. The variables of interest -- age brackets, tenure status, and the other demographic categories used for sortition -- are categorical rather than continuous, and the central question is how these variables intersect, rather than how any one of them is distributed in isolation. Many standard visualisation tools are a poor fit for this combination of properties: scatterplots and histograms are built for continuous data; a simple bar chart or pie chart can show a single categorical variable's marginal distribution, but not how two or more categorical variables co-occur; and a bar chart faceted or grouped by a second variable quickly becomes difficult to read once cell counts become uneven (precisely the situation this thesis investigates) because bar heights are not naturally comparable to each other in the way that proportional tile areas are. As such, we landed on the mosaic plot, which, by contrast, is specifically designed to display exactly this kind of cross-classified categorical structure, representing both marginal distributions and their joint/intersectional distribution within a single figure. As such, they are the primary visualisation tool used throughout this thesis.
+
+A mosaic plot is a way of visualising the joint distribution of two or more categorical variables, in which each combination of categories is represented by a rectangular tile whose area is proportional to the number (or proportion) of observations sharing that combination. This makes mosaic plots well suited to exactly the kind of question this thesis is concerned with: not just whether individual categories are represented in the right proportions on their own (a question a simple bar chart could already answer), but whether particular *combinations* of categories -- intersections -- are over- or under-represented relative to what would be expected for their population demographies, and whether the variables are independent. Because tile area scales with both variables at once, a mosaic plot can reveal an association between categorical variables (a departure from independence) that would not be visible from either variable's marginal distribution alone.
+
+To ensure later plots are easily interpreted, we provide the simplest form of a mosaic plot below:
 
 ```{r}
 source("scripts/exampleplot.R")
@@ -118,4 +195,6 @@ fruit_and_cream +
     theme(aspect.ratio = 1)
 ```
 
-For this plot, only two variables are examined: favourite fruit and favourite ice cream flavour. For the visualised example data set, 25 individuals with a preference for each marginal option were generated, then shuffled randomly to make independent intersectional combinations. As such, the width of bars displays proportion of x-axis category responses conditional on y-axis responses (favourite fruit, conditional on favourite ice cream flavour), and vice versa. Fill colour is used to make the ice cream flavour preferences easier to read.
+For this plot, only two variables are examined: favourite fruit and favourite ice cream flavour. For the visualised example data set, 25 individuals with a preference for each marginal option were generated (for a total n of 50), then shuffled randomly to make independent intersectional combinations. As such, the width of each top-level bar is proportional to that category's marginal share of the data (here, the number of individuals preferring each fruit), while the height of the coloured segments stacked within a bar is proportional to the conditional proportion of the fill variable within that category (here, the proportion preferring each ice cream flavour, given a preference for that fruit). Because fruit and ice cream preference were shuffled independently of one another in this example, the two fruit bars are split at close to the same width, visually confirming that the two variables carry no association: knowing someone's favourite fruit provides no information about their favourite ice cream flavour. Where the fill proportions instead differ noticeably from one bar to the next, this indicates an association between the two variables -- precisely the pattern that distinguishes the independent and associated age-tenure populations introduced above.
+
+Throughout the rest of this thesis, this same convention -- categories on the x-axis with width proportional to marginal share, and a second variable shown via fill colour with segment height proportional to conditional proportion -- is used for the core population, slice and sample comparisons, with age brackets on the x-axis and tenure as fill.

@@ -47,7 +47,7 @@
 library(shiny)
 library(bslib)
 library(ggplot2)
-library(ggmosaic)
+library(ggmosaic2)
 library(patchwork)
 
 # --- 1. Reading uploaded files into a common structure ---

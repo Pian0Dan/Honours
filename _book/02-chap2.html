@@ -228,7 +228,6 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#representation-and-sortition" id="toc-representation-and-sortition" class="nav-link active" data-scroll-target="#representation-and-sortition"><span class="header-section-number">2.1</span> Representation and Sortition</a></li>
   <li><a href="#panel-selection" id="toc-panel-selection" class="nav-link" data-scroll-target="#panel-selection"><span class="header-section-number">2.2</span> Panel Selection</a></li>
-  <li><a href="#visualisation-methods" id="toc-visualisation-methods" class="nav-link" data-scroll-target="#visualisation-methods"><span class="header-section-number">2.3</span> Visualisation Methods</a></li>
   </ul>
 </nav>
     </div>
@@ -259,7 +258,7 @@ window.Quarto = {
 <section id="what-does-it-mean-to-be-representative" class="level3">
 <h3 class="anchored" data-anchor-id="what-does-it-mean-to-be-representative">What does it mean to be representative?</h3>
 <p>The main aim of any and all selection methods within sortition is to create a panel that is fair and representative of the population. But what does this actually mean?</p>
-<p>Fairness refers to the idea that the selection process should be transparent, unbiased, and inclusive. It should give everyone an equal chance of being selected, regardless of their background or demography, which presents a selection likelihood difference minimisation challenge. Systematically, this is typically achieved through introducing randomness to selection processes <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span>, as not doing so immediately introduces implicit selection bias.</p>
+<p>Fairness refers to the idea that the selection process should be transparent, unbiased, and inclusive. It should give everyone an equal chance of being selected, regardless of their background or demography, which presents a selection likelihood difference minimisation challenge. Systematically, this is typically achieved through introducing randomness to selection processes <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021a</a>)</span>, as not doing so immediately introduces implicit selection bias.</p>
 <p>Alongside this, representativeness refers to the idea that the selected panel should accurately reflect the demographics and perspectives of the population from which it was built. This means that the panel should be diverse and inclusive, and should contain individuals from a range of prediagnosed backgrounds of interest. This can be assessed directly by comparing demographic compositions of the selected panels against the population from which it was originally drawn.</p>
 <p>Approaching it procedurally, the sortition process can be thought of in four stages:</p>
 <ul>
@@ -287,84 +286,66 @@ window.Quarto = {
 <section id="non-algorithmicself-selection" class="level4">
 <h4 class="anchored" data-anchor-id="non-algorithmicself-selection">Non-algorithmic/self-selection</h4>
 <p>This is the most basic method of panel selection, where individuals are simply allowed to self-select into the panel. This can be done through a variety of means, such as advertising the opportunity to participate in the panel and allowing individuals to sign up on a first-come, first-served basis. However, these types of methods are often not very effective at creating representative panels, as they can a) lead to self-selection bias (as involvement will be tied to exposure and not random chance, those who put their hand up of their own volition are more likely to have pre-formed perspectives, ahead of the panel process), thus possibly not capturing the diversity and perspectives of the population, and b) lead to lower-than-desired engagement, as it does not guarantee any particular level of exposure or direct engagement in the first place.</p>
-<section id="legacy-heuristic-i-cant-find-original-source-but-it-is-mentioned-in-flanigan2021fairaf" class="level5">
-<h5 class="anchored" data-anchor-id="legacy-heuristic-i-cant-find-original-source-but-it-is-mentioned-in-flanigan2021fairaf">LEGACY heuristic (I can’t find original source, but it is mentioned in <span class="citation" data-cites="Flanigan2021FairAF">Flanigan et al. (<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">2021</a>)</span>)</h5>
-<p>Already a systematic improvement over non-algorithmic methods; the LEGACY selection heuristic takes a given sample of respondents and selects individuals one-by-one until the panel is full. At each step, the heuristic calculates a “need” value to identify the trait that is currently furthest from the desired count in the panel. LEGACY then selects a random individual from the pool who possesses that trait. If selecting any given individual would cause the panel to hit the upper quota for any trait, then all other individuals with that trait are removed from the pool before the next selection. This process is repeated until it either becomes infeasible (exhausts the dataset before hitting overall quota, at which point it will restart), or builds a full panel with desired quota representation. LEGACY’s process fulfils the base requirements of building a panel that meets the desired quotas, but it does not necessarily maximise representativeness, as it does not take into account the likelihood of selection for different individuals (allowing them to just be 0%, in extreme cases), and it does not attempt to minimise the maximum deviation from equal selection chance across all individuals.</p>
+<section id="legacy-heuristic-flanigan2021fairaf-groupselectapp" class="level5">
+<h5 class="anchored" data-anchor-id="legacy-heuristic-flanigan2021fairaf-groupselectapp">LEGACY heuristic <span class="citation" data-cites="Flanigan2021FairAF groupselectapp">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021a</a>; <a href="refs.html#ref-groupselectapp" role="doc-biblioref">Sortition Foundation 2024</a>)</span></h5>
+<p>Already a systematic improvement over non-algorithmic methods; the LEGACY selection heuristic takes a given sample of respondents and selects individuals one-by-one until the panel is full. At each step, the heuristic calculates a “need” value to identify the trait that is currently furthest from the desired count in the panel. LEGACY then selects a random individual from the pool who possesses that trait. If selecting any given individual would cause the panel to hit the upper quota for any trait, then all other individuals with that trait are removed from the pool before the next selection. This process is repeated until it either becomes infeasible (exhausts the dataset before hitting overall quota, at which point it will restart), or builds a full panel with desired quota representation. LEGACY’s process fulfils the base requirements of building a panel that meets the desired quotas, but it does not necessarily maximise representativeness, as it does not take into account the likelihood of selection for different individuals (allowing them to just be 0%, in extreme cases), and it does not attempt to minimise the maximum deviation from equal selection chance across all individuals. This heuristic was, for a time, the Sortition Foundation’s own in-practice method of panel selection, as implemented in their GroupSelect tool, before the more recent algorithmic fairness methods below were developed and adopted.</p>
 </section>
 </section>
-<section id="maximin-and-minimax-baharavfairmanipulationrobusttransparent2024" class="level4">
-<h4 class="anchored" data-anchor-id="maximin-and-minimax-baharavfairmanipulationrobusttransparent2024">MaxiMin and MiniMax <span class="citation" data-cites="baharavFairManipulationRobustTransparent2024">(<a href="refs.html#ref-baharavFairManipulationRobustTransparent2024" role="doc-biblioref">Baharav and Flanigan 2024</a>)</span></h4>
+<section id="maximin-flaniganfairsortitionmadetransparent2021-and-minimax-baharavfairmanipulationrobusttransparent2024" class="level4">
+<h4 class="anchored" data-anchor-id="maximin-flaniganfairsortitionmadetransparent2021-and-minimax-baharavfairmanipulationrobusttransparent2024">MaxiMin <span class="citation" data-cites="flaniganFairSortitionMadeTransparent2021">(<a href="refs.html#ref-flaniganFairSortitionMadeTransparent2021" role="doc-biblioref">Flanigan et al. 2021b</a>)</span> and MiniMax <span class="citation" data-cites="baharavFairManipulationRobustTransparent2024">(<a href="refs.html#ref-baharavFairManipulationRobustTransparent2024" role="doc-biblioref">Baharav and Flanigan 2024</a>)</span></h4>
 <p>This aforementioned shortcoming is then addressed by our first algorithmic sorition methods: MaxiMin and MiniMax, though these both tackle the problem in opposite ways and with differing goals. MaxiMin, as the name would suggest, is a selection algorithm that generates potential panels and selection probabilities and then sets out to maximise the minimum selection probability of the set. This reduces the likelihood of an individual never being chosen (improves fairness) but makes the method quite susceptible to manipulation, if an individual elects as belonging to certain quota groups with lesser representation in the sample. Thus, leading to potential representative burden. Inversely, MiniMax aims to minimise the maximum probability of an individual being selected, with the aim of making selection more robust (less vulnerable to manipulation). However, this then comes at the cost of fairness, as the issue of potential 0% selection likelihood returns.</p>
 </section>
 <section id="leximin-flanigan2021fairaf" class="level4">
-<h4 class="anchored" data-anchor-id="leximin-flanigan2021fairaf">LexiMin <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></h4>
+<h4 class="anchored" data-anchor-id="leximin-flanigan2021fairaf">LexiMin <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021a</a>)</span></h4>
 <p>LexiMin, or lexicographic minimisation, is a method of panel selection similar to MaxiMin, that aims to maximise the minimum likelihood of selection, but for each individual being selected sequentially (rather than just the outright minimum). It works by first identifying the individual with the lowest selection chance, and then selecting panel combinations that make this individual’s selection chance as high as possible. This process is repeated for each individual in order of their selection likelihood until overall selection chance is maximised and, ideally, made as equal as possible across all participants. This ensures that each individual has the highest possible chance of being selected. But this trait of LexiMin can, like MaxiMin, make it vulnerable to manipulation.</p>
 </section>
 <section id="goldilocks-baharavfairmanipulationrobusttransparent2024" class="level4">
 <h4 class="anchored" data-anchor-id="goldilocks-baharavfairmanipulationrobusttransparent2024">Goldilocks <span class="citation" data-cites="baharavFairManipulationRobustTransparent2024">(<a href="refs.html#ref-baharavFairManipulationRobustTransparent2024" role="doc-biblioref">Baharav and Flanigan 2024</a>)</span></h4>
-<p>Bringing us to the supposed current gold standard: the aptly named “Goldilocks” sortition algorithm. Goldilocks is structured in such a way that it simultaneously attempts to maximise minimum selection probabilities (improve fairness) and minimise maximum selection probabilities (improve robustness), providing a “best of both worlds” solution to the problem by averaging outcomes.</p>
+<p>Bringing us to the supposed current gold standard: the aptly named “Goldilocks” sortition algorithm. Goldilocks is structured in such a way that it simultaneously attempts to maximise minimum selection probabilities (improve fairness) and minimise maximum selection probabilities (improve robustness), providing a “best of both worlds” solution to the problem by averaging outcomes. The motivation for this balancing act is specifically to address MaxiMin’s vulnerability to manipulation: because MaxiMin places no limit on how high an individual’s selection probability can climb, a participant (or coordinated group of participants) who misreports their trait membership to appear as part of an under-represented quota group can inflate their own chance of selection disproportionately. By simultaneously capping the maximum selection probability any individual can receive, in the manner of MiniMax, Goldilocks directly limits the payoff available to such manipulation, improving robustness, while still prioritising the lowest selection probabilities enough to preserve most of MaxiMin’s fairness guarantees. In this sense, Goldilocks is motivated less by a desire for some abstract “best of both worlds” balance, and more by the concrete, practical need for a selection rule that is simultaneously difficult to game and reasonably fair.</p>
 </section>
 </section>
 <section id="leximin-approach-flanigan2021fairaf" class="level3">
-<h3 class="anchored" data-anchor-id="leximin-approach-flanigan2021fairaf">LexiMin Approach <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021</a>)</span></h3>
-<p>LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.</p>
-<p>Each feasible panel is assigned a probability.</p>
-<p>These probabilities must be non-negative and must add up to 1.</p>
-<p>For each individual, we then calculate their overall probability of being selected by adding up the probabilities of all feasible panels that include that individual.</p>
-<p>Next, we sort the individual selection probabilities from smallest to largest.</p>
-<p>The LexiMin rule works by first making the smallest selection probability as large as possible. Subject to that, it makes the second-smallest as large as possible. It then does the same for the third-smallest, and continues in this way.</p>
+<h3 class="anchored" data-anchor-id="leximin-approach-flanigan2021fairaf">LexiMin approach <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021a</a>)</span></h3>
+<p>Rather than committing to a single panel immediately, LexiMin instead constructs a probability distribution over the full set of feasible panels <span class="math inline">K</span>, assigning each feasible panel <span class="math inline">S \in K</span> a non-negative probability <span class="math inline">p_S</span> such that the probabilities across all panels sum to one. From this distribution, an individual’s overall chance of selection can be calculated by summing the probabilities of every feasible panel that would include them. Sorting these individual selection probabilities from smallest to largest, the LexiMin rule then proceeds lexicographically: it first makes the very smallest selection probability as large as possible, then, subject to that smallest probability remaining at its now-maximised value, makes the second-smallest probability as large as possible, and continues in this way until every individual’s selection probability has been addressed in turn.</p>
 </section>
 <section id="formal-representation" class="level3">
 <h3 class="anchored" data-anchor-id="formal-representation">Formal Representation</h3>
-<p>Let p_S be the probability assigned to panel S.</p>
-<p>These probabilities satisfy:</p>
+<p>This process can be expressed formally. Let <span class="math inline">p_S</span> denote the probability assigned to panel <span class="math inline">S</span>, which must be non-negative and sum to one across every feasible panel in <span class="math inline">K</span>,</p>
 <p><span class="math display">
-p_S \ge 0
+p_S \ge 0, \qquad \sum_{S \in K} p_S = 1.
 </span></p>
-<p>and</p>
+<p>The resulting selection probability for an individual <span class="math inline">i</span> is then the sum of the probabilities of every feasible panel containing them,</p>
 <p><span class="math display">
-\sum_{S \in K} p_S = 1
+\pi_i(p) = \sum_{S \in K,\ i \in S} p_S,
 </span></p>
-<p>The selection probability for individual i is:</p>
+<p>giving the full vector of individual selection probabilities across the population,</p>
 <p><span class="math display">
-\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
+\pi(p) = (\pi_1(p), \pi_2(p), \ldots, \pi_n(p)).
 </span></p>
-<p>This gives the vector of individual selection probabilities:</p>
+<p>Sorting this vector from smallest to largest,</p>
 <p><span class="math display">
-\pi(p) = (\pi_1(p), \pi_2(p), ..., \pi_n(p))
+\pi_{(1)}(p) \le \pi_{(2)}(p) \le \ldots \le \pi_{(n)}(p),
 </span></p>
-<p>Sort these from smallest to largest:</p>
-<p><span class="math display">
-\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
-</span></p>
-<p>LexiMin chooses p so that this sorted vector is maximised in order.</p>
+<p>LexiMin chooses the distribution <span class="math inline">p</span> that maximises this sorted vector in lexicographic order – that is, the smallest entry first, then the second-smallest subject to the first remaining maximised, and so on down the sorted vector.</p>
 </section>
 <section id="algorithm" class="level3">
 <h3 class="anchored" data-anchor-id="algorithm">Algorithm</h3>
-<ol type="1">
-<li><p>List all feasible panels in K.</p></li>
-<li><p>Consider all possible probability distributions over those panels.</p></li>
-<li><p>For each distribution, compute:</p></li>
-</ol>
-<p><span class="math display">
-\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
-</span></p>
-<ol start="4" type="1">
-<li>Sort the selection probabilities:</li>
-</ol>
-<p><span class="math display">
-\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
-</span></p>
-<ol start="5" type="1">
-<li><p>Choose the distribution that maximises the smallest selection probability.</p></li>
-<li><p>If more than one distribution still remains, choose the one that maximises the second-smallest selection probability.</p></li>
-<li><p>Continue in this way until the distribution is determined.</p></li>
-<li><p>Sample a final panel according to that distribution.</p></li>
-</ol>
+<p>In practice, this lexicographic maximisation is carried out as a sequence of steps: first, every feasible panel in <span class="math inline">K</span> is listed, along with every possible probability distribution over those panels. For each candidate distribution, the resulting selection probability <span class="math inline">\pi_i(p)</span> is computed for every individual <span class="math inline">i</span>, and these are sorted from smallest to largest, <span class="math inline">\pi_{(1)}(p) \le \pi_{(2)}(p) \le \ldots \le \pi_{(n)}(p)</span>, as above. Only the distribution (or distributions) that maximise the smallest selection probability <span class="math inline">\pi_{(1)}(p)</span> are then retained; if more than one still remains, this is narrowed further to only those that also maximise the second-smallest selection probability <span class="math inline">\pi_{(2)}(p)</span>, and so on, resolving ties one probability at a time until a single distribution is determined. A final panel is then sampled according to that distribution.</p>
 </section>
 <section id="logic" class="level3">
 <h3 class="anchored" data-anchor-id="logic">Logic</h3>
-<p>LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. It then iteratively improves the next-lowest probabilities, until it hits optimal values. This makes the selection probabilities as equal as possible while still respecting the panel constraints.</p>
+<p>LexiMin is, at its core, a fairness rule: it gives priority to the individuals with the lowest chance of being selected, improving their chances first, before iteratively improving the next-lowest probabilities until no further improvement is possible without disadvantaging an already-prioritised individual. This makes the selection probabilities as equal as possible across the population, while still respecting the panel’s quota constraints.</p>
+</section>
+<section id="visualisation-methods" class="level3">
+<h3 class="anchored" data-anchor-id="visualisation-methods">Visualisation Methods</h3>
+<p>In order to evaluate the representativeness of selected panels, we used a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the sample from which it was pulled, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: bar charts, mosaic plots, double decker plots, UpSet plots and parallel coordinate plots.</p>
+<p>First, it will be of use to just do some illustrative graphing to show densities within the distribution across traits, in the form of bar charts. These will give a rough visual idea of the breakdown of the population and samples within the simulation, setting up some expectations for how representation should look in further visualisations. From there, either mosaic or double decker plots will be useful for depicting the proportion of given demographic traits that are selected for the panels. Finally, UpSet plots <span class="citation" data-cites="conwayUpSetRPackageVisualization2017">(<a href="refs.html#ref-conwayUpSetRPackageVisualization2017" role="doc-biblioref">Conway et al. 2017</a>)</span> will be an effective way to showcase the intersections that exist in generated panels, as they offer a visual link between demographic variables, as well as frequency counts to highlight how often these occur within a given panel.</p>
+<section id="attribute-distribution-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="attribute-distribution-analysis">Attribute distribution analysis</h4>
+<ul>
+<li>Showcase how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process.</li>
+</ul>
+</section>
 </section>
 <section id="discussion" class="level3">
 <h3 class="anchored" data-anchor-id="discussion">Discussion</h3>
@@ -372,37 +353,9 @@ p_S \ge 0
 </section>
 <section id="new-investigation" class="level3">
 <h3 class="anchored" data-anchor-id="new-investigation">New Investigation</h3>
-<p>Across all algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs–focusing instead purely on affecting individual selection chances based on quotas of each demographic trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g.&nbsp;supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be beneficial, or even necessary, to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. Though this limitation is generally mitigated in practice by bringing in “specialist speakers” to talk to the panel during their deliberation processes <span class="citation" data-cites="redmanHowRecruitParticipants">(<a href="refs.html#ref-redmanHowRecruitParticipants" role="doc-biblioref">Redman and Carson n.d.</a>)</span>, this still is not the same type of inclusion by nature, as being directly part of the panel and decision-making process.</p>
+<p>Across the literature surveyed above, the common thread is that algorithmic effort has gone almost entirely into optimising the fairness and robustness of the selection <em>mechanism</em> itself – how equal selection probabilities are, and how resistant they are to manipulation – rather than into validating the <em>outcome</em> that mechanism actually produces. Put differently, a panel satisfying all of a given algorithm’s fairness and robustness guarantees is not thereby guaranteed to be a good representation of the population it was drawn from; these are related but distinct properties, and the literature has so far focused heavily on the former at the expense of the latter.</p>
+<p>One specific way this gap manifests is that, across all algorithmic techniques, stratification for combinations of demographic traits is not included within their decision-making designs–focusing instead purely on affecting individual selection chances based on quotas of each demographic trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g.&nbsp;supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be beneficial, or even necessary, to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. Though this limitation is generally mitigated in practice by bringing in “specialist speakers” to talk to the panel during their deliberation processes <span class="citation" data-cites="redmanHowRecruitParticipants">(<a href="refs.html#ref-redmanHowRecruitParticipants" role="doc-biblioref">Redman and Carson n.d.</a>)</span>, this still is not the same type of inclusion by nature, as being directly part of the panel and decision-making process.</p>
 <p>The extent to which intersectional inclusion happens naturally through current methods was evaluated in the later simulations. We then also establish a means to measure the level of intersectionality and association preserved throughout the selection process.</p>
-</section>
-</section>
-<section id="visualisation-methods" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="visualisation-methods"><span class="header-section-number">2.3</span> Visualisation Methods</h2>
-<p>In order to evaluate the representativeness of selected panels, we used a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the sample from which it was pulled, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: bar charts, mosaic plots, double decker plots, UpSet plots and parallel coordinate plots.</p>
-<p>First, it will be of use to just do some illustrative graphing to show densities within the distribution across traits, in the form of bar charts. These will give a rough visual idea of the breakdown of the population and samples within the simulation, setting up some expectations for how representation should look in further visualisations. From there, either mosaic or double decker plots will be useful for depicting the proportion of given demographic traits that are selected for the panels. Finally, UpSet plots <span class="citation" data-cites="conwayUpSetRPackageVisualization2017">(<a href="refs.html#ref-conwayUpSetRPackageVisualization2017" role="doc-biblioref">Conway et al. 2017</a>)</span> will be an effective way to showcase the intersections that exist in generated panels, as they offer a visual link between demographic variables, as well as frequency counts to highlight how often these occur within a given panel.</p>
-<p>– ignore the summaries –</p>
-<section id="parallel-coordinate-plots-vanderplaspenguinsgoparallel2023a" class="level3">
-<h3 class="anchored" data-anchor-id="parallel-coordinate-plots-vanderplaspenguinsgoparallel2023a">Parallel coordinate plots <span class="citation" data-cites="vanderplasPenguinsGoParallel2023a">(<a href="refs.html#ref-vanderplasPenguinsGoParallel2023a" role="doc-biblioref">VanderPlas et al. 2023</a>)</span></h3>
-<ul>
-<li>Can help to show the distribution of traits across the selected panel and how it compares to the overall population.</li>
-<li>Can also show the trade-offs between different traits and how they are balanced in the selection process</li>
-<li>Can be used to identify any segments of the population that are underrepresented in the selected panel, and to highlight any potential biases in the selection process.</li>
-</ul>
-</section>
-<section id="matrix-based-set-representation-upsetr-conwayupsetrpackagevisualization2017" class="level3">
-<h3 class="anchored" data-anchor-id="matrix-based-set-representation-upsetr-conwayupsetrpackagevisualization2017">Matrix-based set representation (UpSetR) <span class="citation" data-cites="conwayUpSetRPackageVisualization2017">(<a href="refs.html#ref-conwayUpSetRPackageVisualization2017" role="doc-biblioref">Conway et al. 2017</a>)</span></h3>
-<ul>
-<li>Can be used to show how different traits connect with each other and how they are distributed across the distribution and/or selected panel.</li>
-<li>Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.</li>
-<li>Can highlight specific combinations of traits that are of interest, and show how they are represented in the selected panel compared to the overall population. (Though there is no way to gauge the prevalence of these combinations in the population, beyond anecdotal observations)</li>
-</ul>
-<p>–</p>
-</section>
-<section id="attribute-distribution-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="attribute-distribution-analysis">Attribute distribution analysis</h3>
-<ul>
-<li>Showcase how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process.</li>
-</ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -413,13 +366,16 @@ Baharav, C., and Flanigan, B. (2024), <span>“Fair, <span>Manipulation-Robust</
 Conway, J. R., Lex, A., and Gehlenborg, N. (2017), <span>“<span>UpSetR</span>: An <span>R</span> package for the visualization of intersecting sets and their properties,”</span> <em>Bioinformatics</em>, (J. Hancock, ed.), 33, 2938–2940. <a href="https://doi.org/10.1093/bioinformatics/btx364">https://doi.org/10.1093/bioinformatics/btx364</a>.
 </div>
 <div id="ref-Flanigan2021FairAF" class="csl-entry" role="listitem">
-Flanigan, B., Gölz, P., Gupta, A., Hennig, B., and Procaccia, A. D. (2021), <span>“<a href="https://api.semanticscholar.org/CorpusID:236927646">Fair <span>A</span>lgorithms for <span>S</span>electing <span>C</span>itizens’ <span>A</span>ssemblies</a>,”</span> <em>Nature</em>, 596, 548–552.
+Flanigan, B., Gölz, P., Gupta, A., Hennig, B., and Procaccia, A. D. (2021a), <span>“<a href="https://api.semanticscholar.org/CorpusID:236927646">Fair <span>A</span>lgorithms for <span>S</span>electing <span>C</span>itizens’ <span>A</span>ssemblies</a>,”</span> <em>Nature</em>, 596, 548–552.
+</div>
+<div id="ref-flaniganFairSortitionMadeTransparent2021" class="csl-entry" role="listitem">
+Flanigan, B., Kehne, G., and Procaccia, A. D. (2021b), <span>“<a href="https://procaccia.info/wp-content/uploads/2021/05/transparent.pdf">Fair sortition made transparent</a>,”</span> in <em>Advances in neural information processing systems</em>, pp. 25720–25731.
 </div>
 <div id="ref-redmanHowRecruitParticipants" class="csl-entry" role="listitem">
 Redman, K., and Carson, L. (n.d.). <span>“How to <span>Recruit Participants</span> for <span>Citizens</span>’ <span>Assemblies</span>.”</span>
 </div>
-<div id="ref-vanderplasPenguinsGoParallel2023a" class="csl-entry" role="listitem">
-VanderPlas, S., Ge, Y., Unwin, A., and Hofmann, H. (2023), <span>“Penguins <span>Go Parallel</span>: <span>A Grammar</span> of <span>Graphics Framework</span> for <span>Generalized Parallel Coordinate Plots</span>,”</span> <em>Journal of Computational and Graphical Statistics</em>, Taylor &amp; Francis, 32, 1572–1587. <a href="https://doi.org/10.1080/10618600.2023.2195462">https://doi.org/10.1080/10618600.2023.2195462</a>.
+<div id="ref-groupselectapp" class="csl-entry" role="listitem">
+Sortition Foundation (2024), <span>“<span>GroupSelect</span> app,”</span> <a href="https://github.com/sortitionfoundation/groupselect-app" class="uri">https://github.com/sortitionfoundation/groupselect-app</a>.
 </div>
 </div>
 </section>

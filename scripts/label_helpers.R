@@ -49,11 +49,44 @@ abbreviate_for_plot <- function(data, cols) {
 # inspecting the rendered layer's block boundaries, so that variable
 # alone can be labelled cleanly via
 # scale_x_productlist(breaks = ..., labels = ...).
+#
+# Classic ggmosaic names each product() variable's computed column
+# "x__<var>" (matched directly by name). ggmosaic2 instead names
+# these columns positionally -- ".mosaic_x1", ".mosaic_x2", ... in
+# the order the variables were passed to product() -- with no
+# variable name embedded in the column itself, so the position of
+# `var` within the plot's own x = product(...) mapping has to be
+# recovered first via the layer's mapping expression. Both
+# conventions are supported here (falling back to the classic
+# "x__<var>" name if no ".mosaic_x<N>" columns are present), so this
+# helper keeps working regardless of which of the two packages built
+# the plot.
 # ---------------------------------------------------------------
 
 mosaic_axis_breaks <- function(plot, var) {
   layer_data <- ggplot2::layer_data(plot)
-  col <- paste0("x__", var)
+
+  if (any(grepl("^\\.mosaic_x[0-9]+$", names(layer_data)))) {
+    # ggmosaic2: recover var's position among product()'s arguments
+    # from the layer's own x mapping, e.g. product(age, tenure) ->
+    # c("age", "tenure"), then match that position to ".mosaic_x<N>".
+    x_expr <- rlang::quo_get_expr(plot$layers[[1]]$mapping$x)
+    product_vars <- vapply(as.list(x_expr)[-1], rlang::as_name, character(1))
+    idx <- match(var, product_vars)
+    if (is.na(idx)) {
+      stop(
+        "'",
+        var,
+        "' is not one of this plot's product() variables: ",
+        paste(product_vars, collapse = ", ")
+      )
+    }
+    col <- paste0(".mosaic_x", idx)
+  } else {
+    # Classic ggmosaic: the column is named after the variable directly.
+    col <- paste0("x__", var)
+  }
+
   lv <- levels(plot$data[[var]])
   data.frame(
     label = lv,

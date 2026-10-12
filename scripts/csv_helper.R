@@ -47,15 +47,21 @@ write.csv(sim_cat2, "sim_cat2.csv", row.names = FALSE)
 
 # ---------------------------------------------------------------
 # Respondent CSV exports for simsamp2.R: for each of the two
-# populations (independent `sim_data2`, associated `sim_data2_cov`)
-# and each of the two response-rate cases (Responded1 "equal
-# chance", Responded2 "associated"), write a CSV containing only the
-# individuals who actually responded to the survey, with:
+# populations (independent "ind" = `sim_data2`, covaried/associated
+# "cov" = `sim_data2_cov`) and each of the two response-rate cases
+# ("eq" = equal chance, "ass" = age-associated), write a CSV
+# containing only the individuals who actually responded to the
+# survey, with:
 #
 #   - pool_member_identifier: the individual's ID, carried over from
 #     the population (see simdata2.R, where ID is first assigned)
 #   - age
 #   - tenure
+#
+# File names follow the same "<ind|cov>_<eq|ass>" convention used for
+# the lottery files (lottery_ind_eq.csv etc.) further down the
+# pipeline, so a file name alone identifies both the population and
+# response case it was drawn from.
 # ---------------------------------------------------------------
 
 source("simsamp2yes.R") # also sources simsamp2.R and simdata2.R
@@ -71,26 +77,26 @@ build_respondent_csv <- function(data, file) {
   respondents
 }
 
-sim_data2_responded1_csv <- build_respondent_csv(
-  sim_data2_responded1_yes,
-  "sim_data2_responded1.csv"
+sim_data2_ind_eq_csv <- build_respondent_csv(
+  sim_data2_ind_eq_yes,
+  "sim_data2_ind_eq.csv"
 )
-sim_data2_responded2_csv <- build_respondent_csv(
-  sim_data2_responded2_yes,
-  "sim_data2_responded2.csv"
+sim_data2_ind_ass_csv <- build_respondent_csv(
+  sim_data2_ind_ass_yes,
+  "sim_data2_ind_ass.csv"
 )
-sim_data2_cov_responded1_csv <- build_respondent_csv(
-  sim_data2_cov_responded1_yes,
-  "sim_data2_cov_responded1.csv"
+sim_data2_cov_eq_csv <- build_respondent_csv(
+  sim_data2_cov_eq_yes,
+  "sim_data2_cov_eq.csv"
 )
-sim_data2_cov_responded2_csv <- build_respondent_csv(
-  sim_data2_cov_responded2_yes,
-  "sim_data2_cov_responded2.csv"
+sim_data2_cov_ass_csv <- build_respondent_csv(
+  sim_data2_cov_ass_yes,
+  "sim_data2_cov_ass.csv"
 )
 
 # --- Quick checks ---
-nrow(sim_data2_responded1_csv)
-nrow(sim_data2_responded2_csv)
-nrow(sim_data2_cov_responded1_csv)
-nrow(sim_data2_cov_responded2_csv)
-head(sim_data2_responded1_csv)
+nrow(sim_data2_ind_eq_csv)
+nrow(sim_data2_ind_ass_csv)
+nrow(sim_data2_cov_eq_csv)
+nrow(sim_data2_cov_ass_csv)
+head(sim_data2_ind_eq_csv)

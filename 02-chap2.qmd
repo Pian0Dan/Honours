@@ -44,11 +44,11 @@ These quotas will be certain desired counts, or ranges of counts, of individuals
 
 This is the most basic method of panel selection, where individuals are simply allowed to self-select into the panel. This can be done through a variety of means, such as advertising the opportunity to participate in the panel and allowing individuals to sign up on a first-come, first-served basis. However, these types of methods are often not very effective at creating representative panels, as they can a) lead to self-selection bias (as involvement will be tied to exposure and not random chance, those who put their hand up of their own volition are more likely to have pre-formed perspectives, ahead of the panel process), thus possibly not capturing the diversity and perspectives of the population, and b) lead to lower-than-desired engagement, as it does not guarantee any particular level of exposure or direct engagement in the first place.
 
-##### LEGACY heuristic (I can't find original source, but it is mentioned in @Flanigan2021FairAF)
+##### LEGACY heuristic [@Flanigan2021FairAF; @groupselectapp]
 
-Already a systematic improvement over non-algorithmic methods; the LEGACY selection heuristic takes a given sample of respondents and selects individuals one-by-one until the panel is full. At each step, the heuristic calculates a "need" value to identify the trait that is currently furthest from the desired count in the panel. LEGACY then selects a random individual from the pool who possesses that trait. If selecting any given individual would cause the panel to hit the upper quota for any trait, then all other individuals with that trait are removed from the pool before the next selection. This process is repeated until it either becomes infeasible (exhausts the dataset before hitting overall quota, at which point it will restart), or builds a full panel with desired quota representation. LEGACY's process fulfils the base requirements of building a panel that meets the desired quotas, but it does not necessarily maximise representativeness, as it does not take into account the likelihood of selection for different individuals (allowing them to just be 0%, in extreme cases), and it does not attempt to minimise the maximum deviation from equal selection chance across all individuals.
+Already a systematic improvement over non-algorithmic methods; the LEGACY selection heuristic takes a given sample of respondents and selects individuals one-by-one until the panel is full. At each step, the heuristic calculates a "need" value to identify the trait that is currently furthest from the desired count in the panel. LEGACY then selects a random individual from the pool who possesses that trait. If selecting any given individual would cause the panel to hit the upper quota for any trait, then all other individuals with that trait are removed from the pool before the next selection. This process is repeated until it either becomes infeasible (exhausts the dataset before hitting overall quota, at which point it will restart), or builds a full panel with desired quota representation. LEGACY's process fulfils the base requirements of building a panel that meets the desired quotas, but it does not necessarily maximise representativeness, as it does not take into account the likelihood of selection for different individuals (allowing them to just be 0%, in extreme cases), and it does not attempt to minimise the maximum deviation from equal selection chance across all individuals. This heuristic was, for a time, the Sortition Foundation's own in-practice method of panel selection, as implemented in their GroupSelect tool, before the more recent algorithmic fairness methods below were developed and adopted.
 
-#### MaxiMin and MiniMax [@baharavFairManipulationRobustTransparent2024]
+#### MaxiMin [@flaniganFairSortitionMadeTransparent2021] and MiniMax [@baharavFairManipulationRobustTransparent2024]
 
 This aforementioned shortcoming is then addressed by our first algorithmic sorition methods: MaxiMin and MiniMax, though these both tackle the problem in opposite ways and with differing goals. MaxiMin, as the name would suggest, is a selection algorithm that generates potential panels and selection probabilities and then sets out to maximise the minimum selection probability of the set. This reduces the likelihood of an individual never being chosen (improves fairness) but makes the method quite susceptible to manipulation, if an individual elects as belonging to certain quota groups with lesser representation in the sample. Thus, leading to potential representative burden. Inversely, MiniMax aims to minimise the maximum probability of an individual being selected, with the aim of making selection more robust (less vulnerable to manipulation). However, this then comes at the cost of fairness, as the issue of potential 0% selection likelihood returns.
 
@@ -59,87 +59,58 @@ LexiMin, or lexicographic minimisation, is a method of panel selection similar t
 
 #### Goldilocks [@baharavFairManipulationRobustTransparent2024]
 
-Bringing us to the supposed current gold standard: the aptly named "Goldilocks" sortition algorithm. Goldilocks is structured in such a way that it simultaneously attempts to maximise minimum selection probabilities (improve fairness) and minimise maximum selection probabilities (improve robustness), providing a "best of both worlds" solution to the problem by averaging outcomes.
+Bringing us to the supposed current gold standard: the aptly named "Goldilocks" sortition algorithm. Goldilocks is structured in such a way that it simultaneously attempts to maximise minimum selection probabilities (improve fairness) and minimise maximum selection probabilities (improve robustness), providing a "best of both worlds" solution to the problem by averaging outcomes. The motivation for this balancing act is specifically to address MaxiMin's vulnerability to manipulation: because MaxiMin places no limit on how high an individual's selection probability can climb, a participant (or coordinated group of participants) who misreports their trait membership to appear as part of an under-represented quota group can inflate their own chance of selection disproportionately. By simultaneously capping the maximum selection probability any individual can receive, in the manner of MiniMax, Goldilocks directly limits the payoff available to such manipulation, improving robustness, while still prioritising the lowest selection probabilities enough to preserve most of MaxiMin's fairness guarantees. In this sense, Goldilocks is motivated less by a desire for some abstract "best of both worlds" balance, and more by the concrete, practical need for a selection rule that is simultaneously difficult to game and reasonably fair.
 
-### LexiMin Approach [@Flanigan2021FairAF]
+### LexiMin approach [@Flanigan2021FairAF]
 
-LexiMin does not choose one panel immediately. Instead, it chooses a probability distribution over all feasible panels.
-
-Each feasible panel is assigned a probability.
-
-These probabilities must be non-negative and must add up to 1.
-
-For each individual, we then calculate their overall probability of being selected by adding up the probabilities of all feasible panels that include that individual.
-
-Next, we sort the individual selection probabilities from smallest to largest.
-
-The LexiMin rule works by first making the smallest selection probability as large as possible. Subject to that, it makes the second-smallest as large as possible. It then does the same for the third-smallest, and continues in this way.
+Rather than committing to a single panel immediately, LexiMin instead constructs a probability distribution over the full set of feasible panels $K$, assigning each feasible panel $S \in K$ a non-negative probability $p_S$ such that the probabilities across all panels sum to one. From this distribution, an individual's overall chance of selection can be calculated by summing the probabilities of every feasible panel that would include them. Sorting these individual selection probabilities from smallest to largest, the LexiMin rule then proceeds lexicographically: it first makes the very smallest selection probability as large as possible, then, subject to that smallest probability remaining at its now-maximised value, makes the second-smallest probability as large as possible, and continues in this way until every individual's selection probability has been addressed in turn.
 
 ### Formal Representation
 
-Let p_S be the probability assigned to panel S.
-
-These probabilities satisfy:
+This process can be expressed formally. Let $p_S$ denote the probability assigned to panel $S$, which must be non-negative and sum to one across every feasible panel in $K$,
 
 $$
-p_S \ge 0
+p_S \ge 0, \qquad \sum_{S \in K} p_S = 1.
 $$
 
-and
+The resulting selection probability for an individual $i$ is then the sum of the probabilities of every feasible panel containing them,
 
 $$
-\sum_{S \in K} p_S = 1
+\pi_i(p) = \sum_{S \in K,\ i \in S} p_S,
 $$
 
-The selection probability for individual i is:
+giving the full vector of individual selection probabilities across the population,
 
 $$
-\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
+\pi(p) = (\pi_1(p), \pi_2(p), \ldots, \pi_n(p)).
 $$
 
-This gives the vector of individual selection probabilities:
+Sorting this vector from smallest to largest,
 
 $$
-\pi(p) = (\pi_1(p), \pi_2(p), ..., \pi_n(p))
+\pi_{(1)}(p) \le \pi_{(2)}(p) \le \ldots \le \pi_{(n)}(p),
 $$
 
-Sort these from smallest to largest:
-
-$$
-\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
-$$
-
-LexiMin chooses p so that this sorted vector is maximised in order.
+LexiMin chooses the distribution $p$ that maximises this sorted vector in lexicographic order -- that is, the smallest entry first, then the second-smallest subject to the first remaining maximised, and so on down the sorted vector.
 
 ### Algorithm
 
-1. List all feasible panels in K.
-
-2. Consider all possible probability distributions over those panels.
-
-3. For each distribution, compute:
-
-$$
-\pi_i(p) = \sum_{S \in K,\ i \in S} p_S
-$$
-
-4. Sort the selection probabilities:
-
-$$
-\pi_{(1)}(p) \le \pi_{(2)}(p) \le ... \le \pi_{(n)}(p)
-$$
-
-5. Choose the distribution that maximises the smallest selection probability.
-
-6. If more than one distribution still remains, choose the one that maximises the second-smallest selection probability.
-
-7. Continue in this way until the distribution is determined.
-
-8. Sample a final panel according to that distribution.
+In practice, this lexicographic maximisation is carried out as a sequence of steps: first, every feasible panel in $K$ is listed, along with every possible probability distribution over those panels. For each candidate distribution, the resulting selection probability $\pi_i(p)$ is computed for every individual $i$, and these are sorted from smallest to largest, $\pi_{(1)}(p) \le \pi_{(2)}(p) \le \ldots \le \pi_{(n)}(p)$, as above. Only the distribution (or distributions) that maximise the smallest selection probability $\pi_{(1)}(p)$ are then retained; if more than one still remains, this is narrowed further to only those that also maximise the second-smallest selection probability $\pi_{(2)}(p)$, and so on, resolving ties one probability at a time until a single distribution is determined. A final panel is then sampled according to that distribution.
 
 ### Logic
 
-LexiMin is a fairness rule. It gives priority to the individuals with the lowest chance of being selected and improves their chances first. It then iteratively improves the next-lowest probabilities, until it hits optimal values. This makes the selection probabilities as equal as possible while still respecting the panel constraints.
+LexiMin is, at its core, a fairness rule: it gives priority to the individuals with the lowest chance of being selected, improving their chances first, before iteratively improving the next-lowest probabilities until no further improvement is possible without disadvantaging an already-prioritised individual. This makes the selection probabilities as equal as possible across the population, while still respecting the panel's quota constraints.
+
+### Visualisation Methods
+
+In order to evaluate the representativeness of selected panels, we used a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the sample from which it was pulled, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: bar charts, mosaic plots, double decker plots, UpSet plots and parallel coordinate plots.
+
+First, it will be of use to just do some illustrative graphing to show densities within the distribution across traits, in the form of bar charts. These will give a rough visual idea of the breakdown of the population and samples within the simulation, setting up some expectations for how representation should look in further visualisations. From there, either mosaic or double decker plots will be useful for depicting the proportion of given demographic traits that are selected for the panels. Finally, UpSet plots [@conwayUpSetRPackageVisualization2017] will be an effective way to showcase the intersections that exist in generated panels, as they offer a visual link between demographic variables, as well as frequency counts to highlight how often these occur within a given panel.
+
+#### Attribute distribution analysis
+
+- Showcase how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process.
+
 
 ### Discussion
 
@@ -147,34 +118,8 @@ This approach to the problem of panel selection has been shown to be effective f
 
 ### New Investigation
 
-Across all algorithmic techniques, it is noted that stratification for combinations of demographic traits is not included within their decision-making designs--focusing instead purely on affecting individual selection chances based on quotas of each demographic trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g. supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be beneficial, or even necessary, to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. Though this limitation is generally mitigated in practice by bringing in "specialist speakers" to talk to the panel during their deliberation processes [@redmanHowRecruitParticipants], this still is not the same type of inclusion by nature, as being directly part of the panel and decision-making process.
+Across the literature surveyed above, the common thread is that algorithmic effort has gone almost entirely into optimising the fairness and robustness of the selection *mechanism* itself -- how equal selection probabilities are, and how resistant they are to manipulation -- rather than into validating the *outcome* that mechanism actually produces. Put differently, a panel satisfying all of a given algorithm's fairness and robustness guarantees is not thereby guaranteed to be a good representation of the population it was drawn from; these are related but distinct properties, and the literature has so far focused heavily on the former at the expense of the latter.
+
+One specific way this gap manifests is that, across all algorithmic techniques, stratification for combinations of demographic traits is not included within their decision-making designs--focusing instead purely on affecting individual selection chances based on quotas of each demographic trait at the margin. This is a major limitation, as it means that the selection process may not be able to entirely capture the diversity and perspectives of the desired group, leading to a less representative panel. In some situations (e.g. supporting side-panels built for specific subgroups, communities where there are known intersectional minorities of interest), it may be beneficial, or even necessary, to ensure the inclusion of specific intersectional combinations of traits in order to truly represent a given population. Though this limitation is generally mitigated in practice by bringing in "specialist speakers" to talk to the panel during their deliberation processes [@redmanHowRecruitParticipants], this still is not the same type of inclusion by nature, as being directly part of the panel and decision-making process.
 
 The extent to which intersectional inclusion happens naturally through current methods was evaluated in the later simulations. We then also establish a means to measure the level of intersectionality and association preserved throughout the selection process.
-
-## Visualisation Methods
-
-In order to evaluate the representativeness of selected panels, we used a variety of visualisation methods to show how the distribution of traits in the selected panel compares to the sample from which it was pulled, and to identify any discrepancies or biases in the selection process. Some potentially useful visualisation methods include: bar charts, mosaic plots, double decker plots, UpSet plots and parallel coordinate plots.
-
-First, it will be of use to just do some illustrative graphing to show densities within the distribution across traits, in the form of bar charts. These will give a rough visual idea of the breakdown of the population and samples within the simulation, setting up some expectations for how representation should look in further visualisations. From there, either mosaic or double decker plots will be useful for depicting the proportion of given demographic traits that are selected for the panels. Finally, UpSet plots [@conwayUpSetRPackageVisualization2017] will be an effective way to showcase the intersections that exist in generated panels, as they offer a visual link between demographic variables, as well as frequency counts to highlight how often these occur within a given panel.
-
-
--- ignore the summaries --
-
-### Parallel coordinate plots [@vanderplasPenguinsGoParallel2023a]
-
-- Can help to show the distribution of traits across the selected panel and how it compares to the overall population.
-- Can also show the trade-offs between different traits and how they are balanced in the selection process
-- Can be used to identify any segments of the population that are underrepresented in the selected panel, and to highlight any potential biases in the selection process.
-
-
-### Matrix-based set representation (UpSetR) [@conwayUpSetRPackageVisualization2017]
-
-- Can be used to show how different traits connect with each other and how they are distributed across the distribution and/or selected panel.
-- Can help to identify any clusters of traits that are overrepresented or underrepresented in the selected panel, and to show how different traits interact with each other in the selection process.
-- Can highlight specific combinations of traits that are of interest, and show how they are represented in the selected panel compared to the overall population. (Though there is no way to gauge the prevalence of these combinations in the population, beyond anecdotal observations)
-
---
-
-### Attribute distribution analysis
-
-- Showcase how the distribution of traits in the selected panel compares to the overall population, and to identify any discrepancies or biases in the selection process.

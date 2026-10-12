@@ -2,11 +2,36 @@
 
 Having flagged the issues present with current sortitioning methods and process, the second gap sought to be addressed was the absence of a tool for practitioners to assess the viability and intersectionality of panels before engaging in deliberative processes. As such, a Shiny app was developed. Even within current practice, the LexiMin lottery and panel selection process took two steps: 1. uploading categories and trait quotas alongside a respondent pool and determining desired panel size, and 2. taking the computed panel lottery to a interactive page for random number generation to select a specific panel. The Shiny app developed as part of this thesis serves to replace this second step, with additional functionality that will benefit practitioners in smoothness of their workflow, as well as provide more confidence in the representativeness of their panels at a controllably granular level of intersectionality. This will enable practitioners to make more informed decisions about potential quota constraint adjustments and representative validity, minimising likelihood of unexpectedly poor intersectional spread and representation when panels convene.
 
+## Context: prior steps in the sortition pipeline
+
+Intersection Inspector is not intended to replace the sortition process as a whole, only its final step. By the point a practitioner opens the app, they are assumed to have already carried out the preceding stages of a sortition: recruiting and surveying a respondent pool, specifying the category variables and trait quotas the panel should satisfy (e.g. minimum and maximum counts per age bracket, per tenure category), and running a selection algorithm over that pool to discover every panel of the desired size that satisfies those quotas. In current practice this selection step is performed by the algorithm LexiMin, through an app hosted at [Panelot.org](https://panelot.org), which outputs a lottery file enumerating each feasible panel together with its probability of being returned.
+
+The app takes this lottery file and the underlying respondent pool as given, and does not re-run or second-guess the selection algorithm that produced them. This also means its usefulness is not contingent on LexiMin specifically: any sortition algorithm or process that produces an equivalent output -- a set of feasible panels (or a single panel) drawn from a known respondent pool, satisfying some quota specification -- could be inspected through the app in the same way. The quota-based selection step and the intersectional evaluation step addressed here are conceptually separate, and the latter is agnostic to which algorithm was used for the former.
+
 ## Intended workflow
 
 The app page consists of three parts: 1. a sidebar comprised of interactable buttons, toggles and sliders, 2. a window that displays mosaic plots comparing the 2-way intersections and associations present between the sample and any selected panel for any two selected category variables, and 3. a window that displays the relative proportions of every trait present in the sample and any selected panel, across all categories present within the sample's dataset. To make use of this, a practitioner is expected to follow the below procedure.
 
 ### Uploading files
+
+The app, Intersection Inspector, takes two files as input: a lottery file (Panelot's `lottery.csv`, enumerating every panel the sortition algorithm found feasible, each with its member IDs and return probability) and the sample file the lottery was drawn from (the respondent pool that was invited and agreed to participate). From these two files alone, the app reconstructs every selected panel's composition on each category present in the sample and makes its intersectional structure directly inspectable, without requiring the practitioner to write any code or leave the browser.
+
+### Comparing intersections and marginal proportions
+
+Once the files are uploaded, the practitioner selects any two category variables of interest (e.g. age and tenure) and the app renders a pair of mosaic plots side by side: one for the currently selected panel, one for the sample it was drawn from. These mosaic plots visualise the two-way intersection and association between the chosen variables, so that a practitioner can see at a glance whether the panel's joint distribution of traits resembles the sample's "shape", or whether it is skewed in a way that marginal quota counts alone would not reveal. Beneath the mosaic plots, a second window displays bar charts of every trait's marginal proportion in the panel against the sample, across every category in the dataset, covering representativeness at the single-variable level as well.
+
+### Testing and browsing panels
+
+Beyond visual inspection, the app formally tests association preservation for each panel using the association tests described in the @sec-results, and summarises each as a p-value and significance interpretation ("level of difference" from the sample), alongside the panel's size and its probability of being selected by the lottery. Panels can be browsed in several ways: sliding across all discovered panels ordered from most to least similar in association to the sample, jumping to a uniformly random panel (allowing arbitrary evaluation of the algorithm's performance), jumping to a probability-weighted random panel (sidestepping the need for a separate external random number generator once a panel is to be finalised), or entering a specific panel ID directly. A further view lets the practitioner check, at an adjustable representation threshold, which intersections of categories are missing or under-represented in the panel relative to the sample. Once a panel is chosen, its member IDs can be inspected and copied to the clipboard to continue the existing workflow (e.g. contacting selected members).
+
+### Replacing the Panelot.org selection step
+
+In current practice, after a lottery file is generated, a practitioner takes it to a second, separate interactive page -- on Panelot.org -- purely to generate a random number and select one specific panel from those enumerated, then has to manually select the member IDs from the output. That step reveals no information about *which* panel is being selected or how representative it is beyond the quota constraints already satisfied; it is, in effect, a black box that turns a lottery file into a single panel. Intersection Inspector is designed as a drop-in replacement for this step: it accepts the same lottery and sample files, supports the same random (and probability-weighted random) selection as a final action, and returns the same member list a practitioner needs to proceed -- while additionally providing the mosaic plots, marginal bar charts, association p-values, and under-representation checks along the way.
+
+### Benefits for new practitioners
+
+This is particularly intended to benefit practitioners who are new to sortition or do not have a background in statistics. Rather than trusting that a tool with satisfied quota constraints is automatically representative, or treating panel selection as an opaque final step, the practitioner is given an interpretable visual and numerical basis for that trust (or for flagging concern) before a panel is convened. Because panels can be scrolled through and compared on their association preservation, a practitioner can also use the app diagnostically: if every available panel shows a similarly poor association to the sample, this points to the quota constraints themselves needing revision, rather than to any single unlucky draw. This also provides the practitioner an opportunity to decide whether any particular intersections need to be captured for their particular engagement, and determine whether additional surveying may be necessary for a more representative sample. Assuming the practitioner has access to the slice data, they can also format this to match the expected survey-respondent file structure and compare the panel against this directly, enabling a more direct comparison against data that would be closer to the population. In this way, the app turns a previously invisible step of the sortition pipeline into a transparent, inspectable one, directly in the hands of the people already responsible for running it.
+
 
 
 
@@ -25,3 +50,8 @@ App functions:
 - Allows the user to jump to probability-weighted random panels (if probability exists within the lottery file), side-stepping the need for external RNG to select a panel
 - Allows the user to inspect and copy panel member IDs to clipboard, to continue with workflow
 - Allows the user to check missing and under-represented intersections (compared to sample) at different representation thresholds
+
+---
+
+## App function draft
+

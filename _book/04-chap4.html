@@ -67,6 +67,46 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script><link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather|Source%20Code%20Pro" rel="stylesheet">
+<script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 </head>
 <body class="nav-sidebar docked quarto-light">
 
@@ -146,7 +186,7 @@ ul.task-list li input[type="checkbox"] {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title"><b>Sections</b></h2>
    
   <ul class="collapse">
-<li><a href="#variable-visualisations" id="toc-variable-visualisations" class="nav-link active" data-scroll-target="#variable-visualisations"><span class="header-section-number">4.1</span> 2-variable visualisations</a></li>
+<li><a href="#simulation-visualisations" id="toc-simulation-visualisations" class="nav-link active" data-scroll-target="#simulation-visualisations"><span class="header-section-number">4.1</span> Simulation visualisations</a></li>
   <li><a href="#panel-construction" id="toc-panel-construction" class="nav-link" data-scroll-target="#panel-construction"><span class="header-section-number">4.2</span> Panel construction</a></li>
   <li><a href="#framework-and-recommendations" id="toc-framework-and-recommendations" class="nav-link" data-scroll-target="#framework-and-recommendations"><span class="header-section-number">4.3</span> Framework and recommendations</a></li>
   </ul></nav>
@@ -167,112 +207,178 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header><section id="variable-visualisations" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="variable-visualisations">
-<span class="header-section-number">4.1</span> 2-variable visualisations</h2>
-<section id="population-simulation" class="level3"><h3 class="anchored" data-anchor-id="population-simulation">Population simulation</h3>
+</header><section id="simulation-visualisations" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="simulation-visualisations">
+<span class="header-section-number">4.1</span> Simulation visualisations</h2>
+<section id="simulation-pipeline-population-slice-and-respondents-equal-chance-case" class="level3"><h3 class="anchored" data-anchor-id="simulation-pipeline-population-slice-and-respondents-equal-chance-case">Simulation pipeline: population, slice and respondents (equal-chance case)</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop2-ind-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-ind-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-ind-plot-1.png" class="img-fluid figure-img" width="768">
+<div id="fig-pop1-pipeline-eq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop1-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-pop1-pipeline-eq-1.png" class="img-fluid figure-img" width="768">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-ind-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: Mosaic plot showing the intersection of age and tenure categories when they are generated independently, with age brackets on the x-axis and tenure categories on the y-axis and fill.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop1-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: Patchwork of mosaic plots tracing the independent population’s age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice’s respondents under the equal-chance response case. Age brackets are shown on the x-axis and tenure as fill throughout.
 </figcaption></figure>
 </div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop2-cov-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-cov-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-cov-plot-1.png" class="img-fluid figure-img" width="768">
+<div id="fig-pop2-pipeline-eq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-pop2-pipeline-eq-1.png" class="img-fluid figure-img" width="768">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-cov-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.2: Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting. Age brackets shown on the x-axis and tenure categories on the y-axis and fill.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Patchwork of mosaic plots tracing the associated population’s age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice’s respondents under the equal-chance response case. Age brackets are shown on the x-axis and tenure as fill throughout.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-pop2-ind-plot" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> and <a href="#fig-pop2-cov-plot" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> show the intersectional proportions of the age and tenure categories for the independently and associatively generated populations, respectively. Both skew towards upper middle age and higher frequency of homeowners (compared to other categories). But whilst there is no visible association between categories in <a href="#fig-pop2-ind-plot" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, <a href="#fig-pop2-cov-plot" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> contains a negative association between age and renting. As such, the probability of any intersection in <a href="#fig-pop2-ind-plot" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> is explained purely by the margins, and <a href="#fig-pop2-cov-plot" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> probabilities vary by category.</p>
-</section><section id="sample-construction" class="level3"><h3 class="anchored" data-anchor-id="sample-construction">Sample construction</h3>
+<p><a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> and <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> trace each population’s age-tenure structure across the three pipeline stages under the equal-chance response case. Both populations skew towards upper-middle age and a higher frequency of homeownership compared to other categories. In <a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, there is no visible association between age and tenure at any stage – the probability of any age-tenure intersection is explained purely by the margins – and this independence, along with each category’s relative proportions, is preserved essentially unchanged from the full population through the 10,000-person slice to the equal-chance respondents. In <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>, by contrast, a negative association between age and renting is visible at every stage: the proportion of renters among the youngest bracket is noticeably higher than among the oldest. This pipeline also shows its association and relative proportions carrying through from population to slice to equal-chance respondents largely unchanged, confirming that neither random slicing nor equal-chance response meaningfully disturbs either population’s underlying age-tenure structure.</p>
+</section><section id="simulation-pipeline-population-slice-and-respondents-age-associated-case" class="level3"><h3 class="anchored" data-anchor-id="simulation-pipeline-population-slice-and-respondents-age-associated-case">Simulation pipeline: population, slice and respondents (age-associated case)</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop2-ind-slice-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-ind-slice-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-ind-slice-plot-1.png" class="img-fluid figure-img" width="768">
+<div id="fig-pop1-pipeline-ass" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop1-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-pop1-pipeline-ass-1.png" class="img-fluid figure-img" width="768">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-ind-slice-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.3: Mosaic plot showing the intersection of age and tenure categories when they are generated independently for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved.
-</figcaption></figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-pop2-cov-slice-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-cov-slice-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-cov-slice-plot-1.png" class="img-fluid figure-img" width="768">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-cov-slice-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.4: Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved.
-</figcaption></figure>
-</div>
-</div>
-</div>
-<p><a href="#fig-pop2-ind-slice-plot" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> and <a href="#fig-pop2-cov-slice-plot" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> show random 10% (10000-individual) slices of the independent and associated populations respectively, replicating the mailout process of expressions of interest. <a href="#fig-pop2-ind-slice-plot" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> shows <a href="#fig-pop2-ind-plot" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> ’s indepedendent structure is largely preserved through slicing, with very slight deviations in younger and older “Other Tenure” proportions. <a href="#fig-pop2-cov-slice-plot" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> shows <a href="#fig-pop2-cov-plot" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> ’s associated structure is also preserved through slicing, with relative proportions maintained.</p>
-</section><section id="respondent-simulation" class="level3"><h3 class="anchored" data-anchor-id="respondent-simulation">Respondent simulation</h3>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-pop2-ind-eq-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-ind-eq-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-ind-eq-plot-1.png" class="img-fluid figure-img" width="768">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-ind-eq-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.5: Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop1-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: Patchwork of mosaic plots tracing the independent population’s age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice’s respondents under the age-associated response case. Age brackets are shown on the x-axis and tenure as fill throughout.
 </figcaption></figure>
 </div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop2-ind-ass-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-ind-ass-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-ind-ass-plot-1.png" class="img-fluid figure-img" width="768">
+<div id="fig-pop2-pipeline-ass" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-pop2-pipeline-ass-1.png" class="img-fluid figure-img" width="768">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-ind-ass-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.6: Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.4: Patchwork of mosaic plots tracing the associated population’s age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice’s respondents under the age-associated response case. Age brackets are shown on the x-axis and tenure as fill throughout.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-pop2-ind-eq-plot" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> and <a href="#fig-pop2-ind-ass-plot" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> show the intersections of the simulated respondents of the expression of interest survey, assuming an indepedently generated population. <a href="#fig-pop2-ind-eq-plot" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> simulates responses with equal chance, while <a href="#fig-pop2-ind-ass-plot" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> positive associations.</p>
+<p><a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> and <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> repeat the same three-stage pipeline, but with response likelihood now rising with age rather than being equal across brackets. Unlike the equal-chance case in <a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> and <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>, the age-tenure structure is no longer preserved unchanged once respondents are reached: in both <a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> and <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>, the older age brackets visibly widen and the younger brackets narrow between the “Slice (10,000)” and “Respondents (ass)” panels, since older individuals are now disproportionately more likely to respond. This demonstrates that an association between age and response probability – entirely independent of any association between age and tenure in the underlying population – is sufficient on its own to shift the overall age composition, and therefore the intersections present, in the final respondent sample. Comparing <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> specifically against <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> shows this age-skew compounding with the associated population’s existing negative age-renting relationship, rather than replacing it: the respondents under age-associated response are weighted even further towards the older, lower-renting end of the distribution than either the equal-chance respondents or the slice itself.</p>
+</section><section id="quantifying-association-across-the-pipeline" class="level3"><h3 class="anchored" data-anchor-id="quantifying-association-across-the-pipeline">Quantifying association across the pipeline</h3>
+<p>The mosaic patchworks above show the age-tenure association visually; <a href="#tbl-association-summary-2var" class="quarto-xref">Table&nbsp;<span>4.1</span></a> quantifies it at every stage, using a chi-squared test of independence and Cramer’s V as an effect-size measure of how strong that association is.</p>
 <div class="cell">
+<div id="tbl-association-summary-2var" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-association-summary-2var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Chi-squared test of independence and Cramer’s V for the age-tenure association at each stage of the two-variable pipeline, for both populations and both response cases.
+</figcaption><div aria-describedby="tbl-association-summary-2var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="fig-pop2-cov-eq-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-cov-eq-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-cov-eq-plot-1.png" class="img-fluid figure-img" width="768">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 3%">
+<col style="width: 9%">
+<col style="width: 13%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Response case</th>
+<th style="text-align: left;">Stage</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">Chi-sq</th>
+<th style="text-align: right;">df</th>
+<th style="text-align: right;">p-value</th>
+<th style="text-align: right;">Cramer’s V</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Independent (pop1)</td>
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Population</td>
+<td style="text-align: right;">100000</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.735</td>
+<td style="text-align: right;">0.005</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Independent (pop1)</td>
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Slice (10,000)</td>
+<td style="text-align: right;">10000</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.969</td>
+<td style="text-align: right;">0.011</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Independent (pop1)</td>
+<td style="text-align: left;">eq</td>
+<td style="text-align: left;">Respondents</td>
+<td style="text-align: right;">2974</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.803</td>
+<td style="text-align: right;">0.028</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Independent (pop1)</td>
+<td style="text-align: left;">ass</td>
+<td style="text-align: left;">Respondents</td>
+<td style="text-align: right;">3483</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.759</td>
+<td style="text-align: right;">0.027</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Associated (pop2)</td>
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Population</td>
+<td style="text-align: right;">100000</td>
+<td style="text-align: right;">3148.2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">&lt; .001</td>
+<td style="text-align: right;">0.125</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Associated (pop2)</td>
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Slice (10,000)</td>
+<td style="text-align: right;">10000</td>
+<td style="text-align: right;">334.3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">&lt; .001</td>
+<td style="text-align: right;">0.129</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Associated (pop2)</td>
+<td style="text-align: left;">eq</td>
+<td style="text-align: left;">Respondents</td>
+<td style="text-align: right;">3019</td>
+<td style="text-align: right;">123.9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">&lt; .001</td>
+<td style="text-align: right;">0.143</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Associated (pop2)</td>
+<td style="text-align: left;">ass</td>
+<td style="text-align: left;">Respondents</td>
+<td style="text-align: right;">3563</td>
+<td style="text-align: right;">123.4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">&lt; .001</td>
+<td style="text-align: right;">0.132</td>
+</tr>
+</tbody>
+</table>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-cov-eq-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.7: Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved.
-</figcaption></figure>
+</div>
+</figure>
 </div>
 </div>
-</div>
-<p><a href="#fig-pop2-cov-eq-plot" class="quarto-xref">Figure&nbsp;<span>4.7</span></a></p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-pop2-cov-ass-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pop2-cov-ass-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-cov-ass-plot-1.png" class="img-fluid figure-img" width="768">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-cov-ass-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.8: Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved.
-</figcaption></figure>
-</div>
-</div>
-</div>
-<p><a href="#fig-pop2-cov-ass-plot" class="quarto-xref">Figure&nbsp;<span>4.8</span></a></p>
+<p><a href="#tbl-association-summary-2var" class="quarto-xref">Table&nbsp;<span>4.1</span></a> confirms what <a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> through <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> show visually. For the independent population, no stage or response case ever reaches significance (all <span class="math inline">p &gt; 0.7</span>), and Cramer’s V stays below 0.03 throughout – consistent with an age-tenure association that is genuinely absent, not merely undetected. For the associated population, every stage is significant at <span class="math inline">p &lt; .001</span>, and Cramer’s V stays in a comparatively narrow band (0.125-0.143) from population through to both respondent cases, confirming that the underlying age-renting association is neither diluted by slicing nor meaningfully inflated by either response case – the age-associated case’s effect is visible mainly as a shift in the respondents’ age <em>composition</em> (<a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.3</span></a>, <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>), rather than as a change in the strength of the age-tenure relationship itself. One caveat applies to the independent population’s <span class="math inline">p</span>-values specifically: with population and slice sample sizes in the tens of thousands, even this chi-squared test has the power to detect very small deviations from independence, so the consistently non-significant results here reflect a genuine absence of association, rather than a lack of statistical power.</p>
 </section></section><section id="panel-construction" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="panel-construction">
 <span class="header-section-number">4.2</span> Panel construction</h2>
 <section id="association-preservation" class="level3"><h3 class="anchored" data-anchor-id="association-preservation">Association preservation</h3>

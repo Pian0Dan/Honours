@@ -1,5 +1,5 @@
 library(tibble)
-library(ggmosaic)
+library(ggmosaic2)
 library(ggplot2)
 library(tidyverse)
 

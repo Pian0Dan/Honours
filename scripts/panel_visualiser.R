@@ -13,7 +13,7 @@
 
 source("scripts/lottery_helpers.R") # lottery_dir, read_lottery, get_survey_sample
 library(ggplot2)
-library(ggmosaic)
+library(ggmosaic2)
 library(patchwork)
 
 # --- 1. Available lotteries under panelot_output/2var ---

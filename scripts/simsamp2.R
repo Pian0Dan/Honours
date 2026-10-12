@@ -23,10 +23,6 @@
 # ---------------------------------------------------------------
 
 source("scripts/simdata2.R")
-# legendry provides guide_axis_nested(), used below to split each
-# double decker plot's combined "Age:Tenure" x-axis label into two
-# clean, bracketed rows -- one per variable.
-library(legendry)
 
 set.seed(13)
 
@@ -216,60 +212,10 @@ table(
   sim_data2_cov_response_table$Responded2
 )
 
-# --- 8. Double decker plots of response rate by category, for each
-# population and each response case separately ---
-# Age and tenure are both nested on the x-axis (via divider =
-# ddecker(), the double decker template: a sequence of spines in the
-# same direction -- here age nested within tenure -- with the final
-# spine, response status, laid out in the opposite direction),
-# giving the y-axis its usual double decker role as the conditional
-# proportion of Yes/No responses within every age x tenure
-# combination. Response status is shown both as that y-axis split
-# and as fill colour, matching the classic double decker
-# presentation. guide_axis_nested() splits the combined "Age:Tenure"
-# x-axis label into two clean, bracketed rows -- one per variable.
-pop2_ind_eq_plot <- ggplot(sim_data2_response_table) +
-  geom_mosaic(
-    aes(x = product(Age, Tenure), fill = Responded1),
-    divider = ddecker()
-  ) +
-  labs(fill = "Responded", title = "sim_data2: Responded1 (equal chance)") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(size = 7)) +
-  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
-
-pop2_ind_ass_plot <- ggplot(sim_data2_response_table) +
-  geom_mosaic(
-    aes(x = product(Age, Tenure), fill = Responded2),
-    divider = ddecker()
-  ) +
-  labs(fill = "Responded", title = "sim_data2: Responded2 (associated)") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(size = 7)) +
-  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
-
-pop2_cov_eq_plot <- ggplot(sim_data2_cov_response_table) +
-  geom_mosaic(
-    aes(x = product(Age, Tenure), fill = Responded1),
-    divider = ddecker()
-  ) +
-  labs(
-    fill = "Responded",
-    title = "sim_data2_cov: Responded1 (equal chance)"
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(size = 7)) +
-  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
-
-pop2_cov_ass_plot <- ggplot(sim_data2_cov_response_table) +
-  geom_mosaic(
-    aes(x = product(Age, Tenure), fill = Responded2),
-    divider = ddecker()
-  ) +
-  labs(
-    fill = "Responded",
-    title = "sim_data2_cov: Responded2 (associated)"
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(size = 7)) +
-  guides(x = guide_axis_nested(key = key_range_auto(sep = ":")))
+# Double-decker plots of response rate by category (age x tenure x
+# responded) have been moved to scripts/simsamp2_doubledecker.R,
+# since they are not referred to anywhere in the thesis and were
+# pulling in legendry::guide_axis_nested() -- which is currently
+# incompatible with ggmosaic2 -- for every script that sourced this
+# one. That script is never sourced from here or anywhere else, so
+# it is not run as part of the normal pipeline.

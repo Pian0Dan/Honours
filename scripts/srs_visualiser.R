@@ -21,7 +21,7 @@
 
 source("scripts/lottery_helpers.R") # survey_samples, age_levels, tenure_levels
 library(ggplot2)
-library(ggmosaic)
+library(ggmosaic2)
 library(patchwork)
 
 # --- 1. Draw a simple random sample from a survey sample ---

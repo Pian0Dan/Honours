@@ -7,7 +7,7 @@
 # ---------------------------------------------------------------
 
 library(ggplot2)
-library(ggmosaic)
+library(ggmosaic2)
 
 set.seed(13)
 

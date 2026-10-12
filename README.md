@@ -342,3 +342,8 @@
 ### Plan
 
 ### Discussion
+
+
+# APP IS HOSTED
+
+https://daniel-loza-intersection-inspector.share.connect.posit.cloud/

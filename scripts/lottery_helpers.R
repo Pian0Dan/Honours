@@ -22,18 +22,20 @@ lottery_dir <- normalizePath("panelot_output/2var", mustWork = FALSE)
 # respondent pool) it was generated from ---
 # File names follow "lottery_<population>_<case>.csv", where
 # population is "ind" (sim_data2) or "cov" (sim_data2_cov), and case
-# is some abbreviation of "eq" (Responded1, equal chance) or "assoc"
-# (Responded2, age-associated) -- e.g. "eq" or "ass"/"assoc" have
-# both been seen in practice, so the case token is matched by prefix
-# below rather than requiring an exact match. Deliberately read the
-# respondent-pool CSVs
-# written by scripts/csv_helper.R (the exact files fed to Panelot to
-# generate each lottery.csv) from disk, rather than re-deriving the
-# respondent pool by re-running simsamp2.R/simsamp2yes.R in this
-# session -- those scripts have since been edited (e.g. the
-# population is now sliced to 10,000 before sampling respondents),
-# so re-running them no longer reproduces the same individuals, and
-# most panel member IDs would fail to match a re-simulated pool.
+# is "eq" (Responded1, equal chance) or "ass" (Responded2,
+# age-associated) -- the same "<ind|cov>_<eq|ass>" convention used
+# for the respondent-pool CSVs written by scripts/csv_helper.R
+# (sim_data2_ind_eq.csv etc.). The case token is still matched by
+# prefix below (rather than requiring an exact "eq"/"ass" match), in
+# case a longer variant (e.g. "assoc") is ever used for a file name
+# in future. Deliberately read the respondent-pool CSVs written by
+# scripts/csv_helper.R (the exact files fed to Panelot to generate
+# each lottery.csv) from disk, rather than re-deriving the respondent
+# pool by re-running simsamp2.R/simsamp2yes.R in this session --
+# those scripts have since been edited (e.g. the population is now
+# sliced to 10,000 before sampling respondents), so re-running them
+# no longer reproduces the same individuals, and most panel member
+# IDs would fail to match a re-simulated pool.
 read_survey_sample <- function(path) {
   raw <- read.csv(path)
   data.frame(
@@ -49,16 +51,16 @@ respondent_csv_dir <- normalizePath(
 )
 survey_samples <- list(
   ind_eq = read_survey_sample(
-    file.path(respondent_csv_dir, "sim_data2_responded1.csv")
+    file.path(respondent_csv_dir, "sim_data2_ind_eq.csv")
   ),
-  ind_assoc = read_survey_sample(
-    file.path(respondent_csv_dir, "sim_data2_responded2.csv")
+  ind_ass = read_survey_sample(
+    file.path(respondent_csv_dir, "sim_data2_ind_ass.csv")
   ),
   cov_eq = read_survey_sample(
-    file.path(respondent_csv_dir, "sim_data2_cov_responded1.csv")
+    file.path(respondent_csv_dir, "sim_data2_cov_eq.csv")
   ),
-  cov_assoc = read_survey_sample(
-    file.path(respondent_csv_dir, "sim_data2_cov_responded2.csv")
+  cov_ass = read_survey_sample(
+    file.path(respondent_csv_dir, "sim_data2_cov_ass.csv")
   )
 )
 
@@ -71,14 +73,14 @@ get_survey_sample <- function(lottery_file) {
       "Can't tell which population/case ",
       lottery_file,
       " was drawn from -- expected a name like ",
-      "'lottery_<ind|cov>_<eq|assoc>.csv'."
+      "'lottery_<ind|cov>_<eq|ass>.csv'."
     )
   }
 
   case <- if (grepl("^eq", parts[2])) {
     "eq"
   } else if (grepl("^ass", parts[2])) {
-    "assoc"
+    "ass"
   } else {
     stop(
       "Unrecognised response-case code '",

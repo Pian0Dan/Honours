@@ -21,7 +21,7 @@ Four lottery files were generated in this way, covering every combination of the
 
 ## Linking panels to the survey sample
 
-Each panel's members are identified only by pool identifier in `lottery.csv`, so their age and tenure values were recovered by joining back onto the respondent-pool CSV originally supplied to Panelot (the same file written by `csv_helper.R`, e.g. `sim_data2_cov_responded1.csv`). This respondent pool -- the people who were invited to respond and actually did so -- is referred to throughout as the *survey sample*, and serves as the benchmark against which every panel's composition is compared.
+Each panel's members are identified only by pool identifier in `lottery.csv`, so their age and tenure values were recovered by joining back onto the respondent-pool CSV originally supplied to Panelot (the same file written by `csv_helper.R`, e.g. `sim_data2_cov_eq.csv`). This respondent pool -- the people who were invited to respond and actually did so -- is referred to throughout as the *survey sample*, and serves as the benchmark against which every panel's composition is compared.
 
 ## Within-panel association test
 

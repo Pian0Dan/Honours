@@ -1,131 +1,79 @@
 # Results {#sec-results}
 
-## 2-variable visualisations
+## Simulation visualisations
 
-### Population simulation
-
-```{r}
-#| label: fig-pop2-ind-plot
-#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated independently, with age brackets on the x-axis and tenure categories on the y-axis and fill."
-# source() only suppresses console output for print.eval-gated
-# top-level expressions; simdata2.R's str() calls write directly to
-# the console regardless, so capture.output() is used to discard
-# everything the sourced script prints, leaving only pop2_ind_plot
-# itself to render below.
-invisible(capture.output(source("scripts/simdata2.R")))
-
-pop2_ind_plot
-```
-
-
+### Simulation pipeline: population, slice and respondents (equal-chance case)
 
 ```{r}
-#| label: fig-pop2-cov-plot
-#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting. Age brackets shown on the x-axis and tenure categories on the y-axis and fill."
+#| label: fig-pop1-pipeline-eq
+#| fig-cap: "Patchwork of mosaic plots tracing the independent population's age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice's respondents under the equal-chance response case. Age brackets are shown on the x-axis and tenure as fill throughout."
 # source() only suppresses console output for print.eval-gated
-# top-level expressions; simdata2.R's str() calls write directly to
-# the console regardless, so capture.output() is used to discard
-# everything the sourced script prints, leaving only pop2_ind_plot
-# itself to render below.
-invisible(capture.output(source("scripts/simdata2.R")))
+# top-level expressions; the sourced scripts' str() calls write
+# directly to the console regardless, so capture.output() is used to
+# discard everything they print, leaving only the patchwork objects
+# (pop1_pipeline_eq, pop2_pipeline_eq) to render below.
+invisible(capture.output(source("scripts/patchwork.R")))
 
-pop2_cov_plot
-```
-
-@fig-pop2-ind-plot and @fig-pop2-cov-plot show the intersectional proportions of the age and tenure categories for the independently and associatively generated populations, respectively. Both skew towards upper middle age and higher frequency of homeowners (compared to other categories). But whilst there is no visible association between categories in @fig-pop2-ind-plot, @fig-pop2-cov-plot contains a negative association between age and renting. As such, the probability of any intersection in @fig-pop2-ind-plot is explained purely by the margins, and @fig-pop2-cov-plot probabilities vary by category.
-
-### Sample construction
-
-```{r}
-#| label: fig-pop2-ind-slice-plot
-#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated independently for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
-# source() only suppresses console output for print.eval-gated
-# top-level expressions; simdata2.R's str() calls write directly to
-# the console regardless, so capture.output() is used to discard
-# everything the sourced script prints, leaving only pop2_ind_plot
-# itself to render below.
-invisible(capture.output(source("scripts/simsamp2.R")))
-
-pop2_ind_slice_plot
+pop1_pipeline_eq
 ```
 
 ```{r}
-#| label: fig-pop2-cov-slice-plot
-#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
-# source() only suppresses console output for print.eval-gated
-# top-level expressions; simdata2.R's str() calls write directly to
-# the console regardless, so capture.output() is used to discard
-# everything the sourced script prints, leaving only pop2_ind_plot
-# itself to render below.
-invisible(capture.output(source("scripts/simsamp2.R")))
+#| label: fig-pop2-pipeline-eq
+#| fig-cap: "Patchwork of mosaic plots tracing the associated population's age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice's respondents under the equal-chance response case. Age brackets are shown on the x-axis and tenure as fill throughout."
+invisible(capture.output(source("scripts/patchwork.R")))
 
-pop2_cov_slice_plot
+pop2_pipeline_eq
 ```
 
-@fig-pop2-ind-slice-plot and @fig-pop2-cov-slice-plot show random 10% (10000-individual) slices of the independent and associated populations respectively, replicating the mailout process of expressions of interest. @fig-pop2-ind-slice-plot shows @fig-pop2-ind-plot 's indepedendent structure is largely preserved through slicing, with very slight deviations in younger and older "Other Tenure" proportions. @fig-pop2-cov-slice-plot shows @fig-pop2-cov-plot 's associated structure is also preserved through slicing, with relative proportions maintained.
+@fig-pop1-pipeline-eq and @fig-pop2-pipeline-eq trace each population's age-tenure structure across the three pipeline stages under the equal-chance response case. Both populations skew towards upper-middle age and a higher frequency of homeownership compared to other categories. In @fig-pop1-pipeline-eq, there is no visible association between age and tenure at any stage -- the probability of any age-tenure intersection is explained purely by the margins -- and this independence, along with each category's relative proportions, is preserved essentially unchanged from the full population through the 10,000-person slice to the equal-chance respondents. In @fig-pop2-pipeline-eq, by contrast, a negative association between age and renting is visible at every stage: the proportion of renters among the youngest bracket is noticeably higher than among the oldest. This pipeline also shows its association and relative proportions carrying through from population to slice to equal-chance respondents largely unchanged, confirming that neither random slicing nor equal-chance response meaningfully disturbs either population's underlying age-tenure structure.
 
-### Respondent simulation
+### Simulation pipeline: population, slice and respondents (age-associated case)
 
 ```{r}
-#| label: fig-pop2-ind-eq-plot
-#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
+#| label: fig-pop1-pipeline-ass
+#| fig-cap: "Patchwork of mosaic plots tracing the independent population's age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice's respondents under the age-associated response case. Age brackets are shown on the x-axis and tenure as fill throughout."
 # source() only suppresses console output for print.eval-gated
-# top-level expressions; simdata2.R's str() calls write directly to
-# the console regardless, so capture.output() is used to discard
-# everything the sourced script prints, leaving only pop2_ind_plot
-# itself to render below.
-invisible(capture.output(source("scripts/simsamp2yes.R")))
+# top-level expressions; the sourced scripts' str() calls write
+# directly to the console regardless, so capture.output() is used to
+# discard everything they print, leaving only the patchwork objects
+# (pop1_pipeline_ass, pop2_pipeline_ass) to render below.
+invisible(capture.output(source("scripts/patchwork.R")))
 
-pop2_ind_eq_plot
+pop1_pipeline_ass
 ```
-
 
 ```{r}
-#| label: fig-pop2-ind-ass-plot
-#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
-# source() only suppresses console output for print.eval-gated
-# top-level expressions; simdata2.R's str() calls write directly to
-# the console regardless, so capture.output() is used to discard
-# everything the sourced script prints, leaving only pop2_ind_plot
-# itself to render below.
-invisible(capture.output(source("scripts/simsamp2yes.R")))
+#| label: fig-pop2-pipeline-ass
+#| fig-cap: "Patchwork of mosaic plots tracing the associated population's age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice's respondents under the age-associated response case. Age brackets are shown on the x-axis and tenure as fill throughout."
+invisible(capture.output(source("scripts/patchwork.R")))
 
-pop2_ind_ass_plot
+pop2_pipeline_ass
 ```
 
-@fig-pop2-ind-eq-plot and @fig-pop2-ind-ass-plot show the intersections of the simulated respondents of the expression of interest survey, assuming an indepedently generated population. @fig-pop2-ind-eq-plot simulates responses with equal chance, while @fig-pop2-ind-ass-plot positive associations.
+@fig-pop1-pipeline-ass and @fig-pop2-pipeline-ass repeat the same three-stage pipeline, but with response likelihood now rising with age rather than being equal across brackets. Unlike the equal-chance case in @fig-pop1-pipeline-eq and @fig-pop2-pipeline-eq, the age-tenure structure is no longer preserved unchanged once respondents are reached: in both @fig-pop1-pipeline-ass and @fig-pop2-pipeline-ass, the older age brackets visibly widen and the younger brackets narrow between the "Slice (10,000)" and "Respondents (ass)" panels, since older individuals are now disproportionately more likely to respond. This demonstrates that an association between age and response probability -- entirely independent of any association between age and tenure in the underlying population -- is sufficient on its own to shift the overall age composition, and therefore the intersections present, in the final respondent sample. Comparing @fig-pop2-pipeline-ass specifically against @fig-pop2-pipeline-eq shows this age-skew compounding with the associated population's existing negative age-renting relationship, rather than replacing it: the respondents under age-associated response are weighted even further towards the older, lower-renting end of the distribution than either the equal-chance respondents or the slice itself.
 
+### Quantifying association across the pipeline
 
+The mosaic patchworks above show the age-tenure association visually; @tbl-association-summary-2var quantifies it at every stage, using a chi-squared test of independence and Cramer's V as an effect-size measure of how strong that association is.
 
 ```{r}
-#| label: fig-pop2-cov-eq-plot
-#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
-# source() only suppresses console output for print.eval-gated
-# top-level expressions; simdata2.R's str() calls write directly to
-# the console regardless, so capture.output() is used to discard
-# everything the sourced script prints, leaving only pop2_ind_plot
-# itself to render below.
-invisible(capture.output(source("scripts/simsamp2yes.R")))
+#| label: tbl-association-summary-2var
+#| tbl-cap: "Chi-squared test of independence and Cramer's V for the age-tenure association at each stage of the two-variable pipeline, for both populations and both response cases."
+invisible(capture.output(source("scripts/association_summary.R")))
 
-pop2_cov_eq_plot
+knitr::kable(
+  association_summary_2var[, c(
+    "population", "case", "stage", "n", "chi_sq", "df", "p_value_fmt", "cramers_v"
+  )],
+  col.names = c(
+    "Population", "Response case", "Stage", "n", "Chi-sq", "df", "p-value", "Cramer's V"
+  ),
+  digits = c(0, 0, 0, 0, 1, 0, 0, 3),
+  align = c("l", "l", "l", "r", "r", "r", "r", "r")
+)
 ```
 
-@fig-pop2-cov-eq-plot
-
-```{r}
-#| label: fig-pop2-cov-ass-plot
-#| fig-cap: "Mosaic plot showing the intersection of age and tenure categories when they are generated with a negative association between age and renting for a 10000-individual slice. Age brackets shown on the x-axis and tenure categories on the y-axis and fill. Structure is preserved."
-# source() only suppresses console output for print.eval-gated
-# top-level expressions; simdata2.R's str() calls write directly to
-# the console regardless, so capture.output() is used to discard
-# everything the sourced script prints, leaving only pop2_ind_plot
-# itself to render below.
-invisible(capture.output(source("scripts/simsamp2yes.R")))
-
-pop2_cov_ass_plot
-```
-
-@fig-pop2-cov-ass-plot
+@tbl-association-summary-2var confirms what @fig-pop1-pipeline-eq through @fig-pop2-pipeline-ass show visually. For the independent population, no stage or response case ever reaches significance (all $p > 0.7$), and Cramer's V stays below 0.03 throughout -- consistent with an age-tenure association that is genuinely absent, not merely undetected. For the associated population, every stage is significant at $p < .001$, and Cramer's V stays in a comparatively narrow band (0.125-0.143) from population through to both respondent cases, confirming that the underlying age-renting association is neither diluted by slicing nor meaningfully inflated by either response case -- the age-associated case's effect is visible mainly as a shift in the respondents' age *composition* (@fig-pop1-pipeline-ass, @fig-pop2-pipeline-ass), rather than as a change in the strength of the age-tenure relationship itself. One caveat applies to the independent population's $p$-values specifically: with population and slice sample sizes in the tens of thousands, even this chi-squared test has the power to detect very small deviations from independence, so the consistently non-significant results here reflect a genuine absence of association, rather than a lack of statistical power.
 
 ## Panel construction
 
