@@ -38,7 +38,7 @@
 # Every trait column, not just the two selected for the mosaic plot,
 # still appears in the marginal bar chart below.
 #
-# Run with shiny::runApp("scripts/panel_visualiser_2var_app.R") (or
+# Run with shiny::runApp("scripts/intersection_inspector/app.R") (or
 # the editor's "Run App" button). Like panel_visualiser_prac_app.R,
 # this app does not depend on any of this project's own simulated
 # data or scripts -- it only needs the packages loaded below.
@@ -636,9 +636,25 @@ app_theme <- bs_theme(
   )
 
 ui <- page_sidebar(
-  title = "Intersection Inspector -- axis x fill (upload your own files)",
+  title = tags$span(
+    tags$img(
+      src = "logo.png",
+      height = "28px",
+      style = "margin-right: 8px;",
+      alt = ""
+    ),
+    "Intersection Inspector -- axis x fill (upload your own files)"
+  ),
   theme = app_theme,
   class = "bslib-page-dashboard",
+  # www/favicon.ico is actually PNG-encoded data despite its .ico
+  # extension (same file as www/logo.png), so the MIME type is
+  # declared explicitly here rather than relying on Shiny's
+  # extension-based guess (which would default to image/x-icon and
+  # mislabel it).
+  tags$head(
+    tags$link(rel = "icon", type = "image/png", href = "favicon.ico")
+  ),
   # A <script> tag runs wherever it's placed in the page, regardless
   # of visual layout, so this just rides along as an (invisible) part
   # of page_sidebar()'s main content rather than needing a dedicated

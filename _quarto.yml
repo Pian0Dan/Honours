@@ -1,5 +1,6 @@
 project:
   type: book
+  pre-render: Rscript scripts/renv_prerender.R
 
 book:
   title: "Are you in the room? A framework for sortition and representation"

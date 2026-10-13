@@ -9,6 +9,9 @@
 
 source("simsamp5.R") # also sources simdata5.R
 
+library(ggplot2)
+library(ggmosaic2)
+library(legendry) # guide_axis_nested(), key_range_auto()
 library(patchwork)
 
 # simdata5.R / simsamp5.R only print their final, fully-labelled
@@ -44,8 +47,7 @@ sample_plot_indep <- build_final_mosaic(
   "Sample: sim_data5_sample"
 )
 
-population_plot_indep + sample_plot_indep +
-  plot_layout(guides = "collect")
+population_plot_indep + sample_plot_indep + plot_layout(guides = "collect")
 
 # --- Covaried scenario: population (sim_data5_oeh) vs. survey
 # sample (sim_data5_oeh_sample) ---
@@ -60,5 +62,4 @@ sample_plot_oeh <- build_final_mosaic(
   "Sample: sim_data5_oeh_sample"
 )
 
-population_plot_oeh + sample_plot_oeh +
-  plot_layout(guides = "collect")
+population_plot_oeh + sample_plot_oeh + plot_layout(guides = "collect")

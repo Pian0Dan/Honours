@@ -9,6 +9,7 @@ files = [
     "/app.R",
     "/.posit/publish/Intersection Inspector-FI2U.toml",
     "/.posit/publish/deployments/deployment-MCTQ.toml",
+    "/www",
 ]
 validate = true
 product_type = "connect_cloud"
