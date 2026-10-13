@@ -1128,11 +1128,37 @@ server <- function(input, output, session) {
     }
   })
 
+  # A render-only view onto selected_rank(), debounced so the two
+  # renderPlot() blocks below only rebuild once rank changes have
+  # settled for a moment, rather than once per intermediate rank
+  # touched while a slider drag (or a flurry of echoed pushes) is in
+  # flight -- each rebuild involves a full ggmosaic/patchwork plot
+  # construction, which is too slow to redo on every single step of a
+  # fast drag.
+  #
+  # This is deliberately a separate, read-only branch off
+  # selected_rank() rather than a change to selected_rank() itself,
+  # the pending-push bookkeeping, or the widget-sync observe() hub
+  # above -- all of those still fire immediately and keep the slider
+  # thumb, numeric input, and notifications in perfect lockstep with
+  # selected_rank() the instant it changes. Only the expensive plot
+  # rebuilds wait. This is also a different kind of debounce than the
+  # one already tried and rejected for the widget-sync hub itself (see
+  # pending_panel_rank_pushes above): that earlier attempt debounced
+  # the *inputs feeding into* selected_rank(), which is exactly what
+  # made echoes and genuine edits ambiguous. Debouncing this purely
+  # downstream, nothing-writes-back-to-it reactive can't reintroduce
+  # that ambiguity, since nothing ever reads rank_for_render() to
+  # decide what to push back to the widgets.
+  rank_for_render <- debounce(reactive(selected_rank()), millis = 250)
+
   # Bundles everything both renderPlot() blocks below need for the
-  # currently selected rank.
+  # currently selected rank. Reads the debounced rank_for_render()
+  # (not selected_rank() directly) so the actual plot work -- not just
+  # this cheap bookkeeping -- only happens once the rank has settled.
   current_panel <- reactive({
     po <- panel_order()
-    rank <- selected_rank()
+    rank <- rank_for_render()
     validate(need(
       rank >= 1 && rank <= nrow(po),
       "Select a panel rank within range."

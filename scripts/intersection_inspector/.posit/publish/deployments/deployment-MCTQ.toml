@@ -10,8 +10,8 @@ id = "01a1305a-aefd-eced-2c36-79400fc7cefb"
 dashboard_url = "https://connect.posit.cloud/daniel-loza/content/01a1305a-aefd-eced-2c36-79400fc7cefb"
 direct_url = "https://01a1305a-aefd-eced-2c36-79400fc7cefb.share.connect.posit.cloud"
 logs_url = "https://connect.posit.cloud/daniel-loza/content/01a1305a-aefd-eced-2c36-79400fc7cefb/history"
-deployed_at = "2026-10-13T12:56:23.989Z"
-bundle_id = "01a13554-6673-338f-cac6-c3fe5999d525"
+deployed_at = "2026-10-13T13:11:58.535Z"
+bundle_id = "01a13563-07e7-b060-1b6c-7310aae4bcd0"
 files = [
     ".posit/publish/Intersection Inspector-FI2U.toml",
     ".posit/publish/deployments/deployment-MCTQ.toml",
