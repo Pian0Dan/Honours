@@ -16,7 +16,7 @@ source("scripts/simdata2.R") # only needed for age_levels / tenure_levels
 # relative path here would resolve fine when this file is first
 # sourced (while the working directory is briefly the project root)
 # but fail every time a panel is actually requested afterwards.
-lottery_dir <- normalizePath("panelot_output/2var", mustWork = FALSE)
+lottery_dir <- normalizePath("data/panelot_output", mustWork = FALSE)
 
 # --- Map a lottery.csv's filename to the survey sample (the
 # respondent pool) it was generated from ---
@@ -46,7 +46,7 @@ read_survey_sample <- function(path) {
 }
 
 respondent_csv_dir <- normalizePath(
-  "leximin-implementation/data/simdata2_test",
+  "data/panelot_input",
   mustWork = FALSE
 )
 survey_samples <- list(

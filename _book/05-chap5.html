@@ -33,7 +33,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./refs.html" rel="next">
+<link href="./06-chap6.html" rel="next">
 <link href="./04-chap4.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -74,6 +74,49 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather|Source Code Pro" rel="stylesheet">
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -126,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-chap2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature Review</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature review</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -145,6 +188,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./05-chap5.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introducing Intersection Inspector</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-chap6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -191,34 +240,103 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Having flagged the issues present with current sortitioning methods and process, the second gap sought to be addressed was the absence of a tool for practitioners to assess the viability and intersectionality of panels before engaging in deliberative processes. As such, a Shiny app was developed. Even within current practice, the LexiMin lottery and panel selection process took two steps: 1. uploading categories and trait quotas alongside a respondent pool and determining desired panel size, and 2. taking the computed panel lottery to a interactive page for random number generation to select a specific panel. The Shiny app developed as part of this thesis serves to replace this second step, with additional functionality that will benefit practitioners in smoothness of their workflow, as well as provide more confidence in the representativeness of their panels at a controllably granular level of intersectionality. This will enable practitioners to make more informed decisions about potential quota constraint adjustments and representative validity, minimising likelihood of unexpectedly poor intersectional spread and representation when panels convene.</p>
+<p>Having flagged the issues with current sortition methods and process, the second gap this thesis set out to address was the absence of a tool for practitioners to assess the viability and intersectionality of panels before deliberation begins. To that end, a Shiny app was developed. Even in current practice, the LexiMin lottery and panel selection process takes two steps: uploading categories, trait quotas and a respondent pool with the desired panel size, then taking the resulting lottery to a separate interactive page for random number generation to select a specific panel. This thesis’s app replaces that second step, with added functionality that smooths a practitioner’s workflow and gives them more confidence in a panel’s representativeness at a controllably granular level of intersectionality – enabling more informed decisions about quota adjustments and representative validity, and reducing the likelihood of unexpectedly poor intersectional spread when panels convene.</p>
 <section id="context-prior-steps-in-the-sortition-pipeline" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="context-prior-steps-in-the-sortition-pipeline"><span class="header-section-number">5.1</span> Context: prior steps in the sortition pipeline</h2>
-<p>Intersection Inspector is not intended to replace the sortition process as a whole, only its final step. By the point a practitioner opens the app, they are assumed to have already carried out the preceding stages of a sortition: recruiting and surveying a respondent pool, specifying the category variables and trait quotas the panel should satisfy (e.g.&nbsp;minimum and maximum counts per age bracket, per tenure category), and running a selection algorithm over that pool to discover every panel of the desired size that satisfies those quotas. In current practice this selection step is performed by the algorithm LexiMin, through an app hosted at <a href="https://panelot.org">Panelot.org</a>, which outputs a lottery file enumerating each feasible panel together with its probability of being returned.</p>
-<p>The app takes this lottery file and the underlying respondent pool as given, and does not re-run or second-guess the selection algorithm that produced them. This also means its usefulness is not contingent on LexiMin specifically: any sortition algorithm or process that produces an equivalent output – a set of feasible panels (or a single panel) drawn from a known respondent pool, satisfying some quota specification – could be inspected through the app in the same way. The quota-based selection step and the intersectional evaluation step addressed here are conceptually separate, and the latter is agnostic to which algorithm was used for the former.</p>
+<p>Intersection Inspector is not intended to replace the sortition process as a whole, only its final step. By the time a practitioner opens the app, they are assumed to have already carried out the preceding stages of a sortition: recruiting and surveying a respondent pool, specifying the category variables and trait quotas the panel should satisfy (e.g.&nbsp;minimum and maximum counts per age bracket, per tenure category), and running a selection algorithm over that pool to discover every panel of the desired size that satisfies those quotas. In current practice this selection step is performed by LexiMin, through an app hosted at <a href="https://panelot.org">Panelot.org</a>, which outputs a lottery file enumerating each feasible panel together with its probability of being returned.</p>
+<p>The app takes this lottery file and the underlying respondent pool as given, and does not re-run or second-guess the algorithm that produced them. Its usefulness is therefore not tied to LexiMin specifically: any sortition algorithm or process producing an equivalent output – a set of feasible panels (or a single panel) drawn from a known respondent pool, satisfying some quota specification – could be inspected through the app the same way. The quota-based selection step and the intersectional evaluation step addressed here are conceptually separate, and the latter is agnostic to which algorithm performed the former.</p>
 </section>
 <section id="intended-workflow" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="intended-workflow"><span class="header-section-number">5.2</span> Intended workflow</h2>
-<p>The app page consists of three parts: 1. a sidebar comprised of interactable buttons, toggles and sliders, 2. a window that displays mosaic plots comparing the 2-way intersections and associations present between the sample and any selected panel for any two selected category variables, and 3. a window that displays the relative proportions of every trait present in the sample and any selected panel, across all categories present within the sample’s dataset. To make use of this, a practitioner is expected to follow the below procedure.</p>
+<p>The app page consists of three parts: 1. a sidebar comprised of interactable buttons, toggles and sliders, 2. a window that displays mosaic plots comparing the 2-way intersections and associations present between the sample and any selected panel for any two selected category variables, and 3. a window that displays the relative proportions of every trait present in the sample and any selected panel, across all categories present within the sample’s dataset. <a href="#fig-intersection-inspector-overview" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> shows all three parts together, using the associated population’s equal-chance lottery (<code>lottery_cov_eq.csv</code>) – the same example used for <a href="04-chap4.html#fig-panel-vs-sample-example" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> in <a href="04-chap4.html" class="quarto-xref"><span>Chapter 4</span></a> – as the uploaded sample and lottery file. To make use of this, a practitioner is expected to follow the below procedure.</p>
+<div id="fig-intersection-inspector-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intersection-inspector-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/intersection-inspector-overview.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intersection-inspector-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Intersection Inspector’s main view: the sidebar (left) for file upload, variable selection and panel navigation; the “Survey Sample vs.&nbsp;Panel” mosaic comparison (top right); and the “Marginal trait distributions” bar chart (bottom right). Shown here with the same associated-population, equal-chance example (<code>lottery_cov_eq.csv</code>) used in <a href="04-chap4.html#fig-panel-vs-sample-example" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>.
+</figcaption>
+</figure>
+</div>
 <section id="uploading-files" class="level3">
 <h3 class="anchored" data-anchor-id="uploading-files">Uploading files</h3>
-<p>The app, Intersection Inspector, takes two files as input: a lottery file (Panelot’s <code>lottery.csv</code>, enumerating every panel the sortition algorithm found feasible, each with its member IDs and return probability) and the sample file the lottery was drawn from (the respondent pool that was invited and agreed to participate). From these two files alone, the app reconstructs every selected panel’s composition on each category present in the sample and makes its intersectional structure directly inspectable, without requiring the practitioner to write any code or leave the browser.</p>
+<p>Intersection Inspector takes two files as input: a lottery file (Panelot’s <code>lottery.csv</code>, enumerating every panel the sortition algorithm found feasible, each with its member IDs and return probability) and the sample file the lottery was drawn from (the respondent pool that was invited and agreed to participate). From these two files alone, the app reconstructs every selected panel’s composition on each category present in the sample and makes its intersectional structure directly inspectable, without the practitioner writing any code or leaving the browser.</p>
+</section>
+<section id="required-file-structure" class="level3">
+<h3 class="anchored" data-anchor-id="required-file-structure">Required file structure</h3>
+<p>Because the app is designed to work with any sortition process producing an equivalent output, not just this thesis’s own simulation (<a href="#sec-application" class="quarto-xref"><span>Chapter 5</span></a>), it does not hard-code column names or category domains. Instead, it expects each uploaded file to follow a general structure – the same structure Panelot itself produces, and the one this thesis’s own simulated data (<a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a>) is written out in.</p>
+<p>The <strong>sample file</strong> (the respondent pool, or survey sample, a lottery was drawn from) should hold one row per respondent, with:</p>
+<ul>
+<li>an optional ID column, detected case-insensitively by header name (<code>pool_member_identifier</code>, <code>id</code>, <code>member_id</code>, <code>respondent_id</code>, or <code>identifier</code>); if none of these is found, respondents are instead identified by row number, and lottery member IDs are matched against row position;</li>
+<li>two or more further columns, each treated as a single categorical trait (e.g.&nbsp;age bracket, tenure, gender, region). Values in these columns are coerced to character and sorted alphabetically to form each trait’s factor levels, since the app has no way to infer a meaningful domain-specific order (e.g.&nbsp;“18-34” before “35-44”) for an arbitrary uploaded variable.</li>
+</ul>
+<p>For example, this thesis’s own <code>sim_data2_cov_eq.csv</code> begins:</p>
+<pre><code>"pool_member_identifier","age","tenure"
+33,"18-34","Rent"
+67,"18-34","Rent"</code></pre>
+<p>The <strong>lottery file</strong> (Panelot’s <code>lottery.csv</code>, or equivalent) should hold one row per <em>possible</em> panel, with:</p>
+<ul>
+<li>a “return probability of panel” column (if applicable), giving the probability panel <span class="math inline">j</span> would be returned were the lottery run – optional for the mosaic plots and association tests, but required for the weighted-random panel button;</li>
+<li>one “panel member 1”, “panel member 2”, … column per selected panel member, each holding that member’s ID, matched against the sample file’s ID column (or row number, if no ID column was detected).</li>
+</ul>
+<p>Correspondingly, <code>lottery_cov_eq.csv</code> begins:</p>
+<pre><code>return probability of panel,panel member 1,panel member 2,panel member 3,...
+0.000890,4957,4961,4964,4966,5017,...
+0.001015,6132,6166,6181,6239,6284,...</code></pre>
+<p>Every trait column in the sample file, not just the two currently selected for the mosaic plot, appears in the marginal bar chart described below (<a href="#fig-intersection-inspector-bars" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>) – so a practitioner can switch which two variables the mosaic plots compare without re-uploading anything.</p>
 </section>
 <section id="comparing-intersections-and-marginal-proportions" class="level3">
 <h3 class="anchored" data-anchor-id="comparing-intersections-and-marginal-proportions">Comparing intersections and marginal proportions</h3>
-<p>Once the files are uploaded, the practitioner selects any two category variables of interest (e.g.&nbsp;age and tenure) and the app renders a pair of mosaic plots side by side: one for the currently selected panel, one for the sample it was drawn from. These mosaic plots visualise the two-way intersection and association between the chosen variables, so that a practitioner can see at a glance whether the panel’s joint distribution of traits resembles the sample’s “shape”, or whether it is skewed in a way that marginal quota counts alone would not reveal. Beneath the mosaic plots, a second window displays bar charts of every trait’s marginal proportion in the panel against the sample, across every category in the dataset, covering representativeness at the single-variable level as well.</p>
+<p>Once the files are uploaded, the practitioner selects any two category variables of interest (e.g.&nbsp;age and tenure) and the app renders a pair of mosaic plots side by side: one for the currently selected panel, one for the sample it was drawn from. These mosaic plots visualise the two-way intersection and association between the chosen variables, so that a practitioner can see at a glance whether the panel’s joint distribution of traits resembles the sample’s “shape”, or whether it is skewed in a way that marginal quota counts alone would not reveal. <a href="#fig-intersection-inspector-mosaic" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> shows this comparison for the same most-likely panel examined manually in <a href="04-chap4.html#fig-panel-vs-sample-example" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> – the app reproduces that same blocky, uneven age-tenure structure directly, alongside the panel’s association test p-value, without requiring any code. Beneath the mosaic plots, a second window displays bar charts of every trait’s marginal proportion in the panel against the sample, across every category in the dataset, covering representativeness at the single-variable level as well.</p>
+<div id="fig-intersection-inspector-mosaic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intersection-inspector-mosaic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/intersection-inspector-mosaic.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intersection-inspector-mosaic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: The “Survey Sample vs.&nbsp;Panel” mosaic comparison, showing the most likely panel under <code>lottery_cov_eq.csv</code> against its survey sample – the same panel and sample compared manually in <a href="04-chap4.html#fig-panel-vs-sample-example" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-intersection-inspector-bars" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> shows the accompanying “Marginal trait distributions” view for the same panel and sample: every age bracket and tenure category side by side, with counts labelled directly on each bar. Where the mosaic plots above expose the panel’s distorted <em>joint</em> structure, this view confirms the panel’s single-variable marginals stay close to the sample’s throughout – precisely the gap between marginal and intersectional representativeness this thesis is concerned with (<a href="04-chap4.html#sec-pie-chart-problem" class="quarto-xref"><span>Section 4.1</span></a>).</p>
+<div id="fig-intersection-inspector-bars" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intersection-inspector-bars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/intersection-inspector-bars.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intersection-inspector-bars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: The “Marginal trait distributions” view, showing every age and tenure category’s proportion in the survey sample against the same most-likely panel under <code>lottery_cov_eq.csv</code> used in <a href="#fig-intersection-inspector-mosaic" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="testing-and-browsing-panels" class="level3">
 <h3 class="anchored" data-anchor-id="testing-and-browsing-panels">Testing and browsing panels</h3>
-<p>Beyond visual inspection, the app formally tests association preservation for each panel using the association tests described in the <a href="04-chap4.html" class="quarto-xref"><span>Chapter 4</span></a>, and summarises each as a p-value and significance interpretation (“level of difference” from the sample), alongside the panel’s size and its probability of being selected by the lottery. Panels can be browsed in several ways: sliding across all discovered panels ordered from most to least similar in association to the sample, jumping to a uniformly random panel (allowing arbitrary evaluation of the algorithm’s performance), jumping to a probability-weighted random panel (sidestepping the need for a separate external random number generator once a panel is to be finalised), or entering a specific panel ID directly. A further view lets the practitioner check, at an adjustable representation threshold, which intersections of categories are missing or under-represented in the panel relative to the sample. Once a panel is chosen, its member IDs can be inspected and copied to the clipboard to continue the existing workflow (e.g.&nbsp;contacting selected members).</p>
+<p>Beyond visual inspection, the app formally tests association preservation for each panel using the tests described in <a href="04-chap4.html" class="quarto-xref"><span>Chapter 4</span></a>, summarising each as a p-value and significance interpretation (“level of difference” from the sample), alongside the panel’s size and its probability of selection by the lottery. Panels can be browsed in several ways: sliding across all discovered panels ordered from most to least similar in association to the sample, jumping to a uniformly random panel (for arbitrary evaluation of the algorithm’s performance), jumping to a probability-weighted random panel (sidestepping the need for a separate external random number generator once a panel is to be finalised), or entering a specific panel ID directly. A further view lets the practitioner check, at an adjustable representation threshold, which intersections are missing or under-represented in the panel relative to the sample. Once a panel is chosen, its member IDs can be inspected and copied to the clipboard to continue the existing workflow (e.g.&nbsp;contacting selected members). <a href="#fig-intersection-inspector-sidebar" class="quarto-xref">Figure&nbsp;<span>5.4</span></a> shows the full set of sidebar controls behind this workflow, from file upload and variable selection down to panel navigation, member ID lookup, and the under-representation threshold slider.</p>
+<div id="fig-intersection-inspector-sidebar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intersection-inspector-sidebar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/intersection-inspector-sidebar.png" class="img-fluid figure-img" style="width:55.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intersection-inspector-sidebar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: The sidebar’s full set of controls: file upload, axis/fill variable selection, the panel-rank slider and direct panel-ID entry, the random and weighted-random jump buttons, panel member ID lookup, and the adjustable under-representation threshold.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="replacing-the-panelot.org-selection-step" class="level3">
 <h3 class="anchored" data-anchor-id="replacing-the-panelot.org-selection-step">Replacing the Panelot.org selection step</h3>
-<p>In current practice, after a lottery file is generated, a practitioner takes it to a second, separate interactive page – on Panelot.org – purely to generate a random number and select one specific panel from those enumerated, then has to manually select the member IDs from the output. That step reveals no information about <em>which</em> panel is being selected or how representative it is beyond the quota constraints already satisfied; it is, in effect, a black box that turns a lottery file into a single panel. Intersection Inspector is designed as a drop-in replacement for this step: it accepts the same lottery and sample files, supports the same random (and probability-weighted random) selection as a final action, and returns the same member list a practitioner needs to proceed – while additionally providing the mosaic plots, marginal bar charts, association p-values, and under-representation checks along the way.</p>
+<p>In current practice, after a lottery file is generated, a practitioner takes it to a second, separate interactive page – on Panelot.org – purely to generate a random number and select one specific panel from those enumerated, then manually looks up the member IDs from the output. That step reveals nothing about <em>which</em> panel is being selected or how representative it is beyond the quota constraints already satisfied; it is, in effect, a black box that turns a lottery file into a single panel. Intersection Inspector is designed as a drop-in replacement: it accepts the same lottery and sample files, supports the same random (and probability-weighted random) selection as a final action, and returns the same member list a practitioner needs – while additionally providing the mosaic plots, marginal bar charts, association p-values, and under-representation checks along the way.</p>
 </section>
 <section id="benefits-for-new-practitioners" class="level3">
 <h3 class="anchored" data-anchor-id="benefits-for-new-practitioners">Benefits for new practitioners</h3>
-<p>This is particularly intended to benefit practitioners who are new to sortition or do not have a background in statistics. Rather than trusting that a tool with satisfied quota constraints is automatically representative, or treating panel selection as an opaque final step, the practitioner is given an interpretable visual and numerical basis for that trust (or for flagging concern) before a panel is convened. Because panels can be scrolled through and compared on their association preservation, a practitioner can also use the app diagnostically: if every available panel shows a similarly poor association to the sample, this points to the quota constraints themselves needing revision, rather than to any single unlucky draw. This also provides the practitioner an opportunity to decide whether any particular intersections need to be captured for their particular engagement context, and determine whether additional surveying may be necessary for a more representative sample. Assuming the practitioner has access to the slice data, they can also format this to match the expected survey-respondent file structure and compare the panel against this directly, enabling a more direct comparison against data that would be closer to the population. In this way, the app turns a previously invisible step of the sortition pipeline into a transparent, inspectable one, directly in the hands of the people already responsible for running it.</p>
+<p>This is particularly intended to benefit practitioners who are new to sortition or without a statistics background. Rather than trusting that satisfied quota constraints automatically mean a representative panel, or treating selection as an opaque final step, the practitioner is given an interpretable visual and numerical basis for that trust – or for flagging concern – before a panel is convened. Because panels can be scrolled through and compared on their association preservation, a practitioner can also use the app diagnostically: if every available panel shows a similarly poor association to the sample, that points to the quota constraints themselves needing revision, rather than to any single unlucky draw. It also gives the practitioner a chance to decide whether particular intersections need to be captured for their engagement context, and whether additional surveying may be necessary for a more representative sample. If the practitioner has access to the slice data, they can format it to match the expected survey-respondent structure and compare the panel against that directly, for a comparison closer to the population. In this way, the app turns a previously invisible step of the sortition pipeline into a transparent, inspectable one, directly in the hands of the people already running it.</p>
+</section>
+<section id="a-two-variable-limitation" class="level3">
+<h3 class="anchored" data-anchor-id="a-two-variable-limitation">A two-variable limitation</h3>
+<p>The mosaic plots and association tests described above operate on exactly two category variables at a time, chosen from the sidebar’s axis and fill dropdowns (<a href="#fig-intersection-inspector-sidebar" class="quarto-xref">Figure&nbsp;<span>5.4</span></a>) – unlike the marginal bar charts, which already display every trait column in the dataset at once (<a href="#fig-intersection-inspector-bars" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>). A dataset with more than two trait columns – age, tenure, gender, and region, say – cannot have its full joint, intersectional structure inspected in a single combined view; the practitioner instead sees two variables’ intersection at a time, switching the dropdowns to step through whichever pairs are of interest. This is a genuine constraint relative to the full joint distribution a panel’s representativeness ultimately depends on, and it is worth stating plainly rather than treating the app as a complete solution to the intersectionality gap this thesis has documented.</p>
+<p>It is not, however, a strictly worse design than attempting to show every variable’s intersection at once. A single visualisation spanning four or more categorical variables simultaneously – the kind of display an UpSet plot or a fully faceted mosaic plot might attempt (<a href="02-chap2.html" class="quarto-xref"><span>Chapter 2</span></a>) – trades a cleanly interpretable comparison for a much busier one, and a practitioner without a statistics background is the person least likely to benefit from that trade. Restricting the mosaic and association-test view to two variables at a time instead gives a practitioner deliberate, granular control over which specific intersection they inspect at any point – the “traits that matter” for a given engagement, rather than every combinatorial intersection a dataset happens to contain, most of which may be irrelevant to the community context at hand. Paired with the ability to switch which two variables are selected at will, this arguably hands the practitioner <em>more</em> usable control over intersectional inspection than a single all-variables-at-once view would, while reducing the risk of overwhelming a non-specialist user with a visualisation too dense to act on. The cost is that confirming a panel’s representativeness across every pairwise combination of traits requires stepping through each pair in turn, rather than seeing the full picture in one view – a trade-off between completeness and usability that future versions of the app could revisit, for instance by letting a practitioner flag a small number of trait combinations as particularly important and surfacing those automatically.</p>
 <p>App functions:</p>
 <ul>
 <li>Takes a lottery file and sample file</li>
@@ -651,8 +769,8 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./refs.html" class="pagination-link" aria-label="Bibliography">
-        <span class="nav-page-text">Bibliography</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./06-chap6.html" class="pagination-link" aria-label="Conclusion">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

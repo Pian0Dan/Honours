@@ -43,6 +43,13 @@ invisible(capture.output(source("scripts/simsamp2yes.R")))
 # originally given), so the three panels read as a clean sequence,
 # and collect the repeated Tenure legend into a single shared one. ---
 
+# Angling the age-bracket tick labels keeps adjacent brackets (e.g.
+# "18-34" and "35-44") from running into each other, which happens
+# at this three-panels-wide width with the default horizontal labels.
+rotate_age_labels <- theme(
+  axis.text.x = element_text(angle = 45, hjust = 1)
+)
+
 pop1_pipeline_eq <-
   (pop2_ind_plot + labs(title = "Population")) +
   (pop2_ind_slice_plot + labs(title = "Slice (10,000)")) +
@@ -50,7 +57,8 @@ pop1_pipeline_eq <-
   plot_layout(ncol = 3, guides = "collect") +
   plot_annotation(
     title = "Independent population (pop1): population \u2192 slice \u2192 eq response"
-  )
+  ) &
+  rotate_age_labels
 
 pop2_pipeline_eq <-
   (pop2_cov_plot + labs(title = "Population")) +
@@ -59,7 +67,8 @@ pop2_pipeline_eq <-
   plot_layout(ncol = 3, guides = "collect") +
   plot_annotation(
     title = "Associated population (pop2): population \u2192 slice \u2192 eq response"
-  )
+  ) &
+  rotate_age_labels
 
 # --- Age-associated ("ass") response case: same population and
 # slice panels as above (response case only affects who responds,
@@ -76,7 +85,8 @@ pop1_pipeline_ass <-
   plot_layout(ncol = 3, guides = "collect") +
   plot_annotation(
     title = "Independent population (pop1): population \u2192 slice \u2192 ass response"
-  )
+  ) &
+  rotate_age_labels
 
 pop2_pipeline_ass <-
   (pop2_cov_plot + labs(title = "Population")) +
@@ -85,7 +95,8 @@ pop2_pipeline_ass <-
   plot_layout(ncol = 3, guides = "collect") +
   plot_annotation(
     title = "Associated population (pop2): population \u2192 slice \u2192 ass response"
-  )
+  ) &
+  rotate_age_labels
 
 pop1_pipeline_eq
 pop2_pipeline_eq

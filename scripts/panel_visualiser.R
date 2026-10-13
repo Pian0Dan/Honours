@@ -93,8 +93,8 @@ plot_sample_mosaic <- function(panel_source) {
 # --- 6. Panel mosaic plot with a companion survey-sample mosaic
 # plot placed alongside it, for direct visual comparison ---
 plot_panel_vs_sample <- function(panel_source, panel_id) {
-  plot_panel_mosaic(panel_source, panel_id) +
-    plot_sample_mosaic(panel_source) +
+  plot_sample_mosaic(panel_source) +
+    plot_panel_mosaic(panel_source, panel_id) +
     plot_layout(guides = "collect") +
     plot_annotation(title = basename(panel_source$file))
 }

@@ -1,5 +1,21 @@
 # Results {#sec-results}
 
+## The problem with current visualisations {#sec-pie-chart-problem}
+
+Before turning to this thesis's main results, it is worth demonstrating directly why mosaic plots -- rather than the pie charts (or equivalent bar charts) that commonly accompany a sample or panel's reported composition in current sortition practice -- are used throughout this chapter, rather than simply asserting it (@sec-methodology).
+
+```{r}
+#| label: fig-pie-chart-problem
+#| fig-cap: "Age and tenure marginal proportions for the independent population (top) and associated population (bottom). Each population's age pie chart (left) and tenure pie chart (right) are visually indistinguishable from the other population's, despite the two populations differing sharply in their underlying age-tenure association."
+invisible(capture.output(source("scripts/pie_chart_problem.R")))
+
+pie_chart_patchwork
+```
+
+@fig-pie-chart-problem uses this thesis's own independent and associated populations (`sim_data2`, `sim_data2_cov`) to make the point concrete. The two populations were constructed, by design, to share near-identical age and tenure marginal distributions -- the raking procedure used to build the associated population exists specifically to restore the independent population's marginals while retaining the age-renting association introduced beforehand (@sec-methodology) -- so the largest gap between the two populations' marginal proportions, across any single age bracket or tenure category, is only `{r} round(max(age_marginal_gap, tenure_marginal_gap), 2)` percentage points, fully attributable to multinomial sampling noise rather than anything deliberately different between them. Unsurprisingly, each population's age and tenure pie charts are visually indistinguishable from the other's.
+
+Yet the two populations are not the same: the associated population carries a genuine, and statistically detectable (@tbl-association-summary-2var), negative association between age and renting, while the independent population has none at all. A pie chart -- or a bar chart, which encodes exactly the same single-variable information in a different shape -- has no visual channel available to show this: it can only display one categorical variable's marginal distribution at a time, so two variables each need their own, entirely separate chart, and nothing in either chart can reveal how the two co-occur. A practitioner shown only the pie charts in @fig-pie-chart-problem would have no way of telling the independent and associated populations apart, despite one holding a materially different -- and, as @sec-panel-association-results goes on to show, selection-relevant -- relationship between age and tenure than the other. The mosaic plots used throughout the remainder of this chapter (@sec-methodology) exist specifically to close this gap, representing both variables' marginal distributions and their joint, intersectional distribution within a single figure.
+
 ## Simulation visualisations
 
 ### Simulation pipeline: population, slice and respondents (equal-chance case)
@@ -25,7 +41,7 @@ invisible(capture.output(source("scripts/patchwork.R")))
 pop2_pipeline_eq
 ```
 
-@fig-pop1-pipeline-eq and @fig-pop2-pipeline-eq trace each population's age-tenure structure across the three pipeline stages under the equal-chance response case. Both populations skew towards upper-middle age and a higher frequency of homeownership compared to other categories. In @fig-pop1-pipeline-eq, there is no visible association between age and tenure at any stage -- the probability of any age-tenure intersection is explained purely by the margins -- and this independence, along with each category's relative proportions, is preserved essentially unchanged from the full population through the 10,000-person slice to the equal-chance respondents. In @fig-pop2-pipeline-eq, by contrast, a negative association between age and renting is visible at every stage: the proportion of renters among the youngest bracket is noticeably higher than among the oldest. This pipeline also shows its association and relative proportions carrying through from population to slice to equal-chance respondents largely unchanged, confirming that neither random slicing nor equal-chance response meaningfully disturbs either population's underlying age-tenure structure.
+@fig-pop1-pipeline-eq and @fig-pop2-pipeline-eq trace each population's age-tenure structure across the three pipeline stages under the equal-chance response case. Both populations skew towards upper-middle age and a higher frequency of homeownership than other categories. In @fig-pop1-pipeline-eq, there is no visible association between age and tenure at any stage -- the probability of any age-tenure intersection is explained purely by the margins -- and this independence, along with each category's relative proportions, is preserved essentially unchanged from the full population through the slice to the equal-chance respondents. In @fig-pop2-pipeline-eq, by contrast, a negative association between age and renting is visible at every stage: the proportion of renters among the youngest bracket is noticeably higher than among the oldest. This pipeline, too, carries its association and relative proportions through from population to slice to equal-chance respondents largely unchanged, confirming that neither random slicing nor equal-chance response meaningfully disturbs either population's underlying age-tenure structure.
 
 ### Simulation pipeline: population, slice and respondents (age-associated case)
 
@@ -50,7 +66,7 @@ invisible(capture.output(source("scripts/patchwork.R")))
 pop2_pipeline_ass
 ```
 
-@fig-pop1-pipeline-ass and @fig-pop2-pipeline-ass repeat the same three-stage pipeline, but with response likelihood now rising with age rather than being equal across brackets. Unlike the equal-chance case in @fig-pop1-pipeline-eq and @fig-pop2-pipeline-eq, the age-tenure structure is no longer preserved unchanged once respondents are reached: in both @fig-pop1-pipeline-ass and @fig-pop2-pipeline-ass, the older age brackets visibly widen and the younger brackets narrow between the "Slice (10,000)" and "Respondents (ass)" panels, since older individuals are now disproportionately more likely to respond. This demonstrates that an association between age and response probability -- entirely independent of any association between age and tenure in the underlying population -- is sufficient on its own to shift the overall age composition, and therefore the intersections present, in the final respondent sample. Comparing @fig-pop2-pipeline-ass specifically against @fig-pop2-pipeline-eq shows this age-skew compounding with the associated population's existing negative age-renting relationship, rather than replacing it: the respondents under age-associated response are weighted even further towards the older, lower-renting end of the distribution than either the equal-chance respondents or the slice itself.
+@fig-pop1-pipeline-ass and @fig-pop2-pipeline-ass repeat the same three-stage pipeline, but with response likelihood now rising with age rather than being equal across brackets. Unlike the equal-chance case, the age-tenure structure is no longer preserved unchanged once respondents are reached: in both figures, the older age brackets visibly widen and the younger brackets narrow between the "Slice (10,000)" and "Respondents (ass)" panels, since older individuals are now disproportionately more likely to respond. This shows that an association between age and response probability -- entirely independent of any association between age and tenure in the underlying population -- is sufficient on its own to shift the overall age composition, and therefore the intersections present, in the final respondent sample. Comparing @fig-pop2-pipeline-ass against @fig-pop2-pipeline-eq shows this age-skew compounding with the associated population's existing negative age-renting relationship, rather than replacing it: respondents under age-associated response are weighted even further towards the older, lower-renting end of the distribution than either the equal-chance respondents or the slice itself.
 
 ### Quantifying association across the pipeline
 
@@ -73,14 +89,149 @@ knitr::kable(
 )
 ```
 
-@tbl-association-summary-2var confirms what @fig-pop1-pipeline-eq through @fig-pop2-pipeline-ass show visually. For the independent population, no stage or response case ever reaches significance (all $p > 0.7$), and Cramer's V stays below 0.03 throughout -- consistent with an age-tenure association that is genuinely absent, not merely undetected. For the associated population, every stage is significant at $p < .001$, and Cramer's V stays in a comparatively narrow band (0.125-0.143) from population through to both respondent cases, confirming that the underlying age-renting association is neither diluted by slicing nor meaningfully inflated by either response case -- the age-associated case's effect is visible mainly as a shift in the respondents' age *composition* (@fig-pop1-pipeline-ass, @fig-pop2-pipeline-ass), rather than as a change in the strength of the age-tenure relationship itself. One caveat applies to the independent population's $p$-values specifically: with population and slice sample sizes in the tens of thousands, even this chi-squared test has the power to detect very small deviations from independence, so the consistently non-significant results here reflect a genuine absence of association, rather than a lack of statistical power.
+@tbl-association-summary-2var confirms what @fig-pop1-pipeline-eq through @fig-pop2-pipeline-ass show visually. For the independent population, no stage or response case ever reaches significance (all $p > 0.7$), and Cramer's V stays below 0.03 throughout -- consistent with an age-tenure association that is genuinely absent, not merely undetected. For the associated population, every stage is significant at $p < .001$, and Cramer's V stays in a comparatively narrow band (0.125-0.143) from population through to both respondent cases, confirming the underlying age-renting association is neither diluted by slicing nor meaningfully inflated by either response case -- the age-associated case's effect shows up mainly as a shift in the respondents' age *composition* (@fig-pop1-pipeline-ass, @fig-pop2-pipeline-ass), not as a change in the strength of the age-tenure relationship itself. One caveat applies to the independent population's $p$-values specifically: with population and slice sample sizes in the tens of thousands, even this chi-squared test has the power to detect very small deviations from independence, so the consistently non-significant results here reflect a genuine absence of association, not a lack of statistical power.
 
-## Panel construction
+## Panel-level association evaluation {#sec-panel-association-results}
 
+### Overview across lottery files
 
-### Association preservation
+```{r}
+#| label: load-panel-association-results
+#| include: false
+# performance_evaluator.R sources scripts/lottery_helpers.R, which in
+# turn sources scripts/simdata2.R; capture.output() discards that
+# chain's console output (str(), chisq.test() printouts, etc.),
+# leaving lottery_summary and lottery_evaluations available below.
+invisible(capture.output(source("scripts/performance_evaluator.R")))
+```
 
-It is found that 100% of panels have a significantly different association level than exists
+```{r}
+#| label: tbl-panel-association-summary
+#| tbl-cap: "Panel-level association results across all four lottery files: survey-sample-level age-tenure association, and the proportion of possible panels whose association was found to be significantly different from the sample's."
+# Display order follows increasing association (ind_eq, ind_ass,
+# cov_eq, cov_ass), matching @tbl-association-summary-2var, rather
+# than the alphabetical order lottery_summary is built in.
+file_order <- c(
+  "lottery_ind_eq.csv", "lottery_ind_ass.csv",
+  "lottery_cov_eq.csv", "lottery_cov_ass.csv"
+)
+knitr::kable(
+  lottery_summary[order(match(lottery_summary$file, file_order)), c(
+    "file", "n_panels", "sample_association_p", "sample_cramers_v", "prop_sig_different"
+  )],
+  col.names = c(
+    "Lottery file", "Panels", "Sample assoc. p", "Sample Cramer's V",
+    "Prop. significantly different"
+  ),
+  digits = c(0, 0, 3, 3, 3)
+)
+```
 
-## Framework and recommendations
+@tbl-panel-association-summary summarises the results across all four lottery files. In the associated population, the survey sample itself retains a clearly detectable age-tenure association (Cramer's V around `{r} round(mean(lottery_summary$sample_cramers_v[grepl("cov", lottery_summary$file)]), 2)`), consistent with the negative age-renting relationship built into the population design. In the independent population, by contrast, the sample-level association is negligible and statistically indistinguishable from zero (both $p > 0.5$), exactly as expected given no association was introduced between age and tenure at the population level.
+
+Despite this contrast in the underlying samples, the proportion of panels flagged as holding a significantly different association from their sample is strikingly similar -- and strikingly high -- across all four files: between `{r} round(min(lottery_summary$prop_sig_different) * 100, 1)`% and `{r} round(max(lottery_summary$prop_sig_different) * 100, 1)`%. In other words, essentially every panel Panelot could possibly return, under either population structure and either response-rate case, exhibits an age-tenure relationship detectably different from the sample it was drawn from -- including in the independent population, where there is no true association for a panel to even distort.
+
+Splitting this range apart by file shows little further structure: the two equal-chance lotteries (`lottery_cov_eq.csv`, `lottery_ind_eq.csv`) each flag 100% of their feasible panels, while the two age-associated lotteries fall only fractionally short, at `{r} round(lottery_summary$prop_sig_different[lottery_summary$file == "lottery_cov_ass.csv"] * 100, 2)`% and `{r} round(lottery_summary$prop_sig_different[lottery_summary$file == "lottery_ind_ass.csv"] * 100, 2)`% respectively -- despite these two files containing roughly twice as many feasible panels (`{r} lottery_summary$n_panels[lottery_summary$file == "lottery_cov_ass.csv"]` and `{r} lottery_summary$n_panels[lottery_summary$file == "lottery_ind_ass.csv"]`, against `{r} lottery_summary$n_panels[lottery_summary$file == "lottery_cov_eq.csv"]` and `{r} lottery_summary$n_panels[lottery_summary$file == "lottery_ind_eq.csv"]`), and therefore more opportunities for an occasional panel to be drawn that does not diverge from its sample. In other words, the proportion flagged is already saturated at or near its ceiling in all four files, regardless of whether the underlying population carries a genuine age-tenure association (`cov`) or none at all (`ind`), and regardless of whether response probability is equal across ages or skewed toward older respondents. Neither factor moves the result in a way that a difference of a few feasible panels out of several thousand cannot already explain -- the distortion identified here looks like a property of the quota mechanism itself, not of any particular population or response structure it happens to be applied to.
+
+### Comparison against the random-sampling benchmark
+
+```{r}
+#| label: srs-benchmark
+#| include: false
+set.seed(6821)
+
+n_reps <- 500
+file_keys <- c(cov_eq = "cov_eq", cov_ass = "cov_ass", ind_eq = "ind_eq", ind_ass = "ind_ass")
+
+srs_benchmark_for <- function(key) {
+  pool <- survey_samples[[key]]
+  do.call(rbind, lapply(seq_len(n_reps), function(r) {
+    ids <- sample(pool$ID, 50)
+    members <- pool[pool$ID %in% ids, ]
+    within <- test_within_panel(members)
+    vs_p <- test_panel_vs_sample(ids, pool)
+    data.frame(cramers_v = within$cramers_v, vs_sample_p = vs_p)
+  }))
+}
+
+srs_results <- lapply(file_keys, srs_benchmark_for)
+
+benchmark_comparison <- do.call(rbind, lapply(names(file_keys), function(key) {
+  lottery_file <- paste0("lottery_", key, ".csv")
+  panels <- lottery_evaluations[[lottery_file]]$results
+  srs_df <- srs_results[[key]]
+  data.frame(
+    lottery_file = lottery_file,
+    n_panels = nrow(panels),
+    prop_sig_panels = mean(panels$sig_different),
+    median_cramers_v_panels = median(panels$within_panel_cramers_v),
+    # A handful of 50-member random draws land on a zero marginal
+    # (e.g. no 18-34 renters), for which Cramer's V is undefined;
+    # these are excluded from the SRS median rather than the panel
+    # one, since panels are quota-constrained and never produce a
+    # zero marginal.
+    prop_sig_srs = mean(srs_df$vs_sample_p < 0.05),
+    median_cramers_v_srs = median(srs_df$cramers_v, na.rm = TRUE)
+  )
+}))
+```
+
+```{r}
+#| label: tbl-srs-benchmark
+#| tbl-cap: "Proportion of panels (or random samples) whose age-tenure association was found to be significantly different from the survey sample's, and the median within-group Cramer's V, for actual sortition panels versus 500 simple random samples of equal size, for all four lottery files."
+# benchmark_comparison$lottery_file carries the full "lottery_*.csv"
+# name; displaying just the "<ind|cov>_<eq|ass>" key (already
+# introduced as this file-naming convention earlier in the chapter),
+# alongside shorter column headers, keeps all six columns narrow
+# enough that the "Lottery file" and "Panels" columns no longer
+# collide once rendered at full page width.
+benchmark_display <- benchmark_comparison
+benchmark_display$lottery_file <- gsub(
+  "^lottery_|\\.csv$", "", benchmark_display$lottery_file
+)
+
+knitr::kable(
+  benchmark_display,
+  col.names = c(
+    "Lottery file", "Panels", "Prop. sig. diff. (panels)", "Median V (panels)",
+    "Prop. sig. diff. (SRS)", "Median V (SRS)"
+  ),
+  digits = c(0, 0, 3, 3, 3, 3),
+  align = c("l", "r", "r", "r", "r", "r")
+)
+```
+
+@tbl-srs-benchmark repeats the comparison introduced in @sec-panel-association-methods across all four lottery files, rather than the single associated/equal-chance case alone. The pattern holds throughout: actual sortition panels are flagged as significantly different from their sample `{r} round(min(benchmark_comparison$prop_sig_panels) * 100, 1)`-100% of the time, against only `{r} round(min(benchmark_comparison$prop_sig_srs) * 100, 1)`-`{r} round(max(benchmark_comparison$prop_sig_srs) * 100, 1)`% for equivalently sized random samples -- modestly above the nominal 5% false-positive rate expected under the null (plausibly reflecting the homogeneity test's asymptotic approximation being somewhat liberal at 50 observations spread across 30 cells, rather than any genuine divergence from random sampling itself), but an order of magnitude below the panels' near-total rate. Median within-group Cramer's V tells the same story: panels sit around `{r} round(min(benchmark_comparison$median_cramers_v_panels), 2)`-`{r} round(max(benchmark_comparison$median_cramers_v_panels), 2)`, roughly three times the `{r} round(min(benchmark_comparison$median_cramers_v_srs), 2)`-`{r} round(max(benchmark_comparison$median_cramers_v_srs), 2)` seen from random draws, in every file regardless of population or response case. Because the benchmark result holds uniformly, rather than being specific to the associated/equal-chance file used as the illustrative case above, the explanation cannot be population- or response-case-specific either -- reinforcing that it is Panelot's quota mechanism, not sampling variability at panel size or any one simulated condition, driving the divergence documented in @tbl-panel-association-summary.
+
+### Illustrative example
+
+```{r}
+#| label: load-panel-visualiser
+#| include: false
+invisible(capture.output(source("scripts/panel_visualiser.R")))
+```
+
+```{r}
+#| label: fig-panel-vs-sample-example
+#| fig-cap: "Age-tenure composition of the survey sample under lottery_cov_eq.csv (left), alongside its most likely panel (right)."
+plot_panel_vs_sample(cov_eq_source, most_likely_panel_id)
+```
+
+@fig-panel-vs-sample-example makes concrete what the aggregate figures above describe in summary. The survey sample (left) shows the smooth, gradually strengthening relationship between age and renting built into the associated population. The panel (right) satisfies the same marginal quotas on age and tenure, but its age-tenure combinations are considerably more blocky and uneven -- several age brackets are almost entirely one tenure category, a pattern far more extreme than the sample-level relationship it was ostensibly drawn to represent.
+
+```{r}
+#| label: fig-panel-vs-sample-independent
+#| fig-cap: "Age-tenure composition of the independent population's survey sample under lottery_ind_eq.csv (left), alongside its most likely panel (right)."
+ind_eq_source <- load_panel_source(file.path(lottery_dir, "lottery_ind_eq.csv"))
+most_likely_ind_eq <- which.max(ind_eq_source$lottery$return_probability)
+
+plot_panel_vs_sample(ind_eq_source, most_likely_ind_eq)
+```
+
+@fig-panel-vs-sample-independent shows the same comparison for the independent population, where age and tenure carry no association at all -- the fill proportions in the survey sample (left) are close to flat across every age bracket. The panel (right) is, if anything, more extreme than the associated-population example: most age brackets are dominated by a single tenure category, and the within-panel test gives a Cramer's V of `{r} round(test_within_panel(get_panel_members(ind_eq_source, most_likely_ind_eq))$cramers_v, 2)`, versus `{r} round(lottery_summary$sample_cramers_v[lottery_summary$file == "lottery_ind_eq.csv"], 2)` for the sample it was drawn from. Because this panel's distorted joint structure cannot be attributed to a genuine association it is "exaggerating" -- there is none to exaggerate in the independent population -- it most directly demonstrates that the within-panel association test is picking up an artefact of the selection mechanism, not a real signal faithfully (if imperfectly) carried through from the sample.
+
+### Summary
+
+Across all four simulated conditions, satisfying Panelot's marginal quotas on age and tenure did not translate into a panel whose joint age-tenure structure resembled its survey sample's: essentially every feasible panel was flagged as significantly different from the sample, at a rate far beyond what panel size alone could explain, and this held regardless of whether the underlying population carried a genuine age-tenure association or response was skewed by age. Marginal quota satisfaction -- the only form of representativeness that a current sortition tool like Panelot reports to a practitioner -- is therefore not a reliable proxy for intersectional representativeness in this simulation, and the gap between the two looks like a structural consequence of leaving the joint distribution unconstrained, rather than an artefact of this thesis's particular panel size or association strengths. One interpretive question is worth addressing directly here, since it concerns what this divergence is evidence *of*: because Panelot's quotas target population marginals rather than the survey sample's own marginals, could a panel's divergence from its sample simply reflect the panel correcting toward population representativeness where the sample itself has drifted, rather than any flaw of the selection algorithm? @sec-methodology shows this is not the case, for two separate reasons: the panel-versus-sample test itself is constructed to condition out exactly this kind of marginal difference, testing only for a genuine change in the age-tenure association; and, independently of that, the equal-chance and age-associated response cases show the opposite pattern to what population-correction would predict, with equal-chance panels -- where the sample's marginal barely differs from the population's -- flagged as different at least as often as age-associated panels, not less. The near-total divergence documented here reflects the quota mechanism leaving the joint age-tenure distribution unconstrained, not any population-versus-sample drift. @sec-application introduces Intersection Inspector, a tool built directly in response to this gap, which displays a panel's intersectional association alongside its marginal quota satisfaction so that this kind of distortion is visible to a practitioner before a panel convenes, rather than only to a reader of this thesis after the fact.
+
 

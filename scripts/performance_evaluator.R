@@ -19,10 +19,8 @@
 #      significant interaction means the panel's association differs
 #      from the sample's.
 #   4. Reports the proportion of panels whose association is
-#      significantly different from the survey sample's, at both an
-#      uncorrected alpha = 0.05 and a Benjamini-Hochberg-adjusted
-#      threshold (since every lottery.csv involves running the same
-#      test hundreds of times -- see caveats below).
+#      significantly different from the survey sample's, at an
+#      uncorrected alpha = 0.05.
 #
 # Caveat: each panel has only 50 members spread across 5 x 3 = 15
 # age x tenure cells (~3-4 per cell on average), so both the within-
@@ -129,9 +127,7 @@ evaluate_lottery <- function(path) {
     })
   )
 
-  results$vs_sample_p_bh <- p.adjust(results$vs_sample_p, method = "BH")
   results$sig_different <- results$vs_sample_p < 0.05
-  results$sig_different_bh <- results$vs_sample_p_bh < 0.05
 
   list(
     file = path,
@@ -156,8 +152,7 @@ summarise_evaluation <- function(evaluation) {
     n_panels = nrow(evaluation$results),
     sample_association_p = evaluation$sample_p_value,
     sample_cramers_v = evaluation$sample_cramers_v,
-    prop_sig_different = mean(evaluation$results$sig_different),
-    prop_sig_different_bh = mean(evaluation$results$sig_different_bh)
+    prop_sig_different = mean(evaluation$results$sig_different)
   )
 }
 
