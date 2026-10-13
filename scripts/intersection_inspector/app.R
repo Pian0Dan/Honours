@@ -801,9 +801,93 @@ server <- function(input, output, session) {
     tryCatch(panel_order(), error = function(e) NULL)
   }
 
+  # --- Single source of truth for "which panel is currently
+  # selected", as a rank (position in panel_order()). The slider and
+  # the numeric panel-number input are just two different *views*
+  # onto this one value -- kept in sync with it below, never
+  # directly with each other.
+  #
+  # Previously the slider and numeric input observed *each other*
+  # directly: each one's change handler called updateXInput() on the
+  # other. Under a rapid slider drag that produced a flood of
+  # overlapping client/server round trips -- each updateXInput()
+  # echoes back to the server as a fresh "change" on the other input,
+  # re-triggering its handler in turn -- which could arrive out of
+  # order and kept undoing each other's update (visible as the two
+  # inputs getting stuck cycling between a handful of panels, or
+  # settling on a stale one instead of the last one actually
+  # selected). Debouncing each direction independently (a prior
+  # attempt) only narrowed the window without closing it, since the
+  # two debounce timers still race each other.
+  #
+  # Routing both widgets through this single reactiveVal instead
+  # closes it for good: an echo of our own push is always numerically
+  # identical to what's already stored here, and re-assigning an
+  # identical value to a reactiveVal() is a no-op in Shiny -- it does
+  # *not* re-invalidate dependents -- so the echo has nowhere left to
+  # go, regardless of how fast the inputs change or how the round
+  # trips get interleaved.
+  selected_rank <- reactiveVal(1)
+
+  # Always write to selected_rank() through this, never
+  # selected_rank() directly. match() (used below to turn a typed
+  # panel number into a rank) always returns an integer, while
+  # input$panel_rank and everything echoed back from the widgets is
+  # always a double -- and reactiveVal()'s own no-op-on-reassignment
+  # behaviour (the thing that stops echoes from re-triggering the hub
+  # below) uses identical(), which is type-strict: identical(5L, 5)
+  # is FALSE. Storing a mix of integer/double for numerically
+  # identical ranks would make reactiveVal() see a "change" on every
+  # single echo and re-invalidate the hub forever -- a genuine,
+  # deterministic infinite loop (not a timing race), which is what
+  # was actually behind every prior attempt at this bug: the
+  # identical() checks in both the original mutual-observer code and
+  # the hub below were being defeated by exactly this type mismatch,
+  # not by event timing.
+  set_selected_rank <- function(rank) {
+    selected_rank(as.numeric(rank))
+  }
+
+  # Tracks values pushed to each widget via updateSliderInput()/
+  # updateNumericInput() below that haven't yet been confirmed by an
+  # echo from the client. There can be more than one in flight at
+  # once during a fast drag (selected_rank() can change again before
+  # the first push's echo returns), which is exactly what defeated
+  # every earlier version of this fix -- debouncing, freezeReactiveValue(),
+  # and even comparing an echo against the *current* value all assume
+  # at most one push is outstanding at a time. Once two are in
+  # flight, the earlier one's echo is numerically indistinguishable
+  # from a genuine new user edit by the time it arrives (selected_rank()
+  # has already moved on, so the stale echo looks like a fresh,
+  # different value) -- which is what produced a perfectly repeating
+  # 2-cycle in testing (confirmed via server-side logging against a
+  # live browser; see git history for the trace). Explicitly tracking
+  # every outstanding push and consuming (ignoring) any echo that
+  # matches one removes the ambiguity entirely, regardless of how
+  # many pushes overlap or what order their echoes arrive in.
+  pending_panel_rank_pushes <- reactiveVal(numeric(0))
+  pending_panel_id_choice_pushes <- reactiveVal(numeric(0))
+
+  # If `value` is one of this widget's outstanding pushes, removes
+  # (consumes) exactly one matching entry and returns TRUE -- the
+  # caller should treat the change as an echo of its own doing and
+  # otherwise ignore it. Returns FALSE (nothing consumed) if `value`
+  # isn't pending, meaning it's a genuine, externally-driven change.
+  consume_pending_push <- function(pending_rv, value) {
+    pending <- pending_rv()
+    idx <- match(value, pending)
+    if (is.na(idx)) {
+      return(FALSE)
+    }
+    pending_rv(pending[-idx])
+    TRUE
+  }
+
   # Keep the slider's, and the numeric panel-number input's, ranges
   # in sync with whichever lottery/sample files (and variables) are
-  # currently selected.
+  # currently selected. (max = ... is a widget range constraint, not
+  # a selection, so it's still pushed directly here rather than
+  # through selected_rank().)
   observeEvent(
     list(
       input$lottery_upload,
@@ -818,17 +902,9 @@ server <- function(input, output, session) {
         return()
       }
       n_panels <- nrow(po)
-      updateSliderInput(
-        session,
-        "panel_rank",
-        max = n_panels,
-        value = min(input$panel_rank, n_panels)
-      )
-      updateNumericInput(
-        session,
-        "panel_id_choice",
-        max = nrow(ps)
-      )
+      updateSliderInput(session, "panel_rank", max = n_panels)
+      updateNumericInput(session, "panel_id_choice", max = nrow(ps))
+      set_selected_rank(min(isolate(selected_rank()), n_panels))
     }
   )
 
@@ -849,7 +925,7 @@ server <- function(input, output, session) {
     most_likely_panel_id <- ps$panel_id[which.max(ps$return_probability)]
     rank <- match(most_likely_panel_id, po$panel_id)
     if (!is.na(rank)) {
-      updateSliderInput(session, "panel_rank", value = rank)
+      set_selected_rank(rank)
       # Panel rank orders by association similarity, not by return
       # probability, so the two can land far apart -- spelling out
       # the actual probability and rank here (on top of the panel
@@ -879,7 +955,7 @@ server <- function(input, output, session) {
     if (is.null(po)) {
       return()
     }
-    updateSliderInput(session, "panel_rank", value = sample(nrow(po), 1))
+    set_selected_rank(sample(nrow(po), 1))
   })
 
   # Only offer the weighted-random button once a lottery file with an
@@ -926,7 +1002,7 @@ server <- function(input, output, session) {
     chosen_panel_id <- sample(ps$panel_id, 1, prob = probs)
     rank <- match(chosen_panel_id, po$panel_id)
     if (!is.na(rank)) {
-      updateSliderInput(session, "panel_rank", value = rank)
+      set_selected_rank(rank)
       showNotification(
         paste0(
           "Drew panel ",
@@ -945,45 +1021,110 @@ server <- function(input, output, session) {
     }
   })
 
-  # Typing a specific panel number moves the rank slider to that
-  # panel's rank -- the numeric input is just an alternate way of
-  # setting the same underlying rank, not a second, independent
-  # source of truth, so every downstream plot updates to match.
-  observeEvent(input$panel_id_choice, {
+  # The slider and numeric input each feed *into* selected_rank()
+  # when the user actually operates them -- but only once
+  # consume_pending_push() has ruled out the change being an echo of
+  # one of the hub's own pushes below (see pending_panel_rank_pushes/
+  # pending_panel_id_choice_pushes above for why value-matching
+  # against selected_rank() alone isn't enough to tell the two apart).
+  observeEvent(
+    input$panel_rank,
+    {
+      if (consume_pending_push(pending_panel_rank_pushes, input$panel_rank)) {
+        return()
+      }
+      po <- safe_panel_order()
+      rank <- input$panel_rank
+      if (is.null(po) || is.na(rank) || rank < 1 || rank > nrow(po)) {
+        return()
+      }
+      set_selected_rank(rank)
+    },
+    ignoreInit = TRUE
+  )
+
+  # Typing a specific panel number sets the same underlying rank --
+  # the numeric input is just an alternate way of setting it, not a
+  # second, independent source of truth.
+  observeEvent(
+    input$panel_id_choice,
+    {
+      if (
+        consume_pending_push(
+          pending_panel_id_choice_pushes,
+          input$panel_id_choice
+        )
+      ) {
+        return()
+      }
+      po <- safe_panel_order()
+      if (is.null(po)) {
+        return()
+      }
+      rank <- match(input$panel_id_choice, po$panel_id)
+      if (is.na(rank)) {
+        showNotification(
+          paste0(
+            "Panel ",
+            input$panel_id_choice,
+            " isn't one of this lottery file's discovered panels."
+          ),
+          type = "warning",
+          duration = 4
+        )
+        return()
+      }
+      set_selected_rank(rank)
+    },
+    ignoreInit = TRUE
+  )
+
+  # The hub: pushes selected_rank() out to whichever widget(s) don't
+  # already display it, every downstream plot updating to match.
+  # isolate() on the widgets' own current values is essential here --
+  # without it, this observer would also take a reactive dependency
+  # on input$panel_rank/input$panel_id_choice directly, reintroducing
+  # the same circularity selected_rank() exists to avoid.
+  #
+  # Comparisons here go through as.numeric() on both sides rather
+  # than a bare identical(): po$panel_id is typically an integer
+  # column (see read_lottery_upload()'s panel_id = seq_len(...)),
+  # while numericInput always reports a double, so a type-strict
+  # identical() would see e.g. 42L vs 42 as "different" and push an
+  # update every single time this observer runs, even when nothing
+  # actually changed.
+  #
+  # Fires immediately on every selected_rank() change (no debounce --
+  # that was tried and rejected; see pending_panel_rank_pushes above
+  # for why rate-limiting doesn't actually fix the underlying issue).
+  # Each push is recorded in the relevant pending set so the
+  # observers above can recognise and discard its eventual echo, no
+  # matter how many pushes end up overlapping or in what order their
+  # echoes return.
+  observe({
+    rank <- selected_rank()
     po <- safe_panel_order()
-    if (is.null(po)) {
+    if (is.null(po) || rank < 1 || rank > nrow(po)) {
       return()
     }
-    rank <- match(input$panel_id_choice, po$panel_id)
-    if (is.na(rank)) {
-      showNotification(
-        paste0(
-          "Panel ",
-          input$panel_id_choice,
-          " isn't one of this lottery file's discovered panels."
-        ),
-        type = "warning",
-        duration = 4
-      )
-      return()
-    }
-    if (!identical(rank, input$panel_rank)) {
+    panel_id <- po$panel_id[rank]
+
+    if (!identical(as.numeric(isolate(input$panel_rank)), as.numeric(rank))) {
+      pending_panel_rank_pushes(c(isolate(pending_panel_rank_pushes()), rank))
+      freezeReactiveValue(input, "panel_rank")
       updateSliderInput(session, "panel_rank", value = rank)
     }
-  })
-
-  # Keep the numeric input showing whichever panel_id is actually
-  # selected, including when the rank changes via the slider itself
-  # or the "most likely"/"random" buttons.
-  observeEvent(input$panel_rank, {
-    po <- safe_panel_order()
-    rank <- input$panel_rank
-    if (is.null(po) || is.na(rank) || rank < 1 || rank > nrow(po)) {
-      return()
-    }
-    actual_panel_id <- po$panel_id[rank]
-    if (!identical(actual_panel_id, input$panel_id_choice)) {
-      updateNumericInput(session, "panel_id_choice", value = actual_panel_id)
+    if (
+      !identical(
+        as.numeric(isolate(input$panel_id_choice)),
+        as.numeric(panel_id)
+      )
+    ) {
+      pending_panel_id_choice_pushes(
+        c(isolate(pending_panel_id_choice_pushes()), panel_id)
+      )
+      freezeReactiveValue(input, "panel_id_choice")
+      updateNumericInput(session, "panel_id_choice", value = panel_id)
     }
   })
 
@@ -991,7 +1132,7 @@ server <- function(input, output, session) {
   # currently selected rank.
   current_panel <- reactive({
     po <- panel_order()
-    rank <- input$panel_rank
+    rank <- selected_rank()
     validate(need(
       rank >= 1 && rank <= nrow(po),
       "Select a panel rank within range."
