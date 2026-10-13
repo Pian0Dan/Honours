@@ -112,7 +112,13 @@ Date:
 
 # Acknowledgements {-}
 
-I would like to thank my pet goldfish for ...
+I would like to thank my supervisors Dr Jessica Leung and Dr Dianne Cook for sticking by me throughout the development of this thesis. It was not an easy time, scopes changed greatly and often, and I was stubborn and slow at times, but I am proud of what we achieved, and grateful that stood by me.
+
+I would also like to thank my parents, family and friends for making sure I remained alive between thinking, developing, investigating, writing, and my general running around and complaining while developing this thesis. Oh, and for being there while I ranted about ideas and repeatedly showed off bits and pieces I found, made, or thought were interesting.
+
+I do not think this research would ever have happened, had I not been bitten by the sortition bug after local council engagements. So I would like to extend a thank you to Mel and Naomi from MosaicLab Co for showing me the power a voice can have in community. And another thank you to Mel for thinking of me and roping me in to work with MosaicLab Co myself. The experience was invaluable and formed much of my context and approach to the problems I wanted to demonstrate and work to solve.
+
+And finally, I would like to thank Muse for their song Unnatural Selection. It kept me grounded and sane many a time, where I may otherwise have faltered.
 
 > In accordance with Chapter 7.1.4 of the research degrees handbook, if you have engaged the services of a professional editor, you must provide their name and a brief description of the service rendered. If the professional editor's current or former area of academic specialisation is similar your own, this too should be stated as it may suggest to examiners that the editor's advice to the student has extended beyond guidance on English expression to affect the substance and structure of the thesis.
 
