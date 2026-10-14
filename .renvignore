@@ -1,0 +1,19 @@
+# Rendered / generated output -- never contain package dependencies
+_book/
+.quarto/
+site_libs/
+*_files/
+*.html
+
+# Data and figures -- CSVs, images, no R code
+data/
+panelot_output/
+figures/
+examples/
+
+# Superseded drafts, not part of the active analysis
+Old/
+LexiMin Stash.qmd
+
+# renv's own library/cache
+renv/

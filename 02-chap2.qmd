@@ -103,11 +103,6 @@ To evaluate the representativeness of selected panels, this thesis draws on a ra
 
 Bar charts are the starting point: simple illustrative graphs of trait densities that give a rough sense of how the population and samples break down, setting expectations for the more detailed visualisations that follow. From there, mosaic or double decker plots show the proportion of demographic traits selected onto panels. UpSet plots [@conwayUpSetRPackageVisualization2017] are useful for showcasing the intersections present in generated panels, linking demographic variables visually alongside frequency counts of how often each combination occurs.
 
-#### Attribute distribution analysis
-
-- Compare the distribution of traits in the selected panel against the overall population, to identify any discrepancies or bias in the selection process.
-
-
 ### Discussion
 
 This approach is effective at making selection probabilities as equal as possible, which helps make sortition fairer by reducing situations where specific individuals are disadvantaged. It does not, however, provide any way to impose joint trait requirements on subsets of the population -- something that may be necessary for accurate representation of community groups. That gap can undermine representativeness as a goal, given the motivation for sortitioned panels in the first place: filling a room with individuals who accurately and descriptively reflect a community's population diversity and characteristics.

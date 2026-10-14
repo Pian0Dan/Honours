@@ -1,0 +1,18 @@
+App functions:
+
+- Takes a lottery file and sample file
+- Generates mosaic plots to show intersections of categories within lottery and sample
+- Generates bar charts of trait proportions to show the relative marginal presence of traits between the panel and sample
+- Calculates the level of similarity of associations/general shape present within the sample and panels
+- Orders the panels based on their level of similarity in association to the sample, by using the calculated p-values
+- Displays size of sample and panel, as well as selection probability of each panel and their level of association preservation compared to sample (as p-value, with interpretation of “significance level of difference”)
+- Allows the user to slide across these to compare as they worsen
+- Allows the user to jump to a fully random panel, just to assess its level of representation 
+- Allows the user to input a specific panel ID, if they want to inspect it in particular
+- Allows the user to jump to probability-weighted random panels (if probability exists within the lottery file), side-stepping the need for external RNG to select a panel
+- Allows the user to inspect and copy panel member IDs to clipboard, to continue with workflow
+- Allows the user to check missing and under-represented intersections (compared to sample) at different representation thresholds
+
+---
+
+## App function draft
