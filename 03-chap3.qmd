@@ -10,7 +10,7 @@ Underlying these aims is a more basic question: what does it mean for a panel to
 
 ### Simulation design
 
-This thesis investigates how data complexity and construction affect algorithmic performance. To test this, a population of simple intersectional complexity (two variables) with varying associations (independent and associated) was simulated. The findings should generalise to cases with more categories, and are expected to be more severe there, since the intersectional matrix only grows in dimension while panel size stays fixed. The categories used -- age (18-34, 35-44, 45-54, 55-64, 65+) and tenure status (rent, own, other) -- were chosen to mirror demographic variables commonly used for sortition in practice. Combining these two variables produced the four simulated datasets used for panel selection.
+This thesis investigates how data complexity and construction affect algorithmic performance. To test this, two population of simple intersectional complexity (two variables) with varying associations (independent and associated) was simulated. The findings should generalise to cases with more categories, and are expected to be more severe there, since the intersectional matrix only grows in dimension while panel size stays fixed. The categories used -- age (18-34, 35-44, 45-54, 55-64, 65+) and tenure status (rent, own, other) -- were chosen to mirror demographic variables commonly used for sortition in practice. Combining these two variables produced the four simulated sample/respondent datasets used for panel selection.
 
 ### Population, slice, sample and panel: procedure and definitions
 
