@@ -18,14 +18,14 @@ The app page consists of three parts: 1. a sidebar comprised of interactable but
 
 Intersection Inspector takes two files as input: a lottery file (Panelot's `lottery.csv`, enumerating every panel the sortition algorithm found feasible, each with its member IDs and return probability) and the sample file the lottery was drawn from (the respondent pool that was invited and agreed to participate). From these two files alone, the app reconstructs every selected panel's composition on each category present in the sample and makes its intersectional structure directly inspectable, without the practitioner writing any code or leaving the browser.
 
-### Required file structure
+### Required file structure {#sec-file-structure}
 
 Because the app is designed to work with any sortition process producing an equivalent output, not just this thesis's own simulation (@sec-application), it does not hard-code column names or category domains. Instead, it expects each uploaded file to follow a general structure -- the same structure Panelot itself produces, and the one this thesis's own simulated data (@sec-methodology) is written out in.
 
 The **sample file** (the respondent pool, or survey sample, a lottery was drawn from) should hold one row per respondent, with:
 
 - an optional ID column, detected case-insensitively by header name (`pool_member_identifier`, `id`, `member_id`, `respondent_id`, or `identifier`); if none of these is found, respondents are instead identified by row number, and lottery member IDs are matched against row position;
-- two or more further columns, each treated as a single categorical trait (e.g. age bracket, tenure, gender, region). Values in these columns are coerced to character and sorted alphabetically to form each trait's factor levels, since the app has no way to infer a meaningful domain-specific order (e.g. "18-34" before "35-44") for an arbitrary uploaded variable.
+- two or more further columns, each treated as a single categorical trait (e.g. age bracket, tenure, gender, region). Values in these columns are coerced to character and sorted alphabetically to form each trait's factor levels, since the app has no way to infer a meaningful domain-specific order (e.g. "18-34" before "35-44") for an arbitrary uploaded variable -- a limitation with consequences for ordinal variables discussed further in @sec-ordinal-nominal-limitation.
 
 For example, this thesis's own `sim_data2_cov_eq.csv` begins:
 
@@ -80,26 +80,9 @@ The mosaic plots and association tests described above operate on exactly two ca
 
 It is not, however, a strictly worse design than attempting to show every variable's intersection at once. A single visualisation spanning four or more categorical variables simultaneously -- the kind of display an UpSet plot or a fully faceted mosaic plot might attempt (@sec-litreview) -- trades a cleanly interpretable comparison for a much busier one, and a practitioner without a statistics background is the person least likely to benefit from that trade. Restricting the mosaic and association-test view to two variables at a time instead gives a practitioner deliberate, granular control over which specific intersection they inspect at any point -- the "traits that matter" for a given engagement, rather than every combinatorial intersection a dataset happens to contain, most of which may be irrelevant to the community context at hand. Paired with the ability to switch which two variables are selected at will, this arguably hands the practitioner *more* usable control over intersectional inspection than a single all-variables-at-once view would, while reducing the risk of overwhelming a non-specialist user with a visualisation too dense to act on. The cost is that confirming a panel's representativeness across every pairwise combination of traits requires stepping through each pair in turn, rather than seeing the full picture in one view -- a trade-off between completeness and usability that future versions of the app could revisit, for instance by letting a practitioner flag a small number of trait combinations as particularly important and surfacing those automatically.
 
+### An ordinal/nominal limitation {#sec-ordinal-nominal-limitation}
 
+A further limitation stems from how uploaded trait columns are turned into factor levels in the first place: as noted above (@sec-file-structure), values in each trait column are coerced to character and sorted alphabetically, since the app has no way to infer a meaningful domain-specific order for an arbitrary uploaded variable. For a nominal variable -- gender, region, housing tenure -- alphabetical ordering is immaterial, as there is no inherent order for alphabetical sorting to disrupt. For an ordinal variable, however, this can produce a factor level order that does not match the variable's natural progression: an age bracket column with levels "18-34", "35-44", "45-54", "55-64", "65+" happens to sort correctly alphabetically in this instance, but a column such as income bracket with levels "Under $20k", "$20k-$50k", "$50k-$100k", "Over $100k" would not, nor would an education or agreement-scale variable with levels like "Strongly disagree" through "Strongly agree".
 
-
-
-App functions:
-
-- Takes a lottery file and sample file
-- Generates mosaic plots to show intersections of categories within lottery and sample
-- Generates bar charts of trait proportions to show the relative marginal presence of traits between the panel and sample
-- Calculates the level of similarity of associations/general shape present within the sample and panels
-- Orders the panels based on their level of similarity in association to the sample, by using the calculated p-values
-- Displays size of sample and panel, as well as selection probability of each panel and their level of association preservation compared to sample (as p-value, with interpretation of “significance level of difference”)
-- Allows the user to slide across these to compare as they worsen
-- Allows the user to jump to a fully random panel, just to assess its level of representation 
-- Allows the user to input a specific panel ID, if they want to inspect it in particular
-- Allows the user to jump to probability-weighted random panels (if probability exists within the lottery file), side-stepping the need for external RNG to select a panel
-- Allows the user to inspect and copy panel member IDs to clipboard, to continue with workflow
-- Allows the user to check missing and under-represented intersections (compared to sample) at different representation thresholds
-
----
-
-## App function draft
+This mismatch does not affect the app's core purpose of exposing intersectional structure: the mosaic plots and association tests operate correctly regardless of how levels happen to be ordered along an axis, since both the panel's and sample's blocks are drawn from the same (mis)ordering and so remain directly comparable to one another. What it does affect is a mosaic plot's readability and the inferences a practitioner might draw from its shape by eye -- a plot with an ordinal variable's levels shuffled out of sequence can look "patchier" or less monotonic than the underlying relationship warrants, because blocks that would otherwise sit adjacent and show a smooth gradient are instead scattered across the axis. A practitioner inspecting such a plot should therefore check whether either selected variable is ordinal and, if so, read the plot with that re-ordering in mind, rather than inferring a lack of structure from a mosaic shape that is partly an artefact of alphabetical sorting. Addressing this within the app -- for instance, by letting a practitioner manually specify a level order per column at upload time -- would require the kind of per-column metadata the app's intentionally format-agnostic file structure does not currently collect, and so is left as a direction for future refinement rather than addressed here.
 
