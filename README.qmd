@@ -422,3 +422,10 @@ Then do both populations to slice to associated response chances; demonstrate th
 - Talk about visualisation before discussion and knowledge gap
 - Mention that most literature focuses on optimising for fairness and making selections robust, but does not consider the validity of the resulting panels in great detail
 
+### Discussion
+
+- Is the structure okay?
+- Where should I include Diversimax within this?
+- I realise I have missed visualisation development in lit review -- how should I address it?
+- What is the page limit?
+- How should I structure the slides?
