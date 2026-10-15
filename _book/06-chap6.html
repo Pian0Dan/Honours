@@ -23,7 +23,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -213,7 +233,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="future-research" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="future-research"><span class="header-section-number">6.3</span> Future research</h2>
-<p>A natural next step is extending the simulation framework beyond two variables, to establish whether, and how severely, the intersectional distortion observed here scales with additional demographic categories – and whether it does so uniformly or concentrates in particular combinations with many trait levels. The Goldilocks algorithm, not yet publicly available at the time of writing, is also worth revisiting once released: it addresses a different problem (robustness to manipulation) to the one this thesis raises, but it remains an open question whether its joint handling of selection-probability ceilings and floors incidentally improves, worsens, or leaves unchanged the intersectional preservation documented here. More broadly, this thesis’s central finding motivates a more direct line of work: selection methods that explicitly incorporate joint, intersectional constraints alongside marginal quotas, rather than treating intersectionality purely as something to check for after the fact.</p>
+<p>A natural next step is extending the simulation framework beyond two variables, to establish whether, and how severely, the intersectional distortion observed here scales with additional demographic categories – and whether it does so uniformly or concentrates in particular combinations with many trait levels. The Goldilocks algorithm, not yet publicly available at the time of writing, is also worth revisiting once released: it addresses a different problem (robustness to manipulation) to the one this thesis raises, but it remains an open question whether its joint handling of selection-probability ceilings and floors incidentally improves, worsens, or leaves unchanged the intersectional preservation documented here. More broadly, this thesis’s central finding motivates a more direct line of work: selection methods that explicitly incorporate joint, intersectional constraints alongside marginal quotas, rather than treating intersectionality purely as something to check for after the fact. One emerging example is Diversimax <span class="citation" data-cites="matar2025diversimax">(<a href="refs.html#ref-matar2025diversimax" role="doc-biblioref">Matar 2025</a>)</span>, which uses mixed integer programming to select panels that explicitly minimise imbalance across every intersectional combination of demographic traits, rather than optimising selection probabilities at the marginal level alone; it is not evaluated in detail here, since it has yet to see the kind of practitioner adoption LexiMin has. It is also worth treating cautiously rather than as a straightforward replacement: optimising for intersectional balance alone, without also bounding how unequal individual selection probabilities can become, risks reopening the same extreme-probability and manipulation vulnerabilities that motivated MaxiMin, MiniMax, LexiMin and Goldilocks in the first place – a panel could end up intersectionally balanced only because some individuals were given a far higher selection chance than others to fill sparse cells. Reconciling intersectional balance with that fairness guarantee looks like the more productive target than optimising for either alone.</p>
 </section>
 <section id="closing-remarks" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="closing-remarks"><span class="header-section-number">6.4</span> Closing remarks</h2>
@@ -221,6 +241,11 @@ ul.task-list li input[type="checkbox"] {
 <p>Representation, in other words, is not just a matter of getting the proportions right on each axis taken separately; it is a matter of getting the <em>people</em> right, in all the ways their identities and circumstances combine. A panel can be perfectly fair by the numbers and still quietly leave an entire slice of a community’s lived experience unheard, simply because no one checked whether the categories were ever meant to be looked at together. If sortition’s promise is a seat for everyone, a fair lottery is not the end of the question – it is only the beginning. The real test is who actually ends up on the panel, with their thoughts and feelings heard. So before the next panel is called fair and finished, it is worth pausing to ask: am I in the room?</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-matar2025diversimax" class="csl-entry" role="listitem">
+Matar, O. (2025), <em><a href="https://orenmatar.github.io/diversimax_algorithm/">Diversimax: Maximizing intersectional diversity in sortition-based citizen assemblies</a></em>, Democracy 3.0.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
