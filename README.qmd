@@ -425,7 +425,7 @@ Then do both populations to slice to associated response chances; demonstrate th
 ### Discussion
 
 - Is the structure okay?
-- Where should I include Diversimax within this?
+- Where should I include Diversimax within this? (raise this in conclusion; cite it as miscellaneous, as something that is being considered and worked on, but introduces inverse problem to LexiMin--could be good with more balanced approach)
 - I realise I have missed visualisation development in lit review -- how should I address it?
 - What is the page limit?
 - How should I structure the slides?

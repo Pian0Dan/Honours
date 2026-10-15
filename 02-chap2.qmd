@@ -67,7 +67,7 @@ It also makes little difference to the specific problem this thesis is looking a
 
 Rather than committing to a single panel immediately, LexiMin constructs a probability distribution over the full set of feasible panels $K$, assigning each panel $S \in K$ a non-negative probability $p_S$ that sums to one across the set. An individual's overall selection chance is then the sum of the probabilities of every panel that includes them. Sorting these chances from smallest to largest, LexiMin proceeds lexicographically: it maximises the smallest probability first, then -- holding that value fixed -- maximises the second-smallest, and so on until every individual has been addressed.
 
-### Formal representation
+### Formal representation, algorithm and logic
 
 This process can be expressed formally. Let $p_S$ denote the probability assigned to panel $S$, which must be non-negative and sum to one across every feasible panel in $K$,
 
@@ -75,47 +75,27 @@ $$
 p_S \ge 0, \qquad \sum_{S \in K} p_S = 1.
 $$
 
-The resulting selection probability for an individual $i$ is then the sum of the probabilities of every feasible panel containing them,
+The resulting selection probability for an individual $i$ is the sum of the probabilities of every feasible panel containing them, giving the full vector of individual selection probabilities across the population,
 
 $$
-\pi_i(p) = \sum_{S \in K,\ i \in S} p_S,
+\pi_i(p) = \sum_{S \in K,\ i \in S} p_S, \qquad \pi(p) = (\pi_1(p), \pi_2(p), \ldots, \pi_n(p)).
 $$
 
-giving the full vector of individual selection probabilities across the population,
+Sorted from smallest to largest, $\pi_{(1)}(p) \le \pi_{(2)}(p) \le \ldots \le \pi_{(n)}(p)$, LexiMin chooses the distribution $p$ that maximises this vector in lexicographic order -- the smallest entry first, then the second-smallest subject to the first remaining maximised, and so on down the vector.
 
-$$
-\pi(p) = (\pi_1(p), \pi_2(p), \ldots, \pi_n(p)).
-$$
+In practice, this runs as a sequence of steps: every feasible panel in $K$ is listed alongside every possible probability distribution over those panels, and each candidate distribution's resulting selection probabilities are computed and sorted as above. Only the distribution (or distributions) that maximise the smallest probability $\pi_{(1)}(p)$ are retained; if several remain tied, this narrows further to those that also maximise the second-smallest, and so on, resolving ties one probability at a time until a single distribution remains, from which a final panel is sampled.
 
-Sorting this vector from smallest to largest,
+At its core, then, LexiMin is a fairness rule: it prioritises whoever has the lowest chance of selection, improves their odds first, then works through the next-lowest probabilities until no further improvement is possible without disadvantaging someone already prioritised -- leaving selection probabilities as equal as possible across the population, within the panel's quota constraints.
 
-$$
-\pi_{(1)}(p) \le \pi_{(2)}(p) \le \ldots \le \pi_{(n)}(p),
-$$
+## Visualisation methods
 
-LexiMin chooses the distribution $p$ that maximises this sorted vector in lexicographic order -- that is, the smallest entry first, then the second-smallest subject to the first remaining maximised, and so on down the sorted vector.
+Current sortition practice communicates a sample or panel's composition almost exclusively through pie charts, or bar charts showing the same information in a different shape -- one chart per demographic category, each showing that variable's marginal breakdown in isolation. Both are easy to produce and easy for a non-specialist audience to read at a glance, which likely explains their popularity with practitioners reporting on panel composition. But neither can encode more than a single categorical variable at a time: there is no visual channel left over to show how two variables relate to one another. A practitioner working only from pie or bar charts can confirm that a panel's age breakdown looks right, and separately that its tenure breakdown looks right, but has no way of seeing whether the right *combinations* of age and tenure made it onto the panel. Faceting a bar chart by a second variable does not fix this: each facet's bars are rescaled relative to that facet alone, rather than the whole population, so an association between the two variables -- which can only be seen when proportions stay relative to the full population -- is exactly what gets obscured by splitting the chart apart in the first place.
 
-### Algorithm
+Mosaic plots are a longstanding answer to exactly this limitation. A mosaic plot divides a rectangle into tiles whose widths and heights are proportional to the categories of two (or more) variables, so that each tile's area represents the joint frequency of that specific combination, rather than either variable's marginal frequency alone [@hofmann2003constructing]. Graphical methods for categorical data are comparatively underdeveloped next to those available for numeric data, and mosaic plots have been established in the statistical graphics literature as one of the more effective options for visualising relationships between multiple categorical variables at once. Because tile area scales with both variables simultaneously, a departure from proportional tiling signals that the two variables are not independent, in a way no pie chart or ordinary bar chart can show. The current R package for building mosaic plots within the ggplot2 grammar of graphics is ggmosaic2 [@R-ggmosaic2], an actively maintained extension of the original ggmosaic implementation [@R-ggmosaic].
 
-In practice, this lexicographic maximisation runs as a sequence of steps: every feasible panel in $K$ is listed alongside every possible probability distribution over those panels, and for each candidate distribution the resulting selection probability $\pi_i(p)$ is computed for every individual $i$ and sorted smallest to largest, $\pi_{(1)}(p) \le \pi_{(2)}(p) \le \ldots \le \pi_{(n)}(p)$, as above. Only the distribution (or distributions) that maximise the smallest probability $\pi_{(1)}(p)$ are retained; if several remain tied, this narrows further to those that also maximise the second-smallest, $\pi_{(2)}(p)$, and so on, resolving ties one probability at a time until a single distribution remains. A final panel is then sampled from it.
+## Discussion and new investigation
 
-### Logic
-
-At its core, LexiMin is a fairness rule: it prioritises whoever has the lowest chance of selection, improves their odds first, then works through the next-lowest probabilities until no further improvement is possible without disadvantaging someone already prioritised. The result is selection probabilities as equal as possible across the population, within the panel's quota constraints.
-
-### Visualisation methods
-
-To evaluate the representativeness of selected panels, this thesis draws on a range of visualisation methods that compare a panel's trait distribution against the sample it was drawn from, and surface any discrepancies or bias in the selection process. Useful options include bar charts, mosaic plots, double decker plots, UpSet plots, and parallel coordinate plots.
-
-Bar charts are the starting point: simple illustrative graphs of trait densities that give a rough sense of how the population and samples break down, setting expectations for the more detailed visualisations that follow. From there, mosaic or double decker plots show the proportion of demographic traits selected onto panels. UpSet plots [@conwayUpSetRPackageVisualization2017] are useful for showcasing the intersections present in generated panels, linking demographic variables visually alongside frequency counts of how often each combination occurs.
-
-### Discussion
-
-This approach is effective at making selection probabilities as equal as possible, which helps make sortition fairer by reducing situations where specific individuals are disadvantaged. It does not, however, provide any way to impose joint trait requirements on subsets of the population -- something that may be necessary for accurate representation of community groups. That gap can undermine representativeness as a goal, given the motivation for sortitioned panels in the first place: filling a room with individuals who accurately and descriptively reflect a community's population diversity and characteristics.
-
-### New investigation
-
-Across this literature, the common thread is that algorithmic effort has gone almost entirely into optimising the fairness and robustness of the selection *mechanism* -- how equal selection probabilities are, and how resistant they are to manipulation -- rather than validating the *outcome* that mechanism produces. A panel satisfying every fairness and robustness guarantee an algorithm offers is not thereby guaranteed to represent the population it was drawn from well; these are related but distinct properties, and the literature so far has focused heavily on the former at the expense of the latter.
+This approach is effective at making selection probabilities as equal as possible, which helps make sortition fairer by reducing situations where specific individuals are disadvantaged. It does not, however, provide any way to impose joint trait requirements on subsets of the population -- something that may be necessary for accurate representation of community groups. That gap reflects a broader pattern across this literature: algorithmic effort has gone almost entirely into optimising the fairness and robustness of the selection *mechanism*, rather than validating the *outcome* that mechanism produces. A panel satisfying every fairness and robustness guarantee an algorithm offers is not thereby guaranteed to represent the population it was drawn from well -- these are related but distinct properties, and the literature so far has focused heavily on the former at the expense of the latter, undermining representativeness as a goal given the motivation for sortitioned panels in the first place: filling a room with individuals who accurately and descriptively reflect a community's population diversity and characteristics.
 
 One specific way this gap shows up: no algorithmic technique surveyed here stratifies for combinations of demographic traits in its decision-making -- each instead affects individual selection chances purely through quotas set on each trait at the margin. This is a real limitation, since it means the selection process may fail to capture the group's actual diversity, leaving a less representative panel. In some situations -- side-panels built for specific subgroups, or communities with known intersectional minorities of interest -- ensuring specific intersectional combinations are included may be necessary for genuine representation. This gap is generally patched in practice by bringing in "specialist speakers" during deliberation [@redmanHowRecruitParticipants], but that is a different kind of inclusion than being part of the panel and its decision-making directly.
 

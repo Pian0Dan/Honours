@@ -52,16 +52,6 @@ And finally, I would like to thank Muse for their song Unnatural Selection. It k
 
 I acknowledge the use of Posit Assistant (using an API form of Claude-sonnet) to assist me in the preparation of code, LaTex renders and initial drafting of section skeletons. The output from these was used to support my workflow in producing visualisations and clearly-written explanations.
 
-> If you have used generative artificial intelligence (AI) technologies, you must include a written acknowledgment of the use and its extent. Your acknowledgement should at a minimum specify which technology was used, include explicit description on how the information was generated, and explain how the output was used in your work. Below is a suggested format:
-
-> “I acknowledge the use of [insert AI system(s) and link] to [specific use of generative artificial intelligence]. The output from these was used to [explain use].”
-
-> Free text section for you to record your acknowledgment and gratitude for the more general academic input and support such as financial support from grants and scholarships and the non-academic support you have received during the course of your enrolment. If you are a recipient of the “Australian Government Research Training Program Scholarship”, you are required to include the following statement:
-
-> > “This research was supported by an Australian Government Research Training Program (RTP) Scholarship.”
-
-> You may also wish to acknowledge significant and substantial contribution made by others to the research, work and writing represented and/or reported in the thesis. These could include significant contributions to: the conception and design of the project; non-routine technical work; analysis and interpretation of research data; drafting significant parts of the work or critically revising it to contribute to the interpretation.
-
 <!--
 The following line is required to re-set page numbering after preliminary material in the pdf output. Do not remove
 -->
