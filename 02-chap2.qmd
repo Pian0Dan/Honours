@@ -30,7 +30,7 @@ The same applies to survey response: if certain groups are less likely to respon
 
 ### Problem definition
 
-Suppose there is a pool of individuals numbered 1 to $n$, from which we want to choose a panel of size $k$. Let $K$ be the set of all feasible panels -- any group of $k$ individuals satisfying the required constraints, which generally take the form of quotas.
+Suppose there is a pool of individuals numbered 1 to $n$, from which a panel of size $k$ is to be chosen. Let $K$ be the set of all feasible panels -- any group of $k$ individuals satisfying the required constraints, which generally take the form of quotas.
 
 Quotas specify a desired count, or range of counts, for individuals in a given trait class (e.g. 20-22 males, or 15-17 rural), tied to whichever demographics a project has deemed important to represent. The core goal of sortition, then, is to build a panel that meets those quota constraints equitably, robustly, and in a way that genuinely represents the population it was drawn from.
 
@@ -51,11 +51,11 @@ This shortcoming is addressed by the first two algorithmic sortition methods, Ma
 
 #### LexiMin [@Flanigan2021FairAF]
 
-LexiMin -- short for lexicographic minimisation -- works similarly to MaxiMin, but resolves ties sequentially rather than stopping at the single minimum. It first identifies whoever has the lowest selection chance and maximises that, then moves to the next-lowest, and so on, until every individual's selection probability has been addressed and made as equal as possible across participants. This gives everyone the highest chance of selection achievable without disadvantaging someone already prioritised -- but, like MaxiMin, it inherits a vulnerability to manipulation.
+LexiMin -- short for lexicographic maximin -- works similarly to MaxiMin, but resolves ties sequentially rather than stopping at the single minimum. It first identifies whoever has the lowest selection chance and maximises that, then moves to the next-lowest, and so on, until every individual's selection probability has been addressed and made as equal as possible across participants. This gives everyone the highest chance of selection achievable without disadvantaging someone already prioritised -- but, like MaxiMin, it inherits a vulnerability to manipulation.
 
 #### Goldilocks [@baharavFairManipulationRobustTransparent2024]
 
-This brings us to the current gold standard: the aptly-named Goldilocks algorithm. Goldilocks simultaneously maximises minimum selection probabilities (for fairness) and minimises maximum selection probabilities (for robustness), aiming for a "best of both worlds" balance between MaxiMin and MiniMax. The motivation is clear: both MaxiMin and LexiMin place no ceiling on how high an individual's selection probability can climb, so a participant who misreports their trait membership to appear under-represented can disproportionately inflate their own odds. By capping the maximum selection probability, as MiniMax does, Goldilocks limits the payoff from that kind of manipulation while still prioritising the lowest probabilities enough to preserve most of MaxiMin and LexiMin's fairness guarantees -- a selection rule that is simultaneously hard to manipulate and reasonably fair.
+This brings the discussion to the current gold standard: the aptly-named Goldilocks algorithm. Goldilocks simultaneously maximises minimum selection probabilities (for fairness) and minimises maximum selection probabilities (for robustness), aiming for a "best of both worlds" balance between MaxiMin and MiniMax. The motivation is clear: both MaxiMin and LexiMin place no ceiling on how high an individual's selection probability can climb, so a participant who misreports their trait membership to appear under-represented can disproportionately inflate their own odds. By capping the maximum selection probability, as MiniMax does, Goldilocks limits the payoff from that kind of manipulation while still prioritising the lowest probabilities enough to preserve most of MaxiMin and LexiMin's fairness guarantees -- a selection rule that is simultaneously hard to manipulate and reasonably fair.
 
 ### Why focus on LexiMin
 

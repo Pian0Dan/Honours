@@ -1,28 +1,16 @@
 # ---------------------------------------------------------------
-# Numerical summary of age-tenure association strength at each
-# stage of the two-variable (age x tenure) simulation pipeline --
-# population, slice, and respondents (under both the equal-chance
-# "eq" and age-associated "ass" response cases) -- for each of the
-# independent ("pop1") and associated ("pop2") populations.
-#
-# Quantifies, via a chi-squared test of independence and Cramer's V
-# effect size, exactly what the patchwork mosaic plots in
-# scripts/patchwork.R show visually: whether each stage's age x
-# tenure association is distinguishable from independence, and how
-# strong it is. Population- and slice-level objects use lower-case
-# "age"/"tenure" columns (from simdata2.R/simsamp2.R); respondent
-# objects use capitalised "Age"/"Tenure" columns (from
-# simsamp2yes.R) -- association_stats() takes the column names
-# explicitly so both conventions can be handled by the same helper.
+# Chi-squared test + Cramer's V for the age-tenure association at
+# every stage of the two-variable pipeline (population, slice,
+# respondents under both response cases), for both populations.
+# Quantifies what the patchwork mosaics in scripts/patchwork.R show
+# visually.
 # ---------------------------------------------------------------
 
-# Builds every stage's data frame used below (sim_data2, sim_data2_cov,
-# sim_data2_slice, sim_data2_cov_slice, sim_data2_ind_eq_yes,
-# sim_data2_ind_ass_yes, sim_data2_cov_eq_yes, sim_data2_cov_ass_yes).
 invisible(capture.output(source("scripts/patchwork.R")))
 
-# --- Chi-squared test of independence + Cramer's V for a single
-# age x tenure table ---
+# Population/slice objects use lower-case age/tenure columns; the
+# respondent objects use capitalised Age/Tenure -- pass column names
+# explicitly so one helper handles both.
 association_stats <- function(data, age_col, tenure_col) {
   tbl <- table(data[[age_col]], data[[tenure_col]])
   test <- chisq.test(tbl)
@@ -90,10 +78,8 @@ association_summary_2var <- rbind(
 )
 rownames(association_summary_2var) <- NULL
 
-# A rounded p-value of 0.000 could be misread as exactly zero rather
-# than merely very small, so format p-values below .001 as "< .001"
-# for display, while keeping the raw numeric p_value column intact
-# for any other use.
+# "0.000" reads as exactly zero -- show "< .001" instead wherever
+# that would happen, keeping the raw p_value column for anything else.
 association_summary_2var$p_value_fmt <- ifelse(
   association_summary_2var$p_value < 0.001,
   "< .001",

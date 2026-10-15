@@ -1,7 +1,6 @@
 library(tibble)
 library(ggmosaic2)
 library(ggplot2)
-library(tidyverse)
 
 set.seed(13)
 

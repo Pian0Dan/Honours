@@ -385,21 +385,21 @@ Table&nbsp;4.1: Chi-squared test of independence and Cramer’s V for the age-te
 <td style="text-align: left;">Independent (pop1)</td>
 <td style="text-align: left;">eq</td>
 <td style="text-align: left;">Respondents</td>
-<td style="text-align: right;">2974</td>
-<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">3077</td>
+<td style="text-align: right;">4.0</td>
 <td style="text-align: right;">8</td>
-<td style="text-align: right;">0.803</td>
-<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">0.856</td>
+<td style="text-align: right;">0.026</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Independent (pop1)</td>
 <td style="text-align: left;">ass</td>
 <td style="text-align: left;">Respondents</td>
-<td style="text-align: right;">3483</td>
-<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">3579</td>
+<td style="text-align: right;">6.6</td>
 <td style="text-align: right;">8</td>
-<td style="text-align: right;">0.759</td>
-<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">0.584</td>
+<td style="text-align: right;">0.030</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Associated (pop2)</td>
@@ -416,27 +416,27 @@ Table&nbsp;4.1: Chi-squared test of independence and Cramer’s V for the age-te
 <td style="text-align: left;">–</td>
 <td style="text-align: left;">Slice (10,000)</td>
 <td style="text-align: right;">10000</td>
-<td style="text-align: right;">334.3</td>
+<td style="text-align: right;">341.9</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">&lt; .001</td>
-<td style="text-align: right;">0.129</td>
+<td style="text-align: right;">0.131</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Associated (pop2)</td>
 <td style="text-align: left;">eq</td>
 <td style="text-align: left;">Respondents</td>
-<td style="text-align: right;">3019</td>
-<td style="text-align: right;">123.9</td>
+<td style="text-align: right;">3012</td>
+<td style="text-align: right;">103.4</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">&lt; .001</td>
-<td style="text-align: right;">0.143</td>
+<td style="text-align: right;">0.131</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Associated (pop2)</td>
 <td style="text-align: left;">ass</td>
 <td style="text-align: left;">Respondents</td>
-<td style="text-align: right;">3563</td>
-<td style="text-align: right;">123.4</td>
+<td style="text-align: right;">3457</td>
+<td style="text-align: right;">121.1</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">&lt; .001</td>
 <td style="text-align: right;">0.132</td>
@@ -632,7 +632,7 @@ Figure&nbsp;4.7: Age-tenure composition of the independent population’s survey
 </section>
 <section id="summary" class="level3">
 <h3 class="anchored" data-anchor-id="summary">Summary</h3>
-<p>Across all four simulated conditions, satisfying Panelot’s marginal quotas on age and tenure did not translate into a panel whose joint age-tenure structure resembled its survey sample’s: essentially every feasible panel was flagged as significantly different from the sample, at a rate far beyond what panel size alone could explain, and this held regardless of whether the underlying population carried a genuine age-tenure association or response was skewed by age. Marginal quota satisfaction – the only form of representativeness that a current sortition tool like Panelot reports to a practitioner – is therefore not a reliable proxy for intersectional representativeness in this simulation, and the gap between the two looks like a structural consequence of leaving the joint distribution unconstrained, rather than an artefact of this thesis’s particular panel size or association strengths. One interpretive question is worth addressing directly here, since it concerns what this divergence is evidence <em>of</em>: because Panelot’s quotas target population marginals rather than the survey sample’s own marginals, could a panel’s divergence from its sample simply reflect the panel correcting toward population representativeness where the sample itself has drifted, rather than any flaw of the selection algorithm? <a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a> shows this is not the case, for two separate reasons: the panel-versus-sample test itself is constructed to condition out exactly this kind of marginal difference, testing only for a genuine change in the age-tenure association; and, independently of that, the equal-chance and age-associated response cases show the opposite pattern to what population-correction would predict, with equal-chance panels – where the sample’s marginal barely differs from the population’s – flagged as different at least as often as age-associated panels, not less. The near-total divergence documented here reflects the quota mechanism leaving the joint age-tenure distribution unconstrained, not any population-versus-sample drift. <a href="05-chap5.html" class="quarto-xref"><span>Chapter 5</span></a> introduces Intersection Inspector, a tool built directly in response to this gap, which displays a panel’s intersectional association alongside its marginal quota satisfaction so that this kind of distortion is visible to a practitioner before a panel convenes, rather than only to a reader of this thesis after the fact.</p>
+<p>Across all four simulated conditions, satisfying Panelot’s marginal quotas on age and tenure did not translate into a panel whose joint age-tenure structure resembled its survey sample’s: essentially every feasible panel was flagged as significantly different from the sample, at a rate far beyond what panel size alone could explain, and this held regardless of whether the underlying population carried a genuine age-tenure association or response was skewed by age. Marginal quota satisfaction – the only form of representativeness that a current sortition tool like Panelot reports to a practitioner – is therefore not a reliable proxy for intersectional representativeness in this simulation, and the gap between the two looks like a structural consequence of leaving the joint distribution unconstrained, rather than an artefact of this thesis’s particular panel size or association strengths. One interpretive question is worth addressing directly here, since it concerns what this divergence is evidence <em>of</em>: because Panelot’s quotas target population marginals rather than the survey sample’s own marginals, could a panel’s divergence from its sample simply reflect the panel correcting toward population representativeness where the sample itself has drifted, rather than any flaw of the selection algorithm? <a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a> shows this is not the case, for two separate reasons: the panel-versus-sample test itself is constructed to condition out exactly this kind of marginal difference, testing only for a genuine change in the age-tenure association; and, independently of that, the equal-chance and age-associated response cases show the opposite pattern to what population-correction would predict, with equal-chance panels – where the sample’s marginal barely differs from the population’s – flagged as different at least as often as age-associated panels, not less. <a href="05-chap5.html" class="quarto-xref"><span>Chapter 5</span></a> introduces Intersection Inspector, a tool built directly in response to this gap, which displays a panel’s intersectional association alongside its marginal quota satisfaction so that this kind of distortion is visible to a practitioner before a panel convenes, rather than only to a reader of this thesis after the fact.</p>
 
 
 </section>

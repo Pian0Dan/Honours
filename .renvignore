@@ -15,5 +15,22 @@ examples/
 Old/
 LexiMin Stash.qmd
 
+# Not sourced by the book -- a separate Shiny app, draft app
+# prototypes, a standalone LexiMin reference implementation, one-off
+# scripts for regenerating CSVs/diagrams, and the conference-style
+# slide deck (which has its own rendering needs even though it reuses
+# some of the same analysis scripts).
+scripts/intersection_inspector/
+scripts/vis_app_drafts/
+scripts/panel_vs_srs_trait_bars_app.R
+scripts/performance_evaluator2.R
+scripts/compare_simdata5_simsamp5.R
+scripts/srs_visualiser.R
+scripts/label_helpers.R
+scripts/Flowchart.R
+scripts/csv_helper.R
+leximin-implementation/
+presentation/
+
 # renv's own library/cache
 renv/
