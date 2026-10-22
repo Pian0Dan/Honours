@@ -26,7 +26,7 @@ pop1_pipeline_eq <-
   (pop2_ind_eq_respondents_plot + labs(title = "Respondents (eq)")) +
   plot_layout(ncol = 3, guides = "collect") +
   plot_annotation(
-    title = "Independent population (pop1): population \u2192 slice \u2192 eq response"
+    title = "Independent population (pop1): population -> slice -> eq response"
   ) &
   rotate_age_labels
 
@@ -36,7 +36,7 @@ pop2_pipeline_eq <-
   (pop2_cov_eq_respondents_plot + labs(title = "Respondents (eq)")) +
   plot_layout(ncol = 3, guides = "collect") +
   plot_annotation(
-    title = "Associated population (pop2): population \u2192 slice \u2192 eq response"
+    title = "Associated population (pop2): population -> slice -> eq response"
   ) &
   rotate_age_labels
 
@@ -49,7 +49,7 @@ pop1_pipeline_ass <-
   (pop2_ind_ass_respondents_plot + labs(title = "Respondents (ass)")) +
   plot_layout(ncol = 3, guides = "collect") +
   plot_annotation(
-    title = "Independent population (pop1): population \u2192 slice \u2192 ass response"
+    title = "Independent population (pop1): population -> slice -> ass response"
   ) &
   rotate_age_labels
 
@@ -59,7 +59,7 @@ pop2_pipeline_ass <-
   (pop2_cov_ass_respondents_plot + labs(title = "Respondents (ass)")) +
   plot_layout(ncol = 3, guides = "collect") +
   plot_annotation(
-    title = "Associated population (pop2): population \u2192 slice \u2192 ass response"
+    title = "Associated population (pop2): population -> slice -> ass response"
   ) &
   rotate_age_labels
 

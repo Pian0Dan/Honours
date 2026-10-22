@@ -179,6 +179,23 @@ div.csl-indent {
  <span class="menu-text">Bibliography</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A-appA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Iterative proportional fitting (raking) derivation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -227,12 +244,13 @@ div.csl-indent {
 <p>A thesis submitted for the degree of Bachelor of Commerce (Honours) at Monash University, Department of Econometrics &amp; Business Statistics.</p>
 <section id="copyright-notice" class="level1 unnumbered">
 <h1 class="unnumbered">Copyright notice</h1>
-<p>Produced on 16 October 2026.</p>
+<p>Produced on 23 October 2026.</p>
 <p>© Daniel Loza (2026).</p>
 </section>
 <section id="abstract" class="level1 unnumbered">
 <h1 class="unnumbered">Abstract</h1>
-<p>Sortition, the random selection of individuals to form panels, has seen a renaissance in recent years, as more and more institutions realise the value of direct community and stakeholder input in deliberation and policymaking. These panels have proven to be massively beneficial in terms of improving the quality of outcomes reached, increasing public trust and engagement, and creating more inclusive and representative processes. However, there are still many challenges to overcome in order to ensure that these panels are truly representative and selected effectively. This thesis aims to evaluate current sortition methods and community representation processes, as well as to investigate how sampling biases and algorithmic design can impact panel representativeness. By investigating these factors, we can develop a greater understanding of existing tools and procedures, how they work, how they fall short, and what it would mean for them to be more representative. This enabled the creation of a diagnostic tool (“Intersection Inspector”), for use by practitioners to make the process more transparent, and to assess and improve the representativeness of selected sortition panels.</p>
+<p>Sortition, the random selection of individuals to form deliberative panels, has seen a renaissance in recent years, as institutions realise the value of direct community and stakeholder input in deliberation and policymaking. These panels improve the quality of outcomes, increase public trust and engagement, and create more inclusive processes. Yet little attention has been paid to whether panels preserve a community’s intersectional structure – how demographic traits combine – rather than only its marginal proportions. This thesis uses a simulated sortition pipeline (population, survey sample, and panel selection via the LexiMin algorithm) to test whether quota-constrained selection preserves the joint two-variable association present in a survey sample. Across all simulated conditions, effectively every feasible panel showed a two-variable relationship significantly different from its sample, at a rate far exceeding simple random sampling. These findings motivated Intersection Inspector, a diagnostic Shiny app helping practitioners assess a panel’s representativeness before deliberation begins.</p>
+<p><strong>Keywords:</strong> sortition; citizens’ assemblies; representativeness; intersectionality; panel selection algorithms</p>
 <!-- 
 For an honours thesis, you can remove the rest of this file apart from the last couple of lines. 
 -->
@@ -242,7 +260,7 @@ For an honours thesis, you can remove the rest of this file apart from the last 
 <p>This thesis is an original work of my research and contains no material which has been accepted for the award of any other degree or diploma at any university or equivalent institution and that, to the best of my knowledge and belief, this thesis contains no material previously published or written by another person, except where due reference is made in the text of the thesis.</p>
 <p>Student name: Daniel Leo Loza</p>
 <p>Student signature: Daniel Leo Loza</p>
-<p>Date: 18/10/2026</p>
+<p>Date: 25/10/2026</p>
 <section id="reproducibility-statement" class="level4">
 <h4 class="anchored" data-anchor-id="reproducibility-statement">Reproducibility statement</h4>
 <p>This thesis is written using Quarto with renv <span class="citation" data-cites="renv">(<a href="refs.html#ref-renv" role="doc-biblioref">Ushey and Wickham 2025</a>)</span> to create a reproducible environment. All materials (including the data sets and source files) required to reproduce this document can be found at the Github repository <a href="https://github.com/Pian0Dan/Honours"><code>github.com/Pian0Dan/Honours</code></a>. Analysis and simulation were carried out in R <span class="citation" data-cites="R-base">(<a href="refs.html#ref-R-base" role="doc-biblioref">R Core Team 2026</a>)</span>, making use of the ggplot2 <span class="citation" data-cites="R-ggplot2">(<a href="refs.html#ref-R-ggplot2" role="doc-biblioref"><span class="nocase">Wickham et al.</span> 2026a</a>)</span>, ggmosaic2 <span class="citation" data-cites="R-ggmosaic2">(<a href="refs.html#ref-R-ggmosaic2" role="doc-biblioref">Friendly et al. 2026</a>)</span>, patchwork <span class="citation" data-cites="R-patchwork">(<a href="refs.html#ref-R-patchwork" role="doc-biblioref">Pedersen 2025</a>)</span>, dplyr <span class="citation" data-cites="R-dplyr">(<a href="refs.html#ref-R-dplyr" role="doc-biblioref">Wickham et al. 2026b</a>)</span>, tidyr <span class="citation" data-cites="R-tidyr">(<a href="refs.html#ref-R-tidyr" role="doc-biblioref">Wickham et al. 2025</a>)</span>, tidyverse <span class="citation" data-cites="R-tidyverse">(<a href="refs.html#ref-R-tidyverse" role="doc-biblioref">Wickham 2023</a>)</span>, knitr <span class="citation" data-cites="R-knitr">(<a href="refs.html#ref-R-knitr" role="doc-biblioref">Xie 2025</a>)</span>, kableExtra <span class="citation" data-cites="R-kableExtra">(<a href="refs.html#ref-R-kableExtra" role="doc-biblioref">Zhu 2026</a>)</span>, and shiny <span class="citation" data-cites="R-shiny">(<a href="refs.html#ref-R-shiny" role="doc-biblioref">Chang et al. 2026</a>)</span> packages.</p>

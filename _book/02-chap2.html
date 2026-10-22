@@ -222,6 +222,23 @@ window.Quarto = {
  <span class="menu-text">Bibliography</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A-appA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Iterative proportional fitting (raking) derivation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -312,7 +329,7 @@ window.Quarto = {
 </section>
 <section id="why-focus-on-leximin" class="level3">
 <h3 class="anchored" data-anchor-id="why-focus-on-leximin">Why focus on LexiMin</h3>
-<p>Goldilocks may be the newer and, in theory, the better algorithm, but this thesis works with LexiMin instead. The reasons are practical. LexiMin is the algorithm actually in use: it runs inside Panelot, the tool practitioners currently use to put real panels together, while no public version of Goldilocks existed at the time of writing. Testing LexiMin means testing the algorithm actually shaping panels today, not one that only exists on paper so far.</p>
+<p>Goldilocks may be the newer and, in theory, the better algorithm, but this thesis works with LexiMin instead. The reasons are practical. LexiMin is the algorithm actually in use: it runs inside Panelot <span class="citation" data-cites="panelot">(<a href="refs.html#ref-panelot" role="doc-biblioref">Flanigan et al. 2020</a>)</span>, the tool practitioners currently use to put real panels together, while no public version of Goldilocks existed at the time of writing. Testing LexiMin means testing the algorithm actually shaping panels today, not one that only exists on paper so far.</p>
 <p>It also makes little difference to the specific problem this thesis is looking at. Goldilocks was built to fix manipulation, not to fix how panels handle intersections of traits – and on that front, it works the same way LexiMin does. Both algorithms set selection probabilities purely from marginal quotas, and neither one looks at how traits combine. Capping the highest selection probability, which is all Goldilocks adds on top of LexiMin, has no obvious reason to change how well a panel’s mix of traits reflects its sample. So the gap this chapter identifies below should apply to Goldilocks just as much as it applies to LexiMin. Working with LexiMin here is a matter of what could actually be tested and what practitioners actually use, not a claim that it matters more – the same argument should carry over to Goldilocks once it can be tested directly.</p>
 </section>
 <section id="leximin-approach-flanigan2021fairaf" class="level3">
@@ -353,6 +370,9 @@ Baharav, C., and Flanigan, B. (2024), <span>“Fair, <span>Manipulation-Robust</
 </div>
 <div id="ref-Flanigan2021FairAF" class="csl-entry" role="listitem">
 Flanigan, B., Gölz, P., Gupta, A., Hennig, B., and Procaccia, A. D. (2021a), <span>“<a href="https://api.semanticscholar.org/CorpusID:236927646">Fair <span>A</span>lgorithms for <span>S</span>electing <span>C</span>itizens’ <span>A</span>ssemblies</a>,”</span> <em>Nature</em>, 596, 548–552.
+</div>
+<div id="ref-panelot" class="csl-entry" role="listitem">
+Flanigan, B., Gölz, P., Gupta, A., Procaccia, A. D., and Rusak, G. (2020), <span>“<a href="https://panelot.org">Panelot</a>.”</span>
 </div>
 <div id="ref-flaniganFairSortitionMadeTransparent2021" class="csl-entry" role="listitem">
 Flanigan, B., Kehne, G., and Procaccia, A. D. (2021b), <span>“<a href="https://procaccia.info/wp-content/uploads/2021/05/transparent.pdf">Fair sortition made transparent</a>,”</span> in <em>Advances in neural information processing systems</em>, pp. 25720–25731.

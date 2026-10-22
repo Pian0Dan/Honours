@@ -1,4 +1,18 @@
-# Additional stuff
+# Iterative proportional fitting (raking) derivation {#sec-raking-appendix}
 
-You might put some computer output here, or maybe additional tables.
-It is possible to have multiple appendices. Just list them in the appropriate place within `_quarto.yml`.
+This appendix gives the full iterative update rule underlying the raking step summarised in @sec-methodology, used to restore the age and tenure marginal targets $\mathbf p_A$ and $\mathbf p_T$ after the associated population's exponential seeding adjustment (@eq-seed-adjustment) disturbs them.
+
+Initialising $P^{(0)}_{\text{rake}} = \tilde P$, each raking iteration $r = 0, 1, 2, \dots$ performs two rescaling passes,
+
+$$
+P^{(r + 1/2)}(a, t) \;=\; P^{(r)}_{\text{rake}}(a, t) \cdot \frac{p_{A_a}}{\sum_{t'} P^{(r)}_{\text{rake}}(a, t')}, \qquad
+P^{(r+1)}_{\text{rake}}(a, t) \;=\; P^{(r+1/2)}(a, t) \cdot \frac{p_{T_t}}{\sum_{a'} P^{(r+1/2)}(a', t)},
+$$ {#eq-raking-update}
+
+first rescaling every row to sum to $p_{A_a}$, then every column to sum to $p_{T_t}$. Repeating this pair of passes for $R = 100$ iterations (well past convergence for a $5 \times 3$ table) yields the raked array $P^\star$, satisfying
+
+$$
+\sum_{t} P^\star(a, t) = p_{A_a} \; \text{ for all } a, \qquad \sum_{a} P^\star(a, t) = p_{T_t} \; \text{ for all } t,
+$$ {#eq-raking-convergence}
+
+to numerical tolerance, while retaining the negative age-renting association introduced by the exponential seeding step -- raking restores the specified marginals while preserving the association the adjustment introduced.

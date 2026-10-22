@@ -202,6 +202,23 @@ window.Quarto = {
  <span class="menu-text">Bibliography</span></a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A-appA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Iterative proportional fitting (raking) derivation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -245,19 +262,19 @@ window.Quarto = {
 <p>Before turning to this thesis’s main results, it is worth demonstrating directly why mosaic plots – rather than the pie charts (or equivalent bar charts) that commonly accompany a sample or panel’s reported composition in current sortition practice – are used throughout this chapter, rather than simply asserting it (<a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a>).</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pie-chart-problem" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-pie-chart-problem" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Four pie charts in a two-by-two grid: age proportions and tenure proportions for the independent population on top, and for the associated population on the bottom. The age and tenure pie charts look visually identical between the two populations despite one population having an underlying age-tenure association.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pie-chart-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pie-chart-problem-1.png" class="img-fluid figure-img" width="768">
+<img src="04-chap4_files/figure-html/fig-pie-chart-problem-1.png" class="img-fluid figure-img" style="width:70.0%" alt="Four pie charts in a two-by-two grid: age proportions and tenure proportions for the independent population on top, and for the associated population on the bottom. The age and tenure pie charts look visually identical between the two populations despite one population having an underlying age-tenure association.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pie-chart-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: Age and tenure marginal proportions for the independent population (top) and associated population (bottom). Each population’s age pie chart (left) and tenure pie chart (right) are visually indistinguishable from the other population’s, despite the two populations differing sharply in their underlying age-tenure association.
+Figure&nbsp;4.1: Pie charts displaying age (left column) and tenure (right column) marginal proportions for the independent population (top) and associated population (bottom). The age categories range from 15%-25% and roughly half of the population owns their home. Notably, these marginal distributions are exactly the same, which hides any association.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-pie-chart-problem" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> uses this thesis’s own independent and associated populations (<code>sim_data2</code>, <code>sim_data2_cov</code>) to make the point concrete. The two populations were constructed, by design, to share near-identical age and tenure marginal distributions – the raking procedure used to build the associated population exists specifically to restore the independent population’s marginals while retaining the age-renting association introduced beforehand (<a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a>) – so the largest gap between the two populations’ marginal proportions, across any single age bracket or tenure category, is only 0.02 percentage points, fully attributable to multinomial sampling noise rather than anything deliberately different between them. Unsurprisingly, each population’s age and tenure pie charts are visually indistinguishable from the other’s.</p>
+<p><a href="#fig-pie-chart-problem" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> uses this thesis’s own independent and associated populations (<code>sim_data2</code>, <code>sim_data2_cov</code>) to make the point concrete: the raking procedure used to build the associated population restores the independent population’s marginals while retaining the age-renting association introduced beforehand (<a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a>), so the largest gap between the two populations’ marginal proportions, across any single age bracket or tenure category, is only 0.02 percentage points – attributable to sampling noise alone.</p>
 <p>Yet the two populations are not the same: the associated population carries a genuine, and statistically detectable (<a href="#tbl-association-summary-2var" class="quarto-xref">Table&nbsp;<span>4.1</span></a>), negative association between age and renting, while the independent population has none at all. A pie chart – or a bar chart, which encodes exactly the same single-variable information in a different shape – has no visual channel available to show this: it can only display one categorical variable’s marginal distribution at a time, so two variables each need their own, entirely separate chart, and nothing in either chart can reveal how the two co-occur. A practitioner shown only the pie charts in <a href="#fig-pie-chart-problem" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> would have no way of telling the independent and associated populations apart, despite one holding a materially different – and, as <a href="#sec-panel-association-results" class="quarto-xref"><span>Section 4.3</span></a> goes on to show, selection-relevant – relationship between age and tenure than the other. The mosaic plots used throughout the remainder of this chapter (<a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a>) exist specifically to close this gap, representing both variables’ marginal distributions and their joint, intersectional distribution within a single figure.</p>
 </section>
 <section id="simulation-visualisations" class="level2" data-number="4.2">
@@ -266,13 +283,13 @@ Figure&nbsp;4.1: Age and tenure marginal proportions for the independent populat
 <h3 class="anchored" data-anchor-id="simulation-pipeline-population-slice-and-respondents-equal-chance-case">Simulation pipeline: population, slice and respondents (equal-chance case)</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop1-pipeline-eq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-pop1-pipeline-eq" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three mosaic plots side by side, each with age brackets on the x-axis and tenure as colour fill, for the independent population, a 10,000-person slice, and equal-chance respondents. Tenure fill proportions stay level across every age bar in all three plots, showing no age-tenure association at any stage.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pop1-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop1-pipeline-eq-1.png" class="img-fluid figure-img" width="768">
+<img src="04-chap4_files/figure-html/fig-pop1-pipeline-eq-1.png" class="img-fluid figure-img" style="width:90.0%" alt="Three mosaic plots side by side, each with age brackets on the x-axis and tenure as colour fill, for the independent population, a 10,000-person slice, and equal-chance respondents. Tenure fill proportions stay level across every age bar in all three plots, showing no age-tenure association at any stage.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop1-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.2: Patchwork of mosaic plots tracing the independent population’s age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice’s respondents under the equal-chance response case. Age brackets are shown on the x-axis and tenure as fill throughout.
+Figure&nbsp;4.2: Mosaic plots tracing the independent population’s age-tenure structure across the population (left panel), a random 10,000-person slice (middle panel), and the slice’s respondents under equal-chance response (right panel). Age brackets sit on the x-axis and tenure as fill throughout. Notice that the tile pattern barely shifts from population to respondents – there is no association between age and tenure to begin with, so neither slicing nor equal-chance response introduces one.
 </figcaption>
 </figure>
 </div>
@@ -280,31 +297,31 @@ Figure&nbsp;4.2: Patchwork of mosaic plots tracing the independent population’
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop2-pipeline-eq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-pop2-pipeline-eq" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three mosaic plots side by side, each with age brackets on the x-axis and tenure as colour fill, for the associated population, a 10,000-person slice, and equal-chance respondents. The renting segment shrinks steadily from the youngest to the oldest age bar in all three plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pop2-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-pipeline-eq-1.png" class="img-fluid figure-img" width="768">
+<img src="04-chap4_files/figure-html/fig-pop2-pipeline-eq-1.png" class="img-fluid figure-img" style="width:90.0%" alt="Three mosaic plots side by side, each with age brackets on the x-axis and tenure as colour fill, for the associated population, a 10,000-person slice, and equal-chance respondents. The renting segment shrinks steadily from the youngest to the oldest age bar in all three plots.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.3: Patchwork of mosaic plots tracing the associated population’s age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice’s respondents under the equal-chance response case. Age brackets are shown on the x-axis and tenure as fill throughout.
+Figure&nbsp;4.3: Mosaic plots tracing the associated population’s age-tenure structure across the population (left panel), a random 10,000-person slice (middle panel), and the slice’s respondents under equal-chance response (right panel). Renting narrows steadily with age, from around 44% among 18-34 year olds to around 18% among those 65 and over. Importantly, this negative age-renting association survives essentially unchanged from population to slice to respondents, confirming equal-chance response doesn’t disturb it.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> and <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> trace each population’s age-tenure structure across the three pipeline stages under the equal-chance response case. Both populations skew towards upper-middle age and a higher frequency of homeownership than other categories. In <a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>, there is no visible association between age and tenure at any stage – the probability of any age-tenure intersection is explained purely by the margins – and this independence, along with each category’s relative proportions, is preserved essentially unchanged from the full population through the slice to the equal-chance respondents. In <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.3</span></a>, by contrast, a negative association between age and renting is visible at every stage: the proportion of renters among the youngest bracket is noticeably higher than among the oldest. This pipeline, too, carries its association and relative proportions through from population to slice to equal-chance respondents largely unchanged, confirming that neither random slicing nor equal-chance response meaningfully disturbs either population’s underlying age-tenure structure.</p>
+<p><a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> and <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> trace each population’s age-tenure structure across the three pipeline stages under the equal-chance response case. Both populations skew towards upper-middle age and a higher frequency of homeownership than other categories. As the captions show, each population’s age-tenure relationship (or lack of one) carries through essentially unchanged across all three stages, confirming that neither random slicing nor equal-chance response meaningfully disturbs either population’s underlying structure.</p>
 </section>
 <section id="simulation-pipeline-population-slice-and-respondents-age-associated-case" class="level3">
 <h3 class="anchored" data-anchor-id="simulation-pipeline-population-slice-and-respondents-age-associated-case">Simulation pipeline: population, slice and respondents (age-associated case)</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop1-pipeline-ass" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-pop1-pipeline-ass" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three mosaic plots side by side for the independent population, a 10,000-person slice, and age-associated respondents. The older age bars widen and younger age bars narrow between the slice and respondents plots, while tenure fill proportions stay level within each bar throughout.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pop1-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop1-pipeline-ass-1.png" class="img-fluid figure-img" width="768">
+<img src="04-chap4_files/figure-html/fig-pop1-pipeline-ass-1.png" class="img-fluid figure-img" style="width:90.0%" alt="Three mosaic plots side by side for the independent population, a 10,000-person slice, and age-associated respondents. The older age bars widen and younger age bars narrow between the slice and respondents plots, while tenure fill proportions stay level within each bar throughout.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop1-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.4: Patchwork of mosaic plots tracing the independent population’s age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice’s respondents under the age-associated response case. Age brackets are shown on the x-axis and tenure as fill throughout.
+Figure&nbsp;4.4: Mosaic plots tracing the independent population’s age-tenure structure across the population (left panel), a random 10,000-person slice (middle panel), and the slice’s respondents under age-associated response (right panel), where response likelihood rises from around 20% among 18-34 year olds to over 50% among those 65 and over. Even though age and tenure carry no association in this population, the older age brackets visibly widen among respondents – differential response alone reshapes who appears, independent of any trait association in the underlying population.
 </figcaption>
 </figure>
 </div>
@@ -312,31 +329,29 @@ Figure&nbsp;4.4: Patchwork of mosaic plots tracing the independent population’
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop2-pipeline-ass" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-pop2-pipeline-ass" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three mosaic plots side by side for the associated population, a 10,000-person slice, and age-associated respondents. The renting segment shrinks with age in all three plots, and the older age bars widen further between the slice and respondents plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pop2-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-pop2-pipeline-ass-1.png" class="img-fluid figure-img" width="768">
+<img src="04-chap4_files/figure-html/fig-pop2-pipeline-ass-1.png" class="img-fluid figure-img" style="width:90.0%" alt="Three mosaic plots side by side for the associated population, a 10,000-person slice, and age-associated respondents. The renting segment shrinks with age in all three plots, and the older age bars widen further between the slice and respondents plots.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.5: Patchwork of mosaic plots tracing the associated population’s age-tenure structure across the simulation pipeline: the full population, a random 10,000-person slice, and the slice’s respondents under the age-associated response case. Age brackets are shown on the x-axis and tenure as fill throughout.
+Figure&nbsp;4.5: Mosaic plots tracing the associated population’s age-tenure structure across the population (left panel), a random 10,000-person slice (middle panel), and the slice’s respondents under age-associated response (right panel). Here, the age skew from differential response compounds with the population’s existing negative age-renting association rather than replacing it – respondents end up weighted even further toward the older, lower-renting end of the distribution than the slice or population alone.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> and <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> repeat the same three-stage pipeline, but with response likelihood now rising with age rather than being equal across brackets. Unlike the equal-chance case, the age-tenure structure is no longer preserved unchanged once respondents are reached: in both figures, the older age brackets visibly widen and the younger brackets narrow between the “Slice (10,000)” and “Respondents (ass)” panels, since older individuals are now disproportionately more likely to respond. This shows that an association between age and response probability – entirely independent of any association between age and tenure in the underlying population – is sufficient on its own to shift the overall age composition, and therefore the intersections present, in the final respondent sample. Comparing <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> against <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> shows this age-skew compounding with the associated population’s existing negative age-renting relationship, rather than replacing it: respondents under age-associated response are weighted even further towards the older, lower-renting end of the distribution than either the equal-chance respondents or the slice itself.</p>
+<p><a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> and <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> repeat the same three-stage pipeline, but with response likelihood now rising with age rather than being equal across brackets. Unlike the equal-chance case, the age-tenure structure is no longer preserved unchanged once respondents are reached, as the captions show: an association between age and response probability – entirely independent of any association between age and tenure in the underlying population – is sufficient on its own to shift the overall age composition, and therefore the intersections present, in the final respondent sample, compounding with rather than replacing any existing age-tenure relationship in the population it is drawn from.</p>
 </section>
 <section id="quantifying-association-across-the-pipeline" class="level3">
 <h3 class="anchored" data-anchor-id="quantifying-association-across-the-pipeline">Quantifying association across the pipeline</h3>
 <p>The mosaic patchworks above show the age-tenure association visually; <a href="#tbl-association-summary-2var" class="quarto-xref">Table&nbsp;<span>4.1</span></a> quantifies it at every stage, using a chi-squared test of independence and Cramer’s V as an effect-size measure of how strong that association is.</p>
-<div class="cell">
 <div id="tbl-association-summary-2var" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-association-summary-2var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.1: Chi-squared test of independence and Cramer’s V for the age-tenure association at each stage of the two-variable pipeline, for both populations and both response cases.
+Table&nbsp;4.1: Chi-squared test of independence and Cramer’s V for the age-tenure association at each stage of the two-variable pipeline, for both populations and both response cases. The independent population never reaches significance at any stage (Cramer’s V below 0.03 throughout), while the associated population is significant at every stage, with Cramer’s V holding steady between roughly 0.125 and 0.143.
 </figcaption>
 <div aria-describedby="tbl-association-summary-2var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
 <table class="cell caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 22%">
@@ -444,25 +459,21 @@ Table&nbsp;4.1: Chi-squared test of independence and Cramer’s V for the age-te
 </tbody>
 </table>
 </div>
-</div>
 </figure>
 </div>
-</div>
-<p><a href="#tbl-association-summary-2var" class="quarto-xref">Table&nbsp;<span>4.1</span></a> confirms what <a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> through <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> show visually. For the independent population, no stage or response case ever reaches significance (all <span class="math inline">p &gt; 0.7</span>), and Cramer’s V stays below 0.03 throughout – consistent with an age-tenure association that is genuinely absent, not merely undetected. For the associated population, every stage is significant at <span class="math inline">p &lt; .001</span>, and Cramer’s V stays in a comparatively narrow band (0.125-0.143) from population through to both respondent cases, confirming the underlying age-renting association is neither diluted by slicing nor meaningfully inflated by either response case – the age-associated case’s effect shows up mainly as a shift in the respondents’ age <em>composition</em> (<a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>, <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>), not as a change in the strength of the age-tenure relationship itself. One caveat applies to the independent population’s <span class="math inline">p</span>-values specifically: with population and slice sample sizes in the tens of thousands, even this chi-squared test has the power to detect very small deviations from independence, so the consistently non-significant results here reflect a genuine absence of association, not a lack of statistical power.</p>
+<p><a href="#tbl-association-summary-2var" class="quarto-xref">Table&nbsp;<span>4.1</span></a> confirms what <a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> through <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> show visually: an age-tenure association that is genuinely absent in the independent population, not merely undetected, and one that is neither diluted by slicing nor meaningfully inflated by either response case in the associated population – the age-associated case’s effect shows up mainly as a shift in the respondents’ age <em>composition</em> (<a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>, <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>), not as a change in the strength of the age-tenure relationship itself. One caveat applies to the independent population’s <span class="math inline">p</span>-values specifically: with population and slice sample sizes in the tens of thousands, even this chi-squared test has the power to detect very small deviations from independence, so the consistently non-significant results here reflect a genuine absence of association, not a lack of statistical power.</p>
 </section>
 </section>
 <section id="sec-panel-association-results" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-panel-association-results"><span class="header-section-number">4.3</span> Panel-level association evaluation</h2>
 <section id="overview-across-lottery-files" class="level3">
 <h3 class="anchored" data-anchor-id="overview-across-lottery-files">Overview across lottery files</h3>
-<div class="cell">
 <div id="tbl-panel-association-summary" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-panel-association-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.2: Panel-level association results across all four lottery files: survey-sample-level age-tenure association, and the proportion of possible panels whose association was found to be significantly different from the sample’s.
+Table&nbsp;4.2: Panel-level association results across all four lottery files: survey-sample-level age-tenure association, and the proportion of possible panels whose association was found to be significantly different from the sample’s. The proportion flagged as significantly different is saturated at or near 100% across all four files, regardless of whether the underlying population carries a genuine age-tenure association or none at all.
 </figcaption>
 <div aria-describedby="tbl-panel-association-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
 <table class="cell caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 3%">
@@ -518,24 +529,21 @@ Table&nbsp;4.2: Panel-level association results across all four lottery files: s
 </tbody>
 </table>
 </div>
-</div>
 </figure>
-</div>
 </div>
 <p><a href="#tbl-panel-association-summary" class="quarto-xref">Table&nbsp;<span>4.2</span></a> summarises the results across all four lottery files. In the associated population, the survey sample itself retains a clearly detectable age-tenure association (Cramer’s V around 0.13), consistent with the negative age-renting relationship built into the population design. In the independent population, by contrast, the sample-level association is negligible and statistically indistinguishable from zero (both <span class="math inline">p &gt; 0.5</span>), exactly as expected given no association was introduced between age and tenure at the population level.</p>
 <p>Despite this contrast in the underlying samples, the proportion of panels flagged as holding a significantly different association from their sample is strikingly similar – and strikingly high – across all four files: between 99.8% and 100%. In other words, essentially every panel Panelot could possibly return, under either population structure and either response-rate case, exhibits an age-tenure relationship detectably different from the sample it was drawn from – including in the independent population, where there is no true association for a panel to even distort.</p>
-<p>Splitting this range apart by file shows little further structure: the two equal-chance lotteries (<code>lottery_cov_eq.csv</code>, <code>lottery_ind_eq.csv</code>) each flag 100% of their feasible panels, while the two age-associated lotteries fall only fractionally short, at 99.93% and 99.77% respectively – despite these two files containing roughly twice as many feasible panels (2981 and 3483, against 1867 and 1516), and therefore more opportunities for an occasional panel to be drawn that does not diverge from its sample. In other words, the proportion flagged is already saturated at or near its ceiling in all four files, regardless of whether the underlying population carries a genuine age-tenure association (<code>cov</code>) or none at all (<code>ind</code>), and regardless of whether response probability is equal across ages or skewed toward older respondents. Neither factor moves the result in a way that a difference of a few feasible panels out of several thousand cannot already explain – the distortion identified here looks like a property of the quota mechanism itself, not of any particular population or response structure it happens to be applied to.</p>
+<p>Splitting this range apart by file shows little further structure: the two equal-chance lotteries (<code>lottery_cov_eq.csv</code>, <code>lottery_ind_eq.csv</code>) each flag 100% of their feasible panels, while the two age-associated lotteries fall only fractionally short, at 99.93% and 99.77% respectively – despite these two files containing roughly twice as many feasible panels (2981 and 3483, against 1867 and 1516), and therefore more opportunities for an occasional panel to be drawn that does not diverge from its sample. Neither population structure nor response case moves the result in a way that a difference of a few feasible panels out of several thousand cannot already explain – the distortion identified here looks like a property of the quota mechanism itself, not of any particular population or response structure it happens to be applied to.</p>
+<p>This saturation pattern also speaks to a design concern about the panel-versus-sample test raised in <a href="03-chap3.html#sec-panel-association-methods" class="quarto-xref"><span>Section 3.2.5</span></a>: because Panelot’s quota constraints are set from each category’s <em>population</em> marginal distribution rather than the survey sample’s own marginals, a panel could in principle diverge from its sample simply because the sample’s composition has drifted from the population’s, rather than because of anything specific to the selection mechanism. Under equal-chance response, however, the survey sample’s age marginal already matches the population’s closely (<a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>, <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.3</span></a>), leaving barely any population-versus-sample gap for population-based quotas to correct – yet the equal-chance files above are flagged as different <em>at least as often</em> as the age-associated ones, where the sample’s marginal has genuinely drifted from the population’s (<a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>, <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>). If population correction were driving the divergence, equal-chance panels should have been flagged less often, not equally or more. Together with the test’s own design – which already allows panel and sample to differ freely on each marginal without that alone counting as significant (<a href="03-chap3.html#sec-panel-association-methods" class="quarto-xref"><span>Section 3.2.5</span></a>) – this confirms that the near-total divergence documented here reflects the quota mechanism leaving the joint age-tenure distribution unconstrained, rather than any population-versus-sample drift.</p>
 </section>
 <section id="comparison-against-the-random-sampling-benchmark" class="level3">
 <h3 class="anchored" data-anchor-id="comparison-against-the-random-sampling-benchmark">Comparison against the random-sampling benchmark</h3>
-<div class="cell">
 <div id="tbl-srs-benchmark" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-srs-benchmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.3: Proportion of panels (or random samples) whose age-tenure association was found to be significantly different from the survey sample’s, and the median within-group Cramer’s V, for actual sortition panels versus 500 simple random samples of equal size, for all four lottery files.
+Table&nbsp;4.3: Proportion of panels (or random samples) whose age-tenure association was found to be significantly different from the survey sample’s, and the median within-group Cramer’s V, for actual sortition panels versus 500 simple random samples of equal size, for all four lottery files. Sortition panels are flagged as different an order of magnitude more often than equivalently sized random samples, with roughly three times the median Cramer’s V.
 </figcaption>
 <div aria-describedby="tbl-srs-benchmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
 <table class="cell caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 12%">
@@ -591,44 +599,42 @@ Table&nbsp;4.3: Proportion of panels (or random samples) whose age-tenure associ
 </tbody>
 </table>
 </div>
-</div>
 </figure>
 </div>
-</div>
-<p><a href="#tbl-srs-benchmark" class="quarto-xref">Table&nbsp;<span>4.3</span></a> repeats the comparison introduced in <a href="03-chap3.html#sec-panel-association-methods" class="quarto-xref"><span>Section 3.3</span></a> across all four lottery files, rather than the single associated/equal-chance case alone. The pattern holds throughout: actual sortition panels are flagged as significantly different from their sample 99.8-100% of the time, against only 8.2-9.4% for equivalently sized random samples – modestly above the nominal 5% false-positive rate expected under the null (plausibly reflecting the homogeneity test’s asymptotic approximation being somewhat liberal at 50 observations spread across 30 cells, rather than any genuine divergence from random sampling itself), but an order of magnitude below the panels’ near-total rate. Median within-group Cramer’s V tells the same story: panels sit around 0.87-0.88, roughly three times the 0.27-0.3 seen from random draws, in every file regardless of population or response case. Because the benchmark result holds uniformly, rather than being specific to the associated/equal-chance file used as the illustrative case above, the explanation cannot be population- or response-case-specific either – reinforcing that it is Panelot’s quota mechanism, not sampling variability at panel size or any one simulated condition, driving the divergence documented in <a href="#tbl-panel-association-summary" class="quarto-xref">Table&nbsp;<span>4.2</span></a>.</p>
+<p><a href="#tbl-srs-benchmark" class="quarto-xref">Table&nbsp;<span>4.3</span></a> repeats the comparison introduced in <a href="03-chap3.html#sec-panel-association-methods" class="quarto-xref"><span>Section 3.2.5</span></a> across all four lottery files, rather than the single associated/equal-chance case alone. Actual sortition panels are flagged as significantly different from their sample 99.8-100% of the time, against only 8.2-9.4% for equivalently sized random samples – modestly above the nominal 5% false-positive rate expected under the null (plausibly the homogeneity test’s asymptotic approximation being somewhat liberal at this cell count, rather than genuine divergence from random sampling). Median within-group Cramer’s V tells the same story: panels sit around 0.87-0.88, against 0.27-0.3 seen from random draws, in every file regardless of population or response case. Because the benchmark result holds uniformly, rather than being specific to the associated/equal-chance file used as the illustrative case above, the explanation cannot be population- or response-case-specific either – reinforcing that it is Panelot’s quota mechanism, not sampling variability at panel size or any one simulated condition, driving the divergence documented in <a href="#tbl-panel-association-summary" class="quarto-xref">Table&nbsp;<span>4.2</span></a>.</p>
 </section>
 <section id="illustrative-example" class="level3">
 <h3 class="anchored" data-anchor-id="illustrative-example">Illustrative example</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-panel-vs-sample-example" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-panel-vs-sample-example" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two mosaic plots side by side comparing age-tenure composition: the survey sample on the left shows a smooth gradient in the renting segment across age brackets, while the selected panel on the right shows a blockier pattern with several age brackets almost entirely one tenure category.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-panel-vs-sample-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-panel-vs-sample-example-1.png" class="img-fluid figure-img" width="768">
+<img src="04-chap4_files/figure-html/fig-panel-vs-sample-example-1.png" class="img-fluid figure-img" style="width:68.0%" alt="Two mosaic plots side by side comparing age-tenure composition: the survey sample on the left shows a smooth gradient in the renting segment across age brackets, while the selected panel on the right shows a blockier pattern with several age brackets almost entirely one tenure category.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panel-vs-sample-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.6: Age-tenure composition of the survey sample under lottery_cov_eq.csv (left), alongside its most likely panel (right).
+Figure&nbsp;4.6: Age-tenure composition of the associated population’s survey sample (left) alongside its most likely panel under lottery_cov_eq.csv (right). Although the panel satisfies the same marginal age and tenure quotas as the sample, its age-tenure combinations are considerably more blocky and uneven – several age brackets end up almost entirely one tenure category, exaggerating the sample’s already-present age-renting association.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-panel-vs-sample-example" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> makes concrete what the aggregate figures above describe in summary. The survey sample (left) shows the smooth, gradually strengthening relationship between age and renting built into the associated population. The panel (right) satisfies the same marginal quotas on age and tenure, but its age-tenure combinations are considerably more blocky and uneven – several age brackets are almost entirely one tenure category, a pattern far more extreme than the sample-level relationship it was ostensibly drawn to represent.</p>
+<p><a href="#fig-panel-vs-sample-example" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> makes concrete what the aggregate figures above describe in summary: the smooth, gradually strengthening sample-level relationship between age and renting gives way to a considerably more extreme, blocky panel-level pattern, despite the panel satisfying the same marginal quotas as the sample it was ostensibly drawn to represent.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-panel-vs-sample-independent" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-panel-vs-sample-independent" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two mosaic plots side by side comparing age-tenure composition for the independent population: the survey sample on the left shows flat tile heights across all age brackets, while the selected panel on the right shows an uneven, blocky pattern with most age brackets dominated by a single tenure category.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-panel-vs-sample-independent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04-chap4_files/figure-html/fig-panel-vs-sample-independent-1.png" class="img-fluid figure-img" width="768">
+<img src="04-chap4_files/figure-html/fig-panel-vs-sample-independent-1.png" class="img-fluid figure-img" style="width:68.0%" alt="Two mosaic plots side by side comparing age-tenure composition for the independent population: the survey sample on the left shows flat tile heights across all age brackets, while the selected panel on the right shows an uneven, blocky pattern with most age brackets dominated by a single tenure category.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panel-vs-sample-independent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.7: Age-tenure composition of the independent population’s survey sample under lottery_ind_eq.csv (left), alongside its most likely panel (right).
+Figure&nbsp;4.7: Age-tenure composition of the independent population’s survey sample (left) alongside its most likely panel under lottery_ind_eq.csv (right). Even though age and tenure carry no association in the sample – its fill proportions sit close to flat across every age bracket – the panel still ends up blocky and uneven, with most age brackets dominated by a single tenure category, showing the distortion is an artefact of selection itself rather than an exaggeration of a real trend.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-panel-vs-sample-independent" class="quarto-xref">Figure&nbsp;<span>4.7</span></a> shows the same comparison for the independent population, where age and tenure carry no association at all – the fill proportions in the survey sample (left) are close to flat across every age bracket. The panel (right) is, if anything, more extreme than the associated-population example: most age brackets are dominated by a single tenure category, and the within-panel test gives a Cramer’s V of 0.9, versus 0.03 for the sample it was drawn from. Because this panel’s distorted joint structure cannot be attributed to a genuine association it is “exaggerating” – there is none to exaggerate in the independent population – it most directly demonstrates that the within-panel association test is picking up an artefact of the selection mechanism, not a real signal faithfully (if imperfectly) carried through from the sample.</p>
+<p><a href="#fig-panel-vs-sample-independent" class="quarto-xref">Figure&nbsp;<span>4.7</span></a> shows the same comparison for the independent population. The panel is, if anything, more extreme than the associated-population example: the within-panel test gives a Cramer’s V of 0.9, versus 0.03 for the sample it was drawn from. Because this panel’s distorted joint structure cannot be attributed to a genuine association it is “exaggerating” – there is none to exaggerate in the independent population – it most directly demonstrates that the within-panel association test is picking up an artefact of the selection mechanism, not a real signal faithfully (if imperfectly) carried through from the sample.</p>
 </section>
 <section id="summary" class="level3">
 <h3 class="anchored" data-anchor-id="summary">Summary</h3>
