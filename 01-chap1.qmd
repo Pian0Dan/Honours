@@ -12,7 +12,7 @@ One of the main roadblocks in sortition is ensuring that the selection process i
 
 As a process, sortition moves through several distinct stages between defining a population and convening a panel (@sec-litreview breaks these down in full), and each one has the potential to introduce bias that compounds by the end -- yet there is currently no rigorous evaluation of representation achieved before a deliberative process is run. It is therefore crucial to measure how the level of representativeness (or *potential* representativeness) flows through each stage, and to understand how different factors may affect it.
 
-### Evolution of sortition methods
+### Progression of sortition methods
 
 Sortition methods have evolved substantially over time, moving from simple self-selection and proportional sampling toward increasingly systematic algorithmic approaches -- LEGACY, MaxiMin, MiniMax, and most recently LexiMin and Goldilocks -- each refining how fairly and robustly individual selection probabilities are equalised across a respondent pool (@sec-litreview gives the full history and formal definitions). Of these, LexiMin is the algorithm in practical use today, running inside Panelot [@panelot], the tool currently used to assemble real sortition panels, and is the algorithm this thesis works with directly.
 
