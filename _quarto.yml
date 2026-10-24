@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: docs
   pre-render: Rscript scripts/renv_prerender.R
 
 book:
