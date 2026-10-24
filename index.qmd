@@ -36,7 +36,9 @@ Date: 25/10/2026
 
 This thesis is written using Quarto with renv [@renv] to create a reproducible environment. All materials (including the data sets and source files) required to reproduce this document can be found at the Github repository [`github.com/Pian0Dan/Honours`](https://github.com/Pian0Dan/Honours). Analysis and simulation were carried out in R [@R-base], making use of the ggplot2 [@R-ggplot2], ggmosaic2 [@R-ggmosaic2], patchwork [@R-patchwork], dplyr [@R-dplyr], tidyr [@R-tidyr], tidyverse [@R-tidyverse], knitr [@R-knitr], kableExtra [@R-kableExtra], and shiny [@R-shiny] packages.
 
-This work is licensed under a [Creative Commons  Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+
+The Intersection Inspector app code (`scripts/intersection_inspector/`) is licensed separately under the [GNU Affero General Public License v3.0](https://github.com/Pian0Dan/Honours/blob/main/scripts/intersection_inspector/LICENSE), which requires anyone who modifies and runs the app as a network service to make their modified source available to its users.
 
 # Acknowledgements {-}
 
