@@ -16,7 +16,7 @@ The app page consists of three parts: 1. a sidebar comprised of interactable but
 
 ### Uploading files
 
-Intersection Inspector takes two files as input: a lottery file (Panelot's `lottery.csv`, enumerating every panel the sortition algorithm found feasible, each with its member IDs and return probability) and the sample file the lottery was drawn from (the respondent pool that was invited and agreed to participate). From these two files alone, the app reconstructs every selected panel's composition on each category present in the sample and makes its intersectional structure directly inspectable, without the practitioner writing any code or leaving the browser.
+Intersection Inspector takes two files as input: the sample file the lottery was drawn from (the respondent pool that was invited and agreed to participate) and a lottery file (Panelot's `lottery.csv`, enumerating every panel the sortition algorithm found feasible, each with its member IDs and return probability). From these two files alone, the app reconstructs every selected panel's composition on each category present in the sample and makes its intersectional structure directly inspectable, without the practitioner writing any code or leaving the browser.
 
 ### Required file structure {#sec-file-structure}
 
@@ -75,7 +75,7 @@ The sidebar's full set of controls, split top-to-bottom into two columns for rea
 
 ### Replacing the Panelot.org selection step
 
-In current practice, after a lottery file is generated, a practitioner takes it to a second, separate interactive page -- on Panelot.org -- purely to generate a random number and select one specific panel from those enumerated, then manually looks up the member IDs from the output. That step reveals nothing about *which* panel is being selected or how representative it is beyond the quota constraints already satisfied; it is, in effect, a black box that turns a lottery file into a single panel. Intersection Inspector is designed as a drop-in replacement: it accepts the same lottery and sample files, supports the same random (and probability-weighted random) selection as a final action, and returns the same member list a practitioner needs -- while additionally providing the mosaic plots, marginal bar charts, association p-values, and under-representation checks along the way.
+In current practice, after a lottery file is generated, a practitioner takes it to a second, separate interactive page -- on Panelot.org -- purely to generate a random number and select one specific panel from those enumerated, then manually looks up the member IDs from the output. That step reveals nothing about *which* panel is being selected or how representative it is beyond the quota constraints already satisfied; it is, in effect, a black box that turns a lottery file into a single panel. Intersection Inspector is designed as a drop-in replacement: it accepts the same sample and lottery files, supports the same random (and probability-weighted random) selection as a final action, and returns the same member list a practitioner needs -- while additionally providing the mosaic plots, marginal bar charts, association p-values, and under-representation checks along the way.
 
 ### Benefits for new practitioners
 
