@@ -7,7 +7,7 @@ project:
 book:
   title: "Are you in the room? A framework for sortition and representation"
   author: "Daniel Loza"
-  favicon: scripts/intersection_inspector/www/favicon.ico
+  favicon: scripts/intersection_inspector/www/logo-square.png
   chapters:
     - text: "Front matter"
       file: index.qmd
@@ -33,7 +33,10 @@ affiliation: Department of Econometrics & Business Statistics
 degrees: 'AMusA (AMEB), B.Bus. (Monash University)'
 
 format:
-  monashthesis-html: default
+  monashthesis-html:
+    include-in-header:
+      text: |
+        <link rel="apple-touch-icon" href="scripts/intersection_inspector/www/logo-square.png">
   monashthesis-pdf:
     include-in-header:
       text: |
