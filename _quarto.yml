@@ -7,6 +7,7 @@ project:
 book:
   title: "Are you in the room? A framework for sortition and representation"
   author: "Daniel Loza"
+  favicon: scripts/intersection_inspector/www/favicon.ico
   chapters:
     - text: "Front matter"
       file: index.qmd
