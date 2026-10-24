@@ -27,7 +27,7 @@ Every simulated dataset in this thesis moves through the same four stages, with 
 #| fig-alt: "Flowchart of four boxes labelled Population, Slice, Sample, and Panel, connected left to right by arrows labelled with the sampling step linking each stage: random 10% slice, Bernoulli response trials, and quota-constrained selection algorithm."
 #| out-width: "75%"
 #| fig-width: 7
-#| fig-height: 1.05
+#| fig-height: 1.4
 #| echo: false
 # Doing this through manual roundabout means, since I did not like Mermaid's output
 
@@ -81,11 +81,11 @@ ggplot() +
   ) +
   geom_text(
     data = pipeline_edges,
-    aes(x = (x + xend) / 2, y = y + 0.4, label = label),
-    size = 2.6, lineheight = 0.9
+    aes(x = (x + xend) / 2, y = box_h / 2 + 0.12, label = label),
+    size = 2.6, lineheight = 0.9, vjust = 0
   ) +
   xlim(min(xs) - box_w / 2 - 0.1, max(xs) + box_w / 2 + 0.1) +
-  ylim(-0.4, 0.6) +
+  ylim(-0.4, 0.95) +
   coord_fixed(ratio = 1.1) +
   theme_void() +
   theme(plot.margin = margin(0, 0, 0, 0))

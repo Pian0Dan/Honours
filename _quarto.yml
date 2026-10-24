@@ -3,6 +3,9 @@ project:
   output-dir: docs
   pre-render: Rscript scripts/renv_prerender.R
   post-render: touch docs/.nojekyll
+  resources:
+    - scripts/intersection_inspector/www/icon-192.png
+    - scripts/intersection_inspector/www/icon-512.png
 
 book:
   title: "Are you in the room? A framework for sortition and representation"
@@ -36,7 +39,8 @@ format:
   monashthesis-html:
     include-in-header:
       text: |
-        <link rel="apple-touch-icon" href="scripts/intersection_inspector/www/logo-square.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="scripts/intersection_inspector/www/apple-touch-icon.png">
+        <link rel="manifest" href="scripts/intersection_inspector/www/site.webmanifest">
   monashthesis-pdf:
     include-in-header:
       text: |
