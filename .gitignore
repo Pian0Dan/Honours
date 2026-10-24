@@ -48,3 +48,6 @@ rsconnect/
 .DS_Store
 /.quarto/
 **/*.quarto_ipynb
+
+# old Quarto book output dir (superseded by /docs for GitHub Pages)
+/_book/
