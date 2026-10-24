@@ -9,7 +9,7 @@ Before turning to this thesis's main results, it is worth demonstrating directly
 #| fig-cap: "Pie charts displaying age (left column) and tenure (right column) marginal proportions for the independent population (top) and associated population (bottom). The age categories range from 15%-25% and roughly half of the population owns their home. Notably, these marginal distributions are exactly the same, which hides any association."
 #| fig-alt: "Four pie charts in a two-by-two grid: age proportions and tenure proportions for the independent population on top, and for the associated population on the bottom. The age and tenure pie charts look visually identical between the two populations despite one population having an underlying age-tenure association."
 #| out-width: "70%"
-invisible(capture.output(source("scripts/pie_chart_problem.R")))
+invisible(capture.output(source("scripts/pie_chart_problem_thesis.R")))
 
 pie_chart_patchwork
 ```
@@ -84,7 +84,7 @@ The mosaic patchworks above show the age-tenure association visually; @tbl-assoc
 
 ```{r}
 #| label: tbl-association-summary-2var
-#| tbl-cap: "Chi-squared test of independence and Cramer's V for the age-tenure association at each stage of the two-variable pipeline, for both populations and both response cases. The independent population never reaches significance at any stage (Cramer's V below 0.03 throughout), while the associated population is significant at every stage, with Cramer's V holding steady between roughly 0.125 and 0.143."
+#| tbl-cap: "Chi-squared test of independence and Cramer's V for the age-tenure association at each stage of the two-variable pipeline, for both populations and both response cases. The independent population never reaches significance at any stage (Cramer's V below 0.03 throughout), while the associated population is significant at every stage, with Cramer's V holding steady between roughly 0.125 and 0.132."
 #| results: asis
 invisible(capture.output(source("scripts/association_summary.R")))
 
@@ -241,13 +241,13 @@ invisible(capture.output(source("scripts/panel_visualiser.R")))
 
 ```{r}
 #| label: fig-panel-vs-sample-example
-#| fig-cap: "Age-tenure composition of the associated population's survey sample (left) alongside its most likely panel under lottery_cov_eq.csv (right). Although the panel satisfies the same marginal age and tenure quotas as the sample, its age-tenure combinations are considerably more blocky and uneven -- several age brackets end up almost entirely one tenure category, exaggerating the sample's already-present age-renting association."
+#| fig-cap: "Age-tenure composition of the associated population's survey sample (left) alongside its most likely panel under lottery_cov_eq.csv (right). Although the panel satisfies the same marginal age and tenure quotas as the sample, its age-tenure combinations are considerably more blocky and uneven -- several age brackets end up filled by entirely one tenure category, exaggerating the sample's already-present age-renting association."
 #| fig-alt: "Two mosaic plots side by side comparing age-tenure composition: the survey sample on the left shows a smooth gradient in the renting segment across age brackets, while the selected panel on the right shows a blockier pattern with several age brackets almost entirely one tenure category."
 #| out-width: "68%"
 plot_panel_vs_sample(cov_eq_source, most_likely_panel_id)
 ```
 
-@fig-panel-vs-sample-example makes concrete what the aggregate figures above describe in summary: the smooth, gradually strengthening sample-level relationship between age and renting gives way to a considerably more extreme, blocky panel-level pattern, despite the panel satisfying the same marginal quotas as the sample it was ostensibly drawn to represent.
+@fig-panel-vs-sample-example makes explicit what the aggregate figures above describe in summary: the smooth, gradually strengthening sample-level relationship between age and renting gives way to a considerably more extreme, blocky panel-level pattern, despite the panel satisfying the same marginal quotas as the sample it was ostensibly drawn to represent.
 
 ```{r}
 #| label: fig-panel-vs-sample-independent
@@ -264,6 +264,6 @@ plot_panel_vs_sample(ind_eq_source, most_likely_ind_eq)
 
 ### Summary
 
-Across all four simulated conditions, satisfying Panelot's marginal quotas on age and tenure did not translate into a panel whose joint age-tenure structure resembled its survey sample's: essentially every feasible panel was flagged as significantly different from the sample, at a rate far beyond what panel size alone could explain, and this held regardless of whether the underlying population carried a genuine age-tenure association or response was skewed by age. Marginal quota satisfaction -- the only form of representativeness that a current sortition tool like Panelot reports to a practitioner -- is therefore not a reliable proxy for intersectional representativeness in this simulation, and the gap between the two looks like a structural consequence of leaving the joint distribution unconstrained, rather than an artefact of this thesis's particular panel size or association strengths. One interpretive question is worth addressing directly here, since it concerns what this divergence is evidence *of*: because Panelot's quotas target population marginals rather than the survey sample's own marginals, could a panel's divergence from its sample simply reflect the panel correcting toward population representativeness where the sample itself has drifted, rather than any flaw of the selection algorithm? @sec-methodology shows this is not the case, for two separate reasons: the panel-versus-sample test itself is constructed to condition out exactly this kind of marginal difference, testing only for a genuine change in the age-tenure association; and, independently of that, the equal-chance and age-associated response cases show the opposite pattern to what population-correction would predict, with equal-chance panels -- where the sample's marginal barely differs from the population's -- flagged as different at least as often as age-associated panels, not less. @sec-application introduces Intersection Inspector, a tool built directly in response to this gap, which displays a panel's intersectional association alongside its marginal quota satisfaction so that this kind of distortion is visible to a practitioner before a panel convenes, rather than only to a reader of this thesis after the fact.
+Across all four simulated conditions, satisfying Panelot's marginal quotas on age and tenure did not translate into a panel whose joint age-tenure structure resembled its survey sample's: essentially every feasible panel was flagged as significantly different from the sample, at a rate far beyond what panel size alone could explain, and this held regardless of whether the underlying population carried a genuine age-tenure association or response was skewed by age. Marginal quota satisfaction -- the only form of representativeness that a current sortition tool like Panelot reports to a practitioner -- is therefore not a reliable proxy for intersectional representativeness in this simulation, and the gap between the two looks like a structural consequence of leaving the joint distribution unconstrained, rather than an artefact of this thesis's particular panel size or association strengths. This divergence is not attributable to panels merely correcting toward population marginals where the sample itself has drifted -- a possibility already ruled out above, both by the panel-versus-sample test's design and by the data (@sec-panel-association-results; @sec-methodology). @sec-application introduces Intersection Inspector, a tool built directly in response to this gap, which displays a panel's intersectional association alongside its marginal quota satisfaction so that this kind of distortion is visible to a practitioner before a panel convenes, rather than only to a reader of this thesis after the fact.
 
 

@@ -60,14 +60,14 @@ Step (1): construct a maximally fair output distribution $\mathcal{D}$ over an o
 
 ```{r}
 #| label: fig-pie-chart-problem
-#| fig-width: 9
-#| fig-height: 5.2
+#| fig-width: 14
+#| fig-height: 7
 #| out-width: 100%
 invisible(capture.output(source("scripts/pie_chart_problem.R")))
 pie_chart_patchwork
 ```
 
-Two populations, built to share near-identical age and tenure margins -- yet one has a genuine age-tenure association and the other has none. Pie charts (and bar charts) can't tell them apart.
+Notice anything strange?
 
 # So where in the process do we assess representativeness?
 
