@@ -14,3 +14,5 @@ https://ebsmonash.shinyapps.io/intersection_inspector/
 
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
 
+The Intersection Inspector app code (`scripts/intersection_inspector/`) is licensed separately under the [GNU Affero General Public License v3.0](scripts/intersection_inspector/LICENSE), which requires anyone who modifies and runs the app as a network service to make their modified source available to its users.
+
