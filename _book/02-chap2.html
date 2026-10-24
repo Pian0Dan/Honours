@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Literature review – Are you in the room? A framework for sortition and representation</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-chap3.html" rel="next">
+<link href="./01-chap1.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-14ccfffea835cee4fc5859a5f393a16a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-524fbef8baf2e3dab69d0bed693833d7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather|Source Code Pro" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-chap2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature review</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Are you in the room? A framework for sortition and representation</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Front matter</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-chap1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-chap2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature review</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-chap3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Methodology</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-chap4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Results</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-chap5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introducing Intersection Inspector</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-chap6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./refs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A-appA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Iterative proportional fitting (raking) derivation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Sections</b></h2>
+   
+  <ul class="collapse">
+  <li><a href="#representation-and-sortition" id="toc-representation-and-sortition" class="nav-link active" data-scroll-target="#representation-and-sortition"><span class="header-section-number">2.1</span> Representation and sortition</a></li>
+  <li><a href="#visualisation-methods" id="toc-visualisation-methods" class="nav-link" data-scroll-target="#visualisation-methods"><span class="header-section-number">2.2</span> Visualisation methods</a></li>
+  <li><a href="#discussion-and-new-investigation" id="toc-discussion-and-new-investigation" class="nav-link" data-scroll-target="#discussion-and-new-investigation"><span class="header-section-number">2.3</span> Discussion and new investigation</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-litreview" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature review</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="representation-and-sortition" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="representation-and-sortition"><span class="header-section-number">2.1</span> Representation and sortition</h2>
+<section id="what-does-it-mean-to-be-representative" class="level3">
+<h3 class="anchored" data-anchor-id="what-does-it-mean-to-be-representative">What does it mean to be representative?</h3>
+<p>Every sortition selection method shares the same basic aim: a panel that is fair and representative of the population. But what does that actually mean?</p>
+<p>Fairness means the selection process is transparent, unbiased and inclusive – everyone should have an equal chance of being chosen, regardless of their background or demography. In practice, this comes down to minimising the gap in selection likelihood across the pool, typically achieved by introducing randomness into the process <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021a</a>)</span>; without it, selection bias creeps in implicitly.</p>
+<p>Representativeness, meanwhile, is about whether the selected panel actually reflects the demographics and perspectives of the population it was drawn from – diverse, inclusive, and populated by people from the range of backgrounds the process set out to capture. This can be checked directly, by comparing a panel’s demographic makeup against the population’s.</p>
+<p>Approaching it procedurally, the sortition process can be thought of in four stages:</p>
+<ul>
+<li><p>Defining the population and traits of interest</p></li>
+<li><p>Sampling from a random subset of the population (through survey or other outreach)</p></li>
+<li><p>Panel selection (through algorithmic means or other method)</p></li>
+<li><p>Panel evaluation, confirmation and engagement</p></li>
+</ul>
+<p>Each step is a chance for bias to creep in and representativeness to suffer, which is why it matters to evaluate representativeness (or potential representativeness) at every stage, not just the end.</p>
+<p>If the population and the traits of interest are poorly defined, for instance, the selection process may fail to capture the group’s actual diversity, leaving the panel less representative. This is a real challenge in itself: most population descriptions, as discussed above, record demographic characteristics separately rather than capturing how they intersect, which is central to representativeness. Addressing that gap properly would mean wading into broader data collection and storage practices, which is beyond this thesis’s scope – but it is worth keeping in mind that representation goes beyond the margins.</p>
+<p>The same applies to survey response: if certain groups are less likely to respond, they end up underrepresented in the pool of potential panelists before a panel is even assembled. If a survey of an area that is 60% women somehow drew no female respondents at all, representativeness would already be violated well before selection begins. Cases like this raise the question of how to account for non-response bias, and whether visualisation can help show the gap between the respondent pool and the population – which is part of what this thesis sets out to do.</p>
+</section>
+<section id="panel-selection" class="level3">
+<h3 class="anchored" data-anchor-id="panel-selection">Panel selection</h3>
+<p>Suppose there is a pool of individuals numbered 1 to <span class="math inline">n</span>, from which a panel of size <span class="math inline">k</span> is to be chosen. Let <span class="math inline">K</span> be the set of all feasible panels – any group of <span class="math inline">k</span> individuals satisfying the required constraints, which generally take the form of quotas.</p>
+<p>Quotas specify a desired count, or range of counts, for individuals in a given trait class (e.g.&nbsp;20-22 males, or 15-17 rural), tied to whichever demographics a project has deemed important to represent. The core goal of sortition, then, is to build a panel that meets those quota constraints equitably, robustly, and in a way that genuinely represents the population it was drawn from.</p>
+</section>
+<section id="existing-methods" class="level3">
+<h3 class="anchored" data-anchor-id="existing-methods">Existing methods</h3>
+<section id="non-algorithmicself-selection" class="level4">
+<h4 class="anchored" data-anchor-id="non-algorithmicself-selection">Non-algorithmic/self-selection</h4>
+<p>This is the simplest method of panel selection: individuals are simply allowed to self-select, for example by advertising the opportunity and taking sign-ups on a first-come, first-served basis. These methods tend not to produce representative panels, for two reasons. First, they invite self-selection bias – involvement depends on exposure rather than random chance, and the people who put their hand up are more likely to already hold formed opinions, ahead of ever joining the panel. Second, they tend toward lower engagement, since there is no guarantee of reaching a particular level of exposure in the first place.</p>
+</section>
+<section id="legacy-heuristic-flanigan2021fairaf-groupselectapp" class="level4">
+<h4 class="anchored" data-anchor-id="legacy-heuristic-flanigan2021fairaf-groupselectapp">LEGACY heuristic <span class="citation" data-cites="Flanigan2021FairAF groupselectapp">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021a</a>; <a href="refs.html#ref-groupselectapp" role="doc-biblioref">Sortition Foundation 2024</a>)</span></h4>
+<p>Already an improvement on non-algorithmic methods, the LEGACY selection heuristic builds a panel by selecting respondents one at a time until it is full. At each step, it calculates a “need” value to find the trait currently furthest from its desired count, then picks a random individual who has that trait. If selecting someone would push a trait past its upper quota, everyone else with that trait is removed from the pool before the next pick. This repeats until the panel is complete, or the process runs out of eligible individuals and restarts. LEGACY satisfies the basic requirement of meeting quotas, but it does not maximise representativeness or fairness: it ignores each individual’s actual selection likelihood (which, in extreme cases, can end up at 0%) and makes no attempt to minimise the maximum deviation from an equal chance of selection. For a time, this was the Sortition Foundation’s own method of panel selection, implemented in their GroupSelect tool, before the algorithmic fairness methods below were developed and adopted.</p>
+</section>
+<section id="maximin-flaniganfairsortitionmadetransparent2021-and-minimax-baharavfairmanipulationrobusttransparent2024" class="level4">
+<h4 class="anchored" data-anchor-id="maximin-flaniganfairsortitionmadetransparent2021-and-minimax-baharavfairmanipulationrobusttransparent2024">MaxiMin <span class="citation" data-cites="flaniganFairSortitionMadeTransparent2021">(<a href="refs.html#ref-flaniganFairSortitionMadeTransparent2021" role="doc-biblioref">Flanigan et al. 2021b</a>)</span> and MiniMax <span class="citation" data-cites="baharavFairManipulationRobustTransparent2024">(<a href="refs.html#ref-baharavFairManipulationRobustTransparent2024" role="doc-biblioref">Baharav and Flanigan 2024</a>)</span></h4>
+<p>This shortcoming is addressed by the first two algorithmic sortition methods, MaxiMin and MiniMax, which tackle the problem in opposite ways. MaxiMin generates potential panels and selection probabilities, then sets out to maximise the <em>minimum</em> selection probability across the pool. This reduces the chance of any individual never being picked, improving fairness, but makes the method vulnerable to manipulation – someone who misreports belonging to an under-represented quota group can inflate their own odds. MiniMax instead minimises the <em>maximum</em> selection probability, making selection more robust against manipulation, but at the cost of fairness, since the risk of a 0% selection chance returns.</p>
+</section>
+<section id="leximin-flanigan2021fairaf" class="level4">
+<h4 class="anchored" data-anchor-id="leximin-flanigan2021fairaf">LexiMin <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021a</a>)</span></h4>
+<p>LexiMin – short for Lexicographic MaxiMin – works similarly to MaxiMin, but resolves ties sequentially rather than stopping at the single minimum. It first identifies whoever has the lowest selection chance and maximises that, then moves to the next-lowest, and so on, until every individual’s selection probability has been addressed and made as equal as possible across participants. This gives everyone the highest chance of selection achievable without disadvantaging someone already prioritised – but, like MaxiMin, it inherits a vulnerability to manipulation.</p>
+</section>
+<section id="goldilocks-baharavfairmanipulationrobusttransparent2024" class="level4">
+<h4 class="anchored" data-anchor-id="goldilocks-baharavfairmanipulationrobusttransparent2024">Goldilocks <span class="citation" data-cites="baharavFairManipulationRobustTransparent2024">(<a href="refs.html#ref-baharavFairManipulationRobustTransparent2024" role="doc-biblioref">Baharav and Flanigan 2024</a>)</span></h4>
+<p>This brings the discussion to the imminent gold standard: the aptly-named Goldilocks algorithm. Goldilocks simultaneously maximises minimum selection probabilities (for fairness) and minimises maximum selection probabilities (for robustness), aiming for a “best of both worlds” balance between MaxiMin and MiniMax. The motivation is clear: both MaxiMin and LexiMin place no ceiling on how high an individual’s selection probability can climb, so a participant who misreports their trait membership to appear under-represented can disproportionately inflate their own odds. By capping the maximum selection probability, as MiniMax does, Goldilocks limits the payoff from that kind of manipulation while still prioritising the lowest probabilities enough to preserve most of MaxiMin and LexiMin’s fairness guarantees – a selection rule that is simultaneously hard to manipulate and reasonably fair.</p>
+</section>
+</section>
+<section id="why-focus-on-leximin" class="level3">
+<h3 class="anchored" data-anchor-id="why-focus-on-leximin">Why focus on LexiMin</h3>
+<p>Goldilocks may be the newer and, in theory, the better algorithm, but this thesis works with LexiMin instead. The reasons are practical. LexiMin is the algorithm actually in use: it runs inside Panelot <span class="citation" data-cites="panelot">(<a href="refs.html#ref-panelot" role="doc-biblioref">Flanigan et al. 2020</a>)</span>, the tool practitioners currently use to put real panels together, while no public version of Goldilocks existed at the time of writing. Testing LexiMin means testing the algorithm actually shaping panels today, not one that only exists on paper so far.</p>
+<p>It also makes little difference to the specific problem this thesis is looking at. Goldilocks was built to fix manipulation, not to fix how panels handle intersections of traits – and on that front, it works the same way LexiMin does. Both algorithms set selection probabilities purely from marginal quotas, and neither one looks at how traits combine. Capping the highest selection probability, which is all Goldilocks adds on top of LexiMin, has no obvious reason to change how well a panel’s mix of traits reflects its sample. So the gap this chapter identifies below should apply to Goldilocks just as much as it applies to LexiMin. Working with LexiMin here is a matter of what could actually be tested and what practitioners actually use, not a claim that it matters more – the same argument should carry over to Goldilocks once it can be tested directly.</p>
+<section id="leximin-approach-flanigan2021fairaf" class="level4">
+<h4 class="anchored" data-anchor-id="leximin-approach-flanigan2021fairaf">LexiMin approach <span class="citation" data-cites="Flanigan2021FairAF">(<a href="refs.html#ref-Flanigan2021FairAF" role="doc-biblioref">Flanigan et al. 2021a</a>)</span></h4>
+<p>Rather than committing to a single panel immediately, LexiMin constructs a probability distribution over the full set of feasible panels <span class="math inline">K</span>, assigning each panel <span class="math inline">S \in K</span> a non-negative probability <span class="math inline">p_S</span> that sums to one across the set. An individual’s overall selection chance is then the sum of the probabilities of every panel that includes them. Sorting these chances from smallest to largest, LexiMin proceeds lexicographically: it maximises the smallest probability first, then – holding that value fixed – maximises the second-smallest, and so on until every individual has been addressed.</p>
+</section>
+</section>
+<section id="formal-representation-algorithm-and-logic" class="level3">
+<h3 class="anchored" data-anchor-id="formal-representation-algorithm-and-logic">Formal representation, algorithm and logic</h3>
+<p>This process can be expressed formally. Let <span class="math inline">p_S</span> denote the probability assigned to panel <span class="math inline">S</span>, which must be non-negative and sum to one across every feasible panel in <span class="math inline">K</span>,</p>
+<p><span id="eq-panel-distribution"><span class="math display">
+p_S \ge 0, \qquad \sum_{S \in K} p_S = 1.
+\tag{2.1}</span></span></p>
+<p>The resulting selection probability for an individual <span class="math inline">i</span> is the sum of the probabilities of every feasible panel containing them, giving the full vector of individual selection probabilities across the population,</p>
+<p><span id="eq-selection-probability"><span class="math display">
+\pi_i(p) = \sum_{S \in K,\ i \in S} p_S, \qquad \pi(p) = (\pi_1(p), \pi_2(p), \ldots, \pi_n(p)).
+\tag{2.2}</span></span></p>
+<p>Sorted from smallest to largest, <span class="math inline">\pi_{(1)}(p) \le \pi_{(2)}(p) \le \ldots \le \pi_{(n)}(p)</span>, LexiMin chooses the distribution <span class="math inline">p</span> that maximises this vector in lexicographic order – the smallest entry first, then the second-smallest subject to the first remaining maximised, and so on down the vector.</p>
+<p>In practice, this runs as a sequence of steps: every feasible panel in <span class="math inline">K</span> is listed alongside every possible probability distribution over those panels, and each candidate distribution’s resulting selection probabilities are computed and sorted as above. Only the distribution (or distributions) that maximise the smallest probability <span class="math inline">\pi_{(1)}(p)</span> are retained; if several remain tied, this narrows further to those that also maximise the second-smallest, and so on, resolving ties one probability at a time until a single distribution remains, from which a final panel is then selected.</p>
+<p>At its core, then, LexiMin is purely a fairness rule: it prioritises whoever has the lowest chance of selection, improves their odds first, then works through the next-lowest probabilities until no further improvement is possible without disadvantaging someone already prioritised – leaving selection probabilities as equal as possible across the population, within the panel’s quota constraints.</p>
+</section>
+</section>
+<section id="visualisation-methods" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="visualisation-methods"><span class="header-section-number">2.2</span> Visualisation methods</h2>
+<p>Current sortition practice communicates a sample or panel’s composition almost exclusively through pie charts, or bar charts showing the same information in a different shape – one chart per demographic category, each showing that variable’s marginal breakdown in isolation. Both are easy to produce and easy for a non-specialist audience to read at a glance, which likely explains their popularity with practitioners reporting on panel composition. But neither can encode more than a single categorical variable at a time: there is no visual channel left over to show how two variables relate to one another. For example, a practitioner working only from pie or bar charts can confirm that a panel’s age breakdown looks right, and separately that its tenure breakdown looks right, but has no way of seeing whether the right <em>combinations</em> of age and tenure made it onto the panel. Faceting a bar chart by a second variable does not fix this: each facet’s bars are rescaled relative to that facet alone, rather than the whole population, so an association between the two variables – which can only be seen when proportions stay relative to the full population – is exactly what gets obscured by splitting the chart apart in the first place.</p>
+<p>Mosaic plots are a longstanding answer to exactly this limitation. A mosaic plot divides a rectangle into tiles whose widths and heights are proportional to the categories of two (or more) variables, so that each tile’s area represents the joint frequency of that specific combination, rather than either variable’s marginal frequency alone <span class="citation" data-cites="hofmann2003constructing">(<a href="refs.html#ref-hofmann2003constructing" role="doc-biblioref">Hofmann 2003</a>)</span>. Graphical methods for categorical data are comparatively underdeveloped next to those available for numeric data, and mosaic plots have been established in the statistical graphics literature as one of the more effective options for visualising relationships between multiple categorical variables at once. Because tile area scales with both variables simultaneously, a departure from proportional tiling signals that the two variables are not independent, in a way no pie chart or ordinary bar chart can show. The current R package for building mosaic plots within the ggplot2 grammar of graphics is ggmosaic2 <span class="citation" data-cites="R-ggmosaic2">(<a href="refs.html#ref-R-ggmosaic2" role="doc-biblioref">Friendly et al. 2026</a>)</span>, an actively maintained extension of the original ggmosaic implementation <span class="citation" data-cites="R-ggmosaic">(<a href="refs.html#ref-R-ggmosaic" role="doc-biblioref">Jeppson et al. 2026</a>)</span>.</p>
+</section>
+<section id="discussion-and-new-investigation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="discussion-and-new-investigation"><span class="header-section-number">2.3</span> Discussion and new investigation</h2>
+<p>This approach is effective at making selection probabilities as equal as possible, which helps make sortition fairer by reducing situations where specific individuals are disadvantaged. It does not, however, provide any way to impose joint trait requirements on subsets of the population – something that may be necessary for accurate representation of community groups. That gap reflects a broader pattern across this literature: algorithmic effort has gone almost entirely into optimising the fairness and robustness of the selection <em>mechanism</em>, rather than validating the <em>outcome</em> that mechanism produces. A panel satisfying every fairness and robustness guarantee an algorithm offers is not thereby guaranteed to represent the population it was drawn from well – these are related but distinct properties, and the literature so far has focused heavily on the former at the expense of the latter, undermining representativeness as a goal given the motivation for sortitioned panels in the first place: filling a room with individuals who accurately and descriptively reflect a community’s population diversity and characteristics.</p>
+<p>One specific way this gap shows up: no algorithmic technique surveyed here stratifies for combinations of demographic traits in its decision-making – each instead affects individual selection chances purely through quotas set on each trait at the margin. This is a real limitation, since it means the selection process may fail to capture the group’s actual diversity, leaving a less representative panel. In some situations – side-panels built for specific subgroups, or communities with known intersectional minorities of interest – ensuring specific intersectional combinations are included may be necessary for genuine representation. This gap is generally patched in practice by bringing in “specialist speakers” during deliberation <span class="citation" data-cites="redmanHowRecruitParticipants">(<a href="refs.html#ref-redmanHowRecruitParticipants" role="doc-biblioref">Redman and Carson n.d.</a>)</span>, but that is a different kind of inclusion than being part of the panel and its decision-making directly.</p>
+<p>Notably, this gap is rarely argued for directly; it is largely left unaddressed. The implicit assumption running through this literature appears to be that satisfying marginal quotas is enough – that selecting individuals to hit the right counts for each trait independently will, through the randomness built into the selection mechanism, naturally produce a panel whose <em>combinations</em> of traits are also reasonably representative, without this needing to be checked or enforced directly. None of the algorithmic methods reviewed above test whether this actually holds, and the literature more broadly does not appear to examine it either.</p>
+<p>This thesis treats that assumption as an open empirical question rather than a safe default. The simulations that follow test how much intersectional inclusion happens naturally under current methods, and establish a way to measure how much intersectionality and association survives the selection process.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-baharavFairManipulationRobustTransparent2024" class="csl-entry" role="listitem">
+Baharav, C., and Flanigan, B. (2024), <span>“Fair, <span>Manipulation-Robust</span>, and <span>Transparent Sortition</span>,”</span> <em>Proceedings of the 25th ACM Conference on Economics and Computation</em>, New Haven CT USA: ACM, 756–775. <a href="https://doi.org/10.1145/3670865.3673606">https://doi.org/10.1145/3670865.3673606</a>.
+</div>
+<div id="ref-Flanigan2021FairAF" class="csl-entry" role="listitem">
+Flanigan, B., Gölz, P., Gupta, A., Hennig, B., and Procaccia, A. D. (2021a), <span>“<a href="https://api.semanticscholar.org/CorpusID:236927646">Fair <span>A</span>lgorithms for <span>S</span>electing <span>C</span>itizens’ <span>A</span>ssemblies</a>,”</span> <em>Nature</em>, 596, 548–552.
+</div>
+<div id="ref-panelot" class="csl-entry" role="listitem">
+Flanigan, B., Gölz, P., Gupta, A., Procaccia, A. D., and Rusak, G. (2020), <span>“<a href="https://panelot.org">Panelot</a>.”</span>
+</div>
+<div id="ref-flaniganFairSortitionMadeTransparent2021" class="csl-entry" role="listitem">
+Flanigan, B., Kehne, G., and Procaccia, A. D. (2021b), <span>“<a href="https://procaccia.info/wp-content/uploads/2021/05/transparent.pdf">Fair sortition made transparent</a>,”</span> in <em>Advances in neural information processing systems</em>, pp. 25720–25731.
+</div>
+<div id="ref-R-ggmosaic2" class="csl-entry" role="listitem">
+Friendly, M., Klorfine, G., Jeppson, H., Hofmann, H., and Cook, D. (2026), <em><a href="https://friendly.github.io/ggmosaic2/">ggmosaic2: Mosaic plots in the ’ggplot2’ framework, extended</a></em>.
+</div>
+<div id="ref-hofmann2003constructing" class="csl-entry" role="listitem">
+Hofmann, H. (2003), <span>“Constructing and reading mosaicplots,”</span> <em>Computational Statistics &amp; Data Analysis</em>, 43, 565–580. <a href="https://doi.org/10.1016/S0167-9473(02)00293-1">https://doi.org/10.1016/S0167-9473(02)00293-1</a>.
+</div>
+<div id="ref-R-ggmosaic" class="csl-entry" role="listitem">
+Jeppson, H., Hofmann, H., and Cook, D. (2026), <em><a href="https://haleyjeppson.github.io/ggmosaic/">Ggmosaic: Mosaic plots in the ggplot2 framework</a></em>.
+</div>
+<div id="ref-redmanHowRecruitParticipants" class="csl-entry" role="listitem">
+Redman, K., and Carson, L. (n.d.). <span>“How to <span>Recruit Participants</span> for <span>Citizens</span>’ <span>Assemblies</span>.”</span>
+</div>
+<div id="ref-groupselectapp" class="csl-entry" role="listitem">
+Sortition Foundation (2024), <span>“<span>GroupSelect</span> app,”</span> <a href="https://github.com/sortitionfoundation/groupselect-app" class="uri">https://github.com/sortitionfoundation/groupselect-app</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-chap1.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-chap3.html" class="pagination-link" aria-label="Methodology">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Methodology</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

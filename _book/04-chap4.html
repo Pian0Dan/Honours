@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Results – Are you in the room? A framework for sortition and representation</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05-chap5.html" rel="next">
+<link href="./03-chap3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-14ccfffea835cee4fc5859a5f393a16a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-524fbef8baf2e3dab69d0bed693833d7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans|Merriweather|Source Code Pro" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-chap4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Results</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Are you in the room? A framework for sortition and representation</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Front matter</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-chap1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-chap2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature review</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-chap3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Methodology</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-chap4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Results</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-chap5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introducing Intersection Inspector</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-chap6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./refs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliography</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A-appA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Iterative proportional fitting (raking) derivation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title"><b>Sections</b></h2>
+   
+  <ul class="collapse">
+  <li><a href="#sec-pie-chart-problem" id="toc-sec-pie-chart-problem" class="nav-link active" data-scroll-target="#sec-pie-chart-problem"><span class="header-section-number">4.1</span> The problem with current visualisations</a></li>
+  <li><a href="#simulation-visualisations" id="toc-simulation-visualisations" class="nav-link" data-scroll-target="#simulation-visualisations"><span class="header-section-number">4.2</span> Simulation visualisations</a></li>
+  <li><a href="#sec-panel-association-results" id="toc-sec-panel-association-results" class="nav-link" data-scroll-target="#sec-panel-association-results"><span class="header-section-number">4.3</span> Panel-level association evaluation</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-results" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Results</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-pie-chart-problem" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-pie-chart-problem"><span class="header-section-number">4.1</span> The problem with current visualisations</h2>
+<p>Before turning to this thesis’s main results, it is worth demonstrating directly why mosaic plots – rather than the pie charts (or equivalent bar charts) that commonly accompany a sample or panel’s reported composition in current sortition practice – are used throughout this chapter, rather than simply asserting it (<a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pie-chart-problem" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Four pie charts in a two-by-two grid: age proportions and tenure proportions for the independent population on top, and for the associated population on the bottom. The age and tenure pie charts look visually identical between the two populations despite one population having an underlying age-tenure association.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pie-chart-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-pie-chart-problem-1.png" class="img-fluid figure-img" style="width:70.0%" alt="Four pie charts in a two-by-two grid: age proportions and tenure proportions for the independent population on top, and for the associated population on the bottom. The age and tenure pie charts look visually identical between the two populations despite one population having an underlying age-tenure association.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pie-chart-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: Pie charts displaying age (left column) and tenure (right column) marginal proportions for the independent population (top) and associated population (bottom). The age categories range from 15%-25% and roughly half of the population owns their home. Notably, these marginal distributions are exactly the same, which hides any association.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-pie-chart-problem" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> uses this thesis’s own independent and associated populations (<code>sim_data2</code>, <code>sim_data2_cov</code>) to make the point concrete: the raking procedure used to build the associated population restores the independent population’s marginals while retaining the age-renting association introduced beforehand (<a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a>), so the largest gap between the two populations’ marginal proportions, across any single age bracket or tenure category, is only 0.02 percentage points – attributable to sampling noise alone.</p>
+<p>Yet the two populations are not the same: the associated population carries a genuine, and statistically detectable (<a href="#tbl-association-summary-2var" class="quarto-xref">Table&nbsp;<span>4.1</span></a>), negative association between age and renting, while the independent population has none at all. A pie chart – or a bar chart, which encodes exactly the same single-variable information in a different shape – has no visual channel available to show this: it can only display one categorical variable’s marginal distribution at a time, so two variables each need their own, entirely separate chart, and nothing in either chart can reveal how the two co-occur. A practitioner shown only the pie charts in <a href="#fig-pie-chart-problem" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> would have no way of telling the independent and associated populations apart, despite one holding a materially different – and, as <a href="#sec-panel-association-results" class="quarto-xref"><span>Section 4.3</span></a> goes on to show, selection-relevant – relationship between age and tenure than the other. The mosaic plots used throughout the remainder of this chapter (<a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a>) exist specifically to close this gap, representing both variables’ marginal distributions and their joint, intersectional distribution within a single figure.</p>
+</section>
+<section id="simulation-visualisations" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="simulation-visualisations"><span class="header-section-number">4.2</span> Simulation visualisations</h2>
+<section id="simulation-pipeline-population-slice-and-respondents-equal-chance-case" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-pipeline-population-slice-and-respondents-equal-chance-case">Simulation pipeline: population, slice and respondents (equal-chance case)</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pop1-pipeline-eq" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three mosaic plots side by side, each with age brackets on the x-axis and tenure as colour fill, for the independent population, a 10,000-person slice, and equal-chance respondents. Tenure fill proportions stay level across every age bar in all three plots, showing no age-tenure association at any stage.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pop1-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-pop1-pipeline-eq-1.png" class="img-fluid figure-img" style="width:90.0%" alt="Three mosaic plots side by side, each with age brackets on the x-axis and tenure as colour fill, for the independent population, a 10,000-person slice, and equal-chance respondents. Tenure fill proportions stay level across every age bar in all three plots, showing no age-tenure association at any stage.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop1-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Mosaic plots tracing the independent population’s age-tenure structure across the population (left panel), a random 10,000-person slice (middle panel), and the slice’s respondents under equal-chance response (right panel). Age brackets sit on the x-axis and tenure as fill throughout. Notice that the tile pattern barely shifts from population to respondents – there is no association between age and tenure to begin with, so neither slicing nor equal-chance response introduces one.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pop2-pipeline-eq" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three mosaic plots side by side, each with age brackets on the x-axis and tenure as colour fill, for the associated population, a 10,000-person slice, and equal-chance respondents. The renting segment shrinks steadily from the youngest to the oldest age bar in all three plots.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pop2-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-pop2-pipeline-eq-1.png" class="img-fluid figure-img" style="width:90.0%" alt="Three mosaic plots side by side, each with age brackets on the x-axis and tenure as colour fill, for the associated population, a 10,000-person slice, and equal-chance respondents. The renting segment shrinks steadily from the youngest to the oldest age bar in all three plots.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-pipeline-eq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: Mosaic plots tracing the associated population’s age-tenure structure across the population (left panel), a random 10,000-person slice (middle panel), and the slice’s respondents under equal-chance response (right panel). Renting narrows steadily with age, from around 44% among 18-34 year olds to around 18% among those 65 and over. Importantly, this negative age-renting association survives essentially unchanged from population to slice to respondents, confirming equal-chance response doesn’t disturb it.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> and <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> trace each population’s age-tenure structure across the three pipeline stages under the equal-chance response case. Both populations skew towards upper-middle age and a higher frequency of homeownership than other categories. As the captions show, each population’s age-tenure relationship (or lack of one) carries through essentially unchanged across all three stages, confirming that neither random slicing nor equal-chance response meaningfully disturbs either population’s underlying structure.</p>
+</section>
+<section id="simulation-pipeline-population-slice-and-respondents-age-associated-case" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-pipeline-population-slice-and-respondents-age-associated-case">Simulation pipeline: population, slice and respondents (age-associated case)</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pop1-pipeline-ass" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three mosaic plots side by side for the independent population, a 10,000-person slice, and age-associated respondents. The older age bars widen and younger age bars narrow between the slice and respondents plots, while tenure fill proportions stay level within each bar throughout.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pop1-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-pop1-pipeline-ass-1.png" class="img-fluid figure-img" style="width:90.0%" alt="Three mosaic plots side by side for the independent population, a 10,000-person slice, and age-associated respondents. The older age bars widen and younger age bars narrow between the slice and respondents plots, while tenure fill proportions stay level within each bar throughout.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop1-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.4: Mosaic plots tracing the independent population’s age-tenure structure across the population (left panel), a random 10,000-person slice (middle panel), and the slice’s respondents under age-associated response (right panel), where response likelihood rises from around 20% among 18-34 year olds to over 50% among those 65 and over. Even though age and tenure carry no association in this population, the older age brackets visibly widen among respondents – differential response alone reshapes who appears, independent of any trait association in the underlying population.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pop2-pipeline-ass" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three mosaic plots side by side for the associated population, a 10,000-person slice, and age-associated respondents. The renting segment shrinks with age in all three plots, and the older age bars widen further between the slice and respondents plots.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pop2-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-pop2-pipeline-ass-1.png" class="img-fluid figure-img" style="width:90.0%" alt="Three mosaic plots side by side for the associated population, a 10,000-person slice, and age-associated respondents. The renting segment shrinks with age in all three plots, and the older age bars widen further between the slice and respondents plots.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop2-pipeline-ass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.5: Mosaic plots tracing the associated population’s age-tenure structure across the population (left panel), a random 10,000-person slice (middle panel), and the slice’s respondents under age-associated response (right panel). Here, the age skew from differential response compounds with the population’s existing negative age-renting association rather than replacing it – respondents end up weighted even further toward the older, lower-renting end of the distribution than the slice or population alone.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> and <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> repeat the same three-stage pipeline, but with response likelihood now rising with age rather than being equal across brackets. Unlike the equal-chance case, the age-tenure structure is no longer preserved unchanged once respondents are reached, as the captions show: an association between age and response probability – entirely independent of any association between age and tenure in the underlying population – is sufficient on its own to shift the overall age composition, and therefore the intersections present, in the final respondent sample, compounding with rather than replacing any existing age-tenure relationship in the population it is drawn from.</p>
+</section>
+<section id="quantifying-association-across-the-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="quantifying-association-across-the-pipeline">Quantifying association across the pipeline</h3>
+<p>The mosaic patchworks above show the age-tenure association visually; <a href="#tbl-association-summary-2var" class="quarto-xref">Table&nbsp;<span>4.1</span></a> quantifies it at every stage, using a chi-squared test of independence and Cramer’s V as an effect-size measure of how strong that association is.</p>
+<div id="tbl-association-summary-2var" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-association-summary-2var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Chi-squared test of independence and Cramer’s V for the age-tenure association at each stage of the two-variable pipeline, for both populations and both response cases. The independent population never reaches significance at any stage (Cramer’s V below 0.03 throughout), while the associated population is significant at every stage, with Cramer’s V holding steady between roughly 0.125 and 0.132.
+</figcaption>
+<div aria-describedby="tbl-association-summary-2var-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 3%">
+<col style="width: 9%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Response case</th>
+<th style="text-align: left;">Stage</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">Chi-sq</th>
+<th style="text-align: right;">df</th>
+<th style="text-align: right;">p-value</th>
+<th style="text-align: right;">Cramer’s V</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Independent (pop1)</td>
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Population</td>
+<td style="text-align: right;">100000</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.735</td>
+<td style="text-align: right;">0.005</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Independent (pop1)</td>
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Slice (10,000)</td>
+<td style="text-align: right;">10000</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.969</td>
+<td style="text-align: right;">0.011</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Independent (pop1)</td>
+<td style="text-align: left;">eq</td>
+<td style="text-align: left;">Respondents</td>
+<td style="text-align: right;">3077</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.856</td>
+<td style="text-align: right;">0.026</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Independent (pop1)</td>
+<td style="text-align: left;">ass</td>
+<td style="text-align: left;">Respondents</td>
+<td style="text-align: right;">3579</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.584</td>
+<td style="text-align: right;">0.030</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Associated (pop2)</td>
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Population</td>
+<td style="text-align: right;">100000</td>
+<td style="text-align: right;">3148.2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">&lt; .001</td>
+<td style="text-align: right;">0.125</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Associated (pop2)</td>
+<td style="text-align: left;">–</td>
+<td style="text-align: left;">Slice (10,000)</td>
+<td style="text-align: right;">10000</td>
+<td style="text-align: right;">341.9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">&lt; .001</td>
+<td style="text-align: right;">0.131</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Associated (pop2)</td>
+<td style="text-align: left;">eq</td>
+<td style="text-align: left;">Respondents</td>
+<td style="text-align: right;">3012</td>
+<td style="text-align: right;">103.4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">&lt; .001</td>
+<td style="text-align: right;">0.131</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Associated (pop2)</td>
+<td style="text-align: left;">ass</td>
+<td style="text-align: left;">Respondents</td>
+<td style="text-align: right;">3457</td>
+<td style="text-align: right;">121.1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">&lt; .001</td>
+<td style="text-align: right;">0.132</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><a href="#tbl-association-summary-2var" class="quarto-xref">Table&nbsp;<span>4.1</span></a> confirms what <a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> through <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> show visually: an age-tenure association that is genuinely absent in the independent population, not merely undetected, and one that is neither diluted by slicing nor meaningfully inflated by either response case in the associated population – the age-associated case’s effect shows up mainly as a shift in the respondents’ age <em>composition</em> (<a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>, <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>), not as a change in the strength of the age-tenure relationship itself. One caveat applies to the independent population’s <span class="math inline">p</span>-values specifically: with population and slice sample sizes in the tens of thousands, even this chi-squared test has the power to detect very small deviations from independence, so the consistently non-significant results here reflect a genuine absence of association, not a lack of statistical power.</p>
+</section>
+</section>
+<section id="sec-panel-association-results" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="sec-panel-association-results"><span class="header-section-number">4.3</span> Panel-level association evaluation</h2>
+<section id="overview-across-lottery-files" class="level3">
+<h3 class="anchored" data-anchor-id="overview-across-lottery-files">Overview across lottery files</h3>
+<div id="tbl-panel-association-summary" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-panel-association-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: Panel-level association results across all four lottery files: survey-sample-level age-tenure association, and the proportion of possible panels whose association was found to be significantly different from the sample’s. The proportion flagged as significantly different is saturated at or near 100% across all four files, regardless of whether the underlying population carries a genuine age-tenure association or none at all.
+</figcaption>
+<div aria-describedby="tbl-panel-association-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 21%">
+<col style="width: 7%">
+<col style="width: 17%">
+<col style="width: 19%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Lottery file</th>
+<th style="text-align: right;">Panels</th>
+<th style="text-align: right;">Sample assoc. p</th>
+<th style="text-align: right;">Sample Cramer’s V</th>
+<th style="text-align: right;">Prop. significantly different</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">lottery_ind_eq.csv</td>
+<td style="text-align: right;">1516</td>
+<td style="text-align: right;">0.856</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">lottery_ind_ass.csv</td>
+<td style="text-align: right;">3483</td>
+<td style="text-align: right;">0.584</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">0.998</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">lottery_cov_eq.csv</td>
+<td style="text-align: right;">1867</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">lottery_cov_ass.csv</td>
+<td style="text-align: right;">2981</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.132</td>
+<td style="text-align: right;">0.999</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><a href="#tbl-panel-association-summary" class="quarto-xref">Table&nbsp;<span>4.2</span></a> summarises the results across all four lottery files. In the associated population, the survey sample itself retains a clearly detectable age-tenure association (Cramer’s V around 0.13), consistent with the negative age-renting relationship built into the population design. In the independent population, by contrast, the sample-level association is negligible and statistically indistinguishable from zero (both <span class="math inline">p &gt; 0.5</span>), exactly as expected given no association was introduced between age and tenure at the population level.</p>
+<p>Despite this contrast in the underlying samples, the proportion of panels flagged as holding a significantly different association from their sample is strikingly similar – and strikingly high – across all four files: between 99.8% and 100%. In other words, essentially every panel Panelot could possibly return, under either population structure and either response-rate case, exhibits an age-tenure relationship detectably different from the sample it was drawn from – including in the independent population, where there is no true association for a panel to even distort.</p>
+<p>Splitting this range apart by file shows little further structure: the two equal-chance lotteries (<code>lottery_cov_eq.csv</code>, <code>lottery_ind_eq.csv</code>) each flag 100% of their feasible panels, while the two age-associated lotteries fall only fractionally short, at 99.93% and 99.77% respectively – despite these two files containing roughly twice as many feasible panels (2981 and 3483, against 1867 and 1516), and therefore more opportunities for an occasional panel to be drawn that does not diverge from its sample. Neither population structure nor response case moves the result in a way that a difference of a few feasible panels out of several thousand cannot already explain – the distortion identified here looks like a property of the quota mechanism itself, not of any particular population or response structure it happens to be applied to.</p>
+<p>This saturation pattern also speaks to a design concern about the panel-versus-sample test raised in <a href="03-chap3.html#sec-panel-association-methods" class="quarto-xref"><span>Section 3.2.5</span></a>: because Panelot’s quota constraints are set from each category’s <em>population</em> marginal distribution rather than the survey sample’s own marginals, a panel could in principle diverge from its sample simply because the sample’s composition has drifted from the population’s, rather than because of anything specific to the selection mechanism. Under equal-chance response, however, the survey sample’s age marginal already matches the population’s closely (<a href="#fig-pop1-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>, <a href="#fig-pop2-pipeline-eq" class="quarto-xref">Figure&nbsp;<span>4.3</span></a>), leaving barely any population-versus-sample gap for population-based quotas to correct – yet the equal-chance files above are flagged as different <em>at least as often</em> as the age-associated ones, where the sample’s marginal has genuinely drifted from the population’s (<a href="#fig-pop1-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>, <a href="#fig-pop2-pipeline-ass" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>). If population correction were driving the divergence, equal-chance panels should have been flagged less often, not equally or more. Together with the test’s own design – which already allows panel and sample to differ freely on each marginal without that alone counting as significant (<a href="03-chap3.html#sec-panel-association-methods" class="quarto-xref"><span>Section 3.2.5</span></a>) – this confirms that the near-total divergence documented here reflects the quota mechanism leaving the joint age-tenure distribution unconstrained, rather than any population-versus-sample drift.</p>
+</section>
+<section id="comparison-against-the-random-sampling-benchmark" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-against-the-random-sampling-benchmark">Comparison against the random-sampling benchmark</h3>
+<div id="tbl-srs-benchmark" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-srs-benchmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.3: Proportion of panels (or random samples) whose age-tenure association was found to be significantly different from the survey sample’s, and the median within-group Cramer’s V, for actual sortition panels versus 500 simple random samples of equal size, for all four lottery files. Sortition panels are flagged as different an order of magnitude more often than equivalently sized random samples, with roughly three times the median Cramer’s V.
+</figcaption>
+<div aria-describedby="tbl-srs-benchmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 17%">
+<col style="width: 22%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Lottery file</th>
+<th style="text-align: right;">Panels</th>
+<th style="text-align: right;">Prop. sig. diff. (panels)</th>
+<th style="text-align: right;">Median V (panels)</th>
+<th style="text-align: right;">Prop. sig. diff. (SRS)</th>
+<th style="text-align: right;">Median V (SRS)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">cov_eq</td>
+<td style="text-align: right;">1867</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.878</td>
+<td style="text-align: right;">0.084</td>
+<td style="text-align: right;">0.301</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cov_ass</td>
+<td style="text-align: right;">2981</td>
+<td style="text-align: right;">0.999</td>
+<td style="text-align: right;">0.878</td>
+<td style="text-align: right;">0.082</td>
+<td style="text-align: right;">0.300</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ind_eq</td>
+<td style="text-align: right;">1516</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.876</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">0.274</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ind_ass</td>
+<td style="text-align: right;">3483</td>
+<td style="text-align: right;">0.998</td>
+<td style="text-align: right;">0.873</td>
+<td style="text-align: right;">0.084</td>
+<td style="text-align: right;">0.273</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><a href="#tbl-srs-benchmark" class="quarto-xref">Table&nbsp;<span>4.3</span></a> repeats the comparison introduced in <a href="03-chap3.html#sec-panel-association-methods" class="quarto-xref"><span>Section 3.2.5</span></a> across all four lottery files, rather than the single associated/equal-chance case alone. Actual sortition panels are flagged as significantly different from their sample 99.8-100% of the time, against only 8.2-9.4% for equivalently sized random samples – modestly above the nominal 5% false-positive rate expected under the null (plausibly the homogeneity test’s asymptotic approximation being somewhat liberal at this cell count, rather than genuine divergence from random sampling). Median within-group Cramer’s V tells the same story: panels sit around 0.87-0.88, against 0.27-0.3 seen from random draws, in every file regardless of population or response case. Because the benchmark result holds uniformly, rather than being specific to the associated/equal-chance file used as the illustrative case above, the explanation cannot be population- or response-case-specific either – reinforcing that it is Panelot’s quota mechanism, not sampling variability at panel size or any one simulated condition, driving the divergence documented in <a href="#tbl-panel-association-summary" class="quarto-xref">Table&nbsp;<span>4.2</span></a>.</p>
+</section>
+<section id="illustrative-example" class="level3">
+<h3 class="anchored" data-anchor-id="illustrative-example">Illustrative example</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-panel-vs-sample-example" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two mosaic plots side by side comparing age-tenure composition: the survey sample on the left shows a smooth gradient in the renting segment across age brackets, while the selected panel on the right shows a blockier pattern with several age brackets almost entirely one tenure category.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-panel-vs-sample-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-panel-vs-sample-example-1.png" class="img-fluid figure-img" style="width:68.0%" alt="Two mosaic plots side by side comparing age-tenure composition: the survey sample on the left shows a smooth gradient in the renting segment across age brackets, while the selected panel on the right shows a blockier pattern with several age brackets almost entirely one tenure category.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panel-vs-sample-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.6: Age-tenure composition of the associated population’s survey sample (left) alongside its most likely panel under lottery_cov_eq.csv (right). Although the panel satisfies the same marginal age and tenure quotas as the sample, its age-tenure combinations are considerably more blocky and uneven – several age brackets end up filled by entirely one tenure category, exaggerating the sample’s already-present age-renting association.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-panel-vs-sample-example" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> makes explicit what the aggregate figures above describe in summary: the smooth, gradually strengthening sample-level relationship between age and renting gives way to a considerably more extreme, blocky panel-level pattern, despite the panel satisfying the same marginal quotas as the sample it was ostensibly drawn to represent.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-panel-vs-sample-independent" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two mosaic plots side by side comparing age-tenure composition for the independent population: the survey sample on the left shows flat tile heights across all age brackets, while the selected panel on the right shows an uneven, blocky pattern with most age brackets dominated by a single tenure category.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-panel-vs-sample-independent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="04-chap4_files/figure-html/fig-panel-vs-sample-independent-1.png" class="img-fluid figure-img" style="width:68.0%" alt="Two mosaic plots side by side comparing age-tenure composition for the independent population: the survey sample on the left shows flat tile heights across all age brackets, while the selected panel on the right shows an uneven, blocky pattern with most age brackets dominated by a single tenure category.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panel-vs-sample-independent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.7: Age-tenure composition of the independent population’s survey sample (left) alongside its most likely panel under lottery_ind_eq.csv (right). Even though age and tenure carry no association in the sample – its fill proportions sit close to flat across every age bracket – the panel still ends up blocky and uneven, with most age brackets dominated by a single tenure category, showing the distortion is an artefact of selection itself rather than an exaggeration of a real trend.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-panel-vs-sample-independent" class="quarto-xref">Figure&nbsp;<span>4.7</span></a> shows the same comparison for the independent population. The panel is, if anything, more extreme than the associated-population example: the within-panel test gives a Cramer’s V of 0.9, versus 0.03 for the sample it was drawn from. Because this panel’s distorted joint structure cannot be attributed to a genuine association it is “exaggerating” – there is none to exaggerate in the independent population – it most directly demonstrates that the within-panel association test is picking up an artefact of the selection mechanism, not a real signal faithfully (if imperfectly) carried through from the sample.</p>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<p>Across all four simulated conditions, satisfying Panelot’s marginal quotas on age and tenure did not translate into a panel whose joint age-tenure structure resembled its survey sample’s: essentially every feasible panel was flagged as significantly different from the sample, at a rate far beyond what panel size alone could explain, and this held regardless of whether the underlying population carried a genuine age-tenure association or response was skewed by age. Marginal quota satisfaction – the only form of representativeness that a current sortition tool like Panelot reports to a practitioner – is therefore not a reliable proxy for intersectional representativeness in this simulation, and the gap between the two looks like a structural consequence of leaving the joint distribution unconstrained, rather than an artefact of this thesis’s particular panel size or association strengths. This divergence is not attributable to panels merely correcting toward population marginals where the sample itself has drifted – a possibility already ruled out above, both by the panel-versus-sample test’s design and by the data (<a href="#sec-panel-association-results" class="quarto-xref"><span>Section 4.3</span></a>; <a href="03-chap3.html" class="quarto-xref"><span>Chapter 3</span></a>). <a href="05-chap5.html" class="quarto-xref"><span>Chapter 5</span></a> introduces Intersection Inspector, a tool built directly in response to this marginal-versus-intersectional gap, which displays a panel’s intersectional association alongside its marginal quota satisfaction so that this kind of distortion is visible to a practitioner before a panel convenes, rather than only to a reader of this thesis after the fact.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03-chap3.html" class="pagination-link" aria-label="Methodology">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Methodology</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./05-chap5.html" class="pagination-link" aria-label="Introducing Intersection Inspector">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introducing Intersection Inspector</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
