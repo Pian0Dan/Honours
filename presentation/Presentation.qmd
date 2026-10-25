@@ -71,26 +71,25 @@ Notice anything strange?
 
 # So where in the process do we assess representativeness?
 
-## Simulation design
+## Simulation design {.nostretch}
 
-::: {style="font-size: 90%;"}
+::: {style="font-size: 75%;"}
 
 - Four-stage pipeline: **Population** (n = 100,000) &rarr; **Slice** (10% invited) &rarr; **Sample** (actual respondents) &rarr; **Panel** ($k$ = 50, via LexiMin)
 - Two categorical traits: **age** (5 brackets) and **tenure** (Rent/Own/Other)
-- Two populations: age & tenure **independent**, or **associated** (negative age-renting relationship, introduced via seeding + raking to preserve identical margins)
-- Two response cases: **equal-chance**, or **age-associated** (response probability rises with age)
-- &rarr; four simulated respondent pools, each run through Panelot's LexiMin to enumerate every feasible panel
+- Two populations: age & tenure **independent** or **associated** (negative age-renting relationship, via seeding + raking to preserve margins)
+- Two response cases: **equal-chance** or **age-associated** (response probability rises with age) &rarr; four simulated respondent pools, each run through Panelot's LexiMin
 
 :::
 
 ```{r}
-#| label: fig-population-slice-sample-panel
+#| label: population-slice-sample-panel-plot
 #| echo: false
 #| fig-width: 9
-#| fig-height: 2.6
-#| out-width: 100%
-box_w <- 1.45
-box_h <- 0.6
+#| fig-height: 2.4
+#| out-width: 90%
+box_w <- 1.55
+box_h <- 0.85
 xs <- c(0, 1.9, 3.8, 5.7)
 
 pipeline_nodes <- data.frame(
@@ -110,10 +109,10 @@ ggplot() +
     fontface = "bold", size = 3.6, lineheight = 0.9) +
   geom_segment(data = pipeline_edges, aes(x = x, xend = xend, y = y, yend = y),
     arrow = arrow(length = unit(0.18, "cm"), type = "closed"), linewidth = 0.4) +
-  geom_text(data = pipeline_edges, aes(x = (x + xend) / 2, y = y + 0.4, label = label),
+  geom_text(data = pipeline_edges, aes(x = (x + xend) / 2, y = y + 0.55, label = label),
     size = 2.9, lineheight = 0.9) +
   xlim(min(xs) - box_w / 2 - 0.1, max(xs) + box_w / 2 + 0.1) +
-  ylim(-0.6, 0.8) +
+  ylim(-0.7, 1.0) +
   coord_fixed(ratio = 1.1) +
   theme_void()
 ```
@@ -175,47 +174,131 @@ knitr::kable(
 - True even for the **independent** population, where there is no association to distort in the first place
 - Against a simple-random-sampling benchmark (500 draws of equal size), panels are flagged at a rate **roughly an order of magnitude higher** than chance
 
-## Why does this happen?
+## Why does this happen? {.nostretch}
 
-- LexiMin's quotas are set **marginally** -- a count per age bracket, a count per tenure category -- never jointly
-- Satisfying every marginal quota says nothing about how those categories *combine* within a selected panel
-- A panel can hit every quota count exactly and still be badly skewed on the intersections that matter for lived experience
-- This is invisible to the pie charts / bar charts typically used to report panel composition
+:::: {.columns}
+
+::: {.column width="45%"}
+- Quotas set **marginally** -- age and tenure counted separately, never jointly
+- Meeting every quota says nothing about how categories *combine*
+- A panel can hit every quota and still be badly skewed on intersections
+- Invisible to standard pie/bar chart reporting
+:::
+
+::: {.column width="55%"}
+```{r}
+#| label: quota-vs-joint-schematic
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.3
+#| out-width: 100%
+make_quota_panel <- function(counts_mat, title) {
+  rows <- c("A", "B", "C")
+  cols <- c("Rent", "Own")
+  row_totals <- rowSums(counts_mat)
+  col_totals <- colSums(counts_mat)
+
+  df <- expand.grid(row = rows, col = cols)
+  df$count <- as.vector(counts_mat)
+
+  row_labs <- paste0(rows, "\n(n=", row_totals, ")")
+  col_labs <- paste0(cols, "\n(n=", col_totals, ")")
+  names(row_labs) <- rows
+  names(col_labs) <- cols
+
+  ggplot(df, aes(x = col, y = row, fill = count)) +
+    geom_tile(colour = "white", linewidth = 1.2) +
+    geom_text(aes(label = count), size = 6, fontface = "bold") +
+    scale_fill_gradient(low = "grey95", high = "grey40", limits = c(0, 4), guide = "none") +
+    scale_x_discrete(labels = col_labs, position = "top") +
+    scale_y_discrete(labels = row_labs, limits = rev(rows)) +
+    labs(title = title, x = NULL, y = NULL) +
+    coord_fixed() +
+    theme_minimal(base_size = 13) +
+    theme(
+      panel.grid = element_blank(),
+      axis.text = element_text(colour = "black", face = "bold", size = 10),
+      plot.title = element_text(face = "bold", size = 12, hjust = 0.5)
+    )
+}
+
+# Same row/column quotas (4,4,4 / 6,6) -- different joint structure
+skewed_mat <- matrix(c(4, 0,
+                        1, 3,
+                        1, 3), nrow = 3, byrow = TRUE)
+balanced_mat <- matrix(c(2, 2,
+                          2, 2,
+                          2, 2), nrow = 3, byrow = TRUE)
+
+p_skewed <- make_quota_panel(skewed_mat, "Skewed")
+p_balanced <- make_quota_panel(balanced_mat, "Balanced")
+
+p_skewed + p_balanced +
+  plot_annotation(
+    title = "Both satisfy identical quotas",
+    theme = theme(plot.title = element_text(face = "bold", size = 12, hjust = 0.5))
+  )
+```
+:::
+
+::::
+
+::: {.notes}
+LexiMin's quotas are set marginally -- a count per age bracket, a count per tenure category -- never jointly. Satisfying every marginal quota says nothing about how those categories combine within a selected panel. A panel can hit every quota count exactly and still be badly skewed on the intersections that matter for lived experience. This is invisible to the pie charts / bar charts typically used to report panel composition.
+:::
 
 # Introducing Intersection Inspector
 
-## Demo {background-video="TODO-intersection-inspector-demo.mp4" background-video-loop="false"}
+## Demo
 
 ::: {.notes}
-Placeholder slide -- swap `background-video` for the recorded screen-capture file (or replace this slide entirely with a `video` shortcode / embedded player) once the Intersection Inspector walkthrough has been recorded. See the Appendix at the end of this deck for the original static-screenshot slides ("What it does", "Comparing intersections", "Testing, browsing, and deciding") to crib talking points from while narrating the demo.
+Screen-capture walkthrough of Intersection Inspector. See appendix.qmd ("What it does", "Comparing intersections", "Testing, browsing, and deciding") to crib talking points from while narrating the demo.
 :::
 
-[Video demo of Intersection Inspector -- to be recorded]{style="font-size: 150%;"}
+[Watch the demo video](https://drive.google.com/file/d/14_uLDk7YKTWf6XqL-TCqphr7yGYmxCaX/view?usp=sharing){style="font-size: 150%;"}
 
 ## A framework for practitioners
 
-1. **Quota-based selection** (LexiMin, or future methods) remains the right tool for fair, robust marginal selection probabilities
-2. An **intersectional check** -- like Intersection Inspector -- should sit between panel generation and convening, before members are contacted
-3. Where a specific intersection matters for an engagement, **deliberate joint-quota constraints or targeted recruitment** are more defensible than trusting marginal quotas to deliver it incidentally
+::: {style="font-size: 105%; line-height: 2;"}
+1. **Quota-based selection** -- still the right tool for fair marginal chances
+2. **Intersectional check** -- before convening, not after
+3. **Deliberate joint constraints** where a specific intersection matters
+:::
 
-Marginal quota satisfaction should be treated as **necessary, but not sufficient**, evidence of a representative panel.
+::: {style="font-size: 105%;"}
+Marginal quota satisfaction: **necessary, but not sufficient**.
+:::
+
+::: {.notes}
+Quota-based selection (LexiMin, or future methods) remains the right tool for fair, robust marginal selection probabilities. An intersectional check -- like Intersection Inspector -- should sit between panel generation and convening, before members are contacted. Where a specific intersection matters for an engagement, deliberate joint-quota constraints or targeted recruitment are more defensible than trusting marginal quotas to deliver it incidentally. Marginal quota satisfaction should be treated as necessary, but not sufficient, evidence of a representative panel.
+:::
 
 ## Limitations
 
-::: {style="font-size: 90%;"}
+::: {style="font-size: 95%; line-height: 2;"}
 
-- Simulation uses only two categorical variables; real panels typically use three or more -- the gap is expected to compound, not shrink, as dimensionality grows
-- Response rates (30-50%) were deliberately elevated above typical civic-lottery rates (often < 10%), to keep cells populated enough to isolate the algorithm's behaviour -- results are a **conservative, best-case** estimate
-- Association strengths were fixed at values chosen for visibility, not drawn from a specific real-world dataset
-- Intersection Inspector shows two variables' joint structure at a time, and sorts uploaded levels alphabetically (a problem for ordinal variables specifically)
+- Only **two** categorical variables simulated -- real panels typically use three or more
+- Response rates elevated (30-50%) -- a **conservative, best-case** estimate
+- Association strengths fixed for visibility, not drawn from real data
+- Tool compares **two variables** at a time; levels sorted alphabetically
 
+:::
+
+::: {.notes}
+Simulation uses only two categorical variables; real panels typically use three or more -- the gap is expected to compound, not shrink, as dimensionality grows. Response rates (30-50%) were deliberately elevated above typical civic-lottery rates (often < 10%), to keep cells populated enough to isolate the algorithm's behaviour -- results are a conservative, best-case estimate. Association strengths were fixed at values chosen for visibility, not drawn from a specific real-world dataset. Intersection Inspector shows two variables' joint structure at a time, and sorts uploaded levels alphabetically (a problem for ordinal variables specifically).
 :::
 
 ## Future research
 
-- Extend simulation beyond two variables to test how severely distortion scales with added demographic categories
-- Revisit with the **Goldilocks** algorithm once released -- does its handling of selection-probability floors/ceilings affect intersectional preservation?
-- More directly: selection methods that build in **joint**, intersectional constraints alongside marginal quotas, rather than checking for intersectionality after the fact
+::: {style="font-size: 100%; line-height: 2.4;"}
+- Extend to **more than two** variables
+- Revisit with the **Goldilocks** algorithm once released
+- Selection methods with **joint** constraints, not after-the-fact checks
+:::
+
+::: {.notes}
+Extend simulation beyond two variables to test how severely distortion scales with added demographic categories. Revisit with the Goldilocks algorithm once released -- does its handling of selection-probability floors/ceilings affect intersectional preservation? More directly: selection methods that build in joint, intersectional constraints alongside marginal quotas, rather than checking for intersectionality after the fact.
+:::
 
 ## Reproducibility and Software
 
@@ -228,37 +311,6 @@ Code, data and thesis source available at <https://github.com/Pian0Dan/Honours>.
 
 :::
 
-# So... am I in the room?
-
-A fair lottery is not the end of the question. A panel can be perfectly fair by the numbers and still quietly leave an entire slice of a community's lived experience unheard -- simply because no one checked whether the categories were ever meant to be looked at together.
-
-# Appendix: Intersection Inspector (backup slides)
-
-## What it does
-
-A Shiny app that replaces the final, opaque "generate a random panel" step of the sortition pipeline with an inspectable one -- given a lottery file and its respondent pool, it lets a practitioner see, test, and browse panels before one is finalised.
-
-![Intersection Inspector's main view: file upload and panel navigation (left), mosaic comparison of sample vs panel (top right), and marginal trait distributions (bottom right).](../figures/intersection-inspector-overview.png)
-
-## Comparing intersections
-
-::: {layout-ncol=2}
-
-![Mosaic comparison: sample vs. the most likely panel.](../figures/intersection-inspector-mosaic.png)
-
-![Marginal trait distributions: single-variable proportions stay close between sample and panel, even while the joint structure (left) diverges.](../figures/intersection-inspector-bars.png)
-
-:::
-
-The gap between these two views **is** the gap this thesis is about: marginal representativeness without intersectional representativeness.
-
-## Testing, browsing, and deciding
-
-![Full sidebar: upload, variable selection, panel-rank slider, random/weighted-random jump buttons, member ID lookup, and an adjustable under-representation threshold.](../figures/intersection-inspector-sidebar.png){width=55%}
-
-- Formally tests each panel's association against its sample (same tests used in the results above)
-- Browse panels by similarity, at random, weighted by return probability, or by ID
-- Flags under-represented intersections at a practitioner-adjustable threshold
-- Agnostic to the selection algorithm -- works with any lottery file in the same format
+# So... [am I in the room?]{.fragment}
 
 ## References {style="font-size: 65%;"}

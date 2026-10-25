@@ -1,0 +1,28 @@
+# Appendix: Intersection Inspector (backup slides)
+
+## What it does
+
+A Shiny app that replaces the final, opaque "generate a random panel" step of the sortition pipeline with an inspectable one -- given a lottery file and its respondent pool, it lets a practitioner see, test, and browse panels before one is finalised.
+
+![Intersection Inspector's main view: file upload and panel navigation (left), mosaic comparison of sample vs panel (top right), and marginal trait distributions (bottom right).](../figures/intersection-inspector-overview.png)
+
+## Comparing intersections
+
+::: {layout-ncol=2}
+
+![Mosaic comparison: sample vs. the most likely panel.](../figures/intersection-inspector-mosaic.png)
+
+![Marginal trait distributions: single-variable proportions stay close between sample and panel, even while the joint structure (left) diverges.](../figures/intersection-inspector-bars.png)
+
+:::
+
+The gap between these two views **is** the gap this thesis is about: marginal representativeness without intersectional representativeness.
+
+## Testing, browsing, and deciding
+
+![Full sidebar: upload, variable selection, panel-rank slider, random/weighted-random jump buttons, member ID lookup, and an adjustable under-representation threshold.](../figures/intersection-inspector-sidebar.png){width=55%}
+
+- Formally tests each panel's association against its sample (same tests used in the results above)
+- Browse panels by similarity, at random, weighted by return probability, or by ID
+- Flags under-represented intersections at a practitioner-adjustable threshold
+- Agnostic to the selection algorithm -- works with any lottery file in the same format
