@@ -142,7 +142,8 @@ knitr::kable(
     "Lottery file", "Panels", "Sample assoc. p", "Sample Cramer's V",
     "Prop. significantly different"
   ),
-  digits = c(0, 0, 3, 3, 3)
+  digits = c(0, 0, 3, 3, 3),
+  row.names = FALSE
 )
 
 if (knitr::is_latex_output()) cat("\n\\normalsize")
