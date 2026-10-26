@@ -117,6 +117,36 @@ ggplot() +
   theme_void()
 ```
 
+## How to read a mosaic plot {.nostretch}
+
+:::: {.columns}
+
+::: {.column style="width:45%; font-size: 75%;"}
+- **Bar width** = marginal share (equal here: 25 Apple, 25 Orange)
+- **Fill height** = proportion of ice cream *given* fruit
+- 80% Apple $\rightarrow$ Vanilla; 80% Orange $\rightarrow$ Strawberry
+- The fill split **reverses** between bars -- a clear association
+- If independent, both bars split $\approx$ 50/50 regardless of width
+:::
+
+::: {.column width="55%"}
+```{r}
+#| label: mosaic-plot-explainer
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.3
+#| out-width: 100%
+source("scripts/exampleplot.R")
+fruit_and_cream
+```
+:::
+
+::::
+
+::: {.notes}
+This is the same toy example used in the thesis to introduce the mosaic plot convention. Bar width encodes the marginal distribution of the x-variable -- fruit -- which is equal here (25 Apple, 25 Orange lovers). Within each bar, the vertical split encodes the conditional distribution of the fill variable -- ice cream -- given that fruit: 80% of Apple-lovers prefer Vanilla, while 80% of Orange-lovers prefer Strawberry. So a box's area is proportional to the joint proportion of that fruit/ice-cream combination. The key thing to look for is a *difference* in the split, not the width: if the split points lined up across bars, fruit and ice cream would be independent; here they reverse almost entirely, signalling a strong association. Keep this convention in mind for the next few slides, which compare mosaic plots of samples against their drawn panels, with age brackets on the x-axis and tenure as fill.
+:::
+
 ## Does the panel preserve the association?
 
 ```{r}
