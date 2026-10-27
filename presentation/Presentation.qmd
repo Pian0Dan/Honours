@@ -264,7 +264,7 @@ knitr::kable(
 ::: {style="font-size: 72%;"}
 - Across **all four** simulated conditions (independent/associated population, equal-chance/age-skewed response), **`r round(min(lottery_summary$prop_sig_different) * 100, 1)`-100%** of feasible panels show an age-tenure association significantly different from their own sample
 - True even for the **independent** population, where there is no association to distort in the first place
-- Against a simple-random-sampling benchmark (500 draws of equal size), panels are flagged **`r round(min(benchmark_comparison$prop_sig_panels) * 100, 1)`-100%** of the time vs. only **`r round(min(benchmark_comparison$prop_sig_srs) * 100, 1)`-`r round(max(benchmark_comparison$prop_sig_srs) * 100, 1)`%** for random samples -- roughly an order of magnitude higher than chance
+- A simple-random-sampling benchmark (500 draws of equal size) is flagged only **`r round(min(benchmark_comparison$prop_sig_srs) * 100, 1)`-`r round(max(benchmark_comparison$prop_sig_srs) * 100, 1)`%** of the time -- roughly an order of magnitude lower than panels
 :::
 
 ## Panels vs. random chance
