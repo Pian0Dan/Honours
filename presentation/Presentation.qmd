@@ -56,19 +56,6 @@ Step (1): construct a maximally fair output distribution $\mathcal{D}$ over an o
 
 **The question this thesis asks:** satisfying quotas on each trait *separately* guarantees fairness of selection chances -- but does it guarantee a panel that actually *looks like* the population, once traits are considered *together*?
 
-## The problem with current visualisations
-
-```{r}
-#| label: fig-pie-chart-problem
-#| fig-width: 14
-#| fig-height: 7
-#| out-width: 100%
-invisible(capture.output(source("scripts/pie_chart_problem.R")))
-pie_chart_patchwork
-```
-
-Notice anything strange?
-
 # So where in the process do we assess representativeness?
 
 ## Simulation design {.nostretch}
@@ -117,6 +104,19 @@ ggplot() +
   theme_void()
 ```
 
+## The problem with current visualisations
+
+```{r}
+#| label: fig-pie-chart-problem
+#| fig-width: 14
+#| fig-height: 4.2
+#| out-width: 100%
+invisible(capture.output(source("scripts/pie_chart_problem.R")))
+pie_chart_patchwork
+```
+
+Both populations defined above -- notice anything strange?
+
 ## How to read a mosaic plot {.nostretch}
 
 :::: {.columns}
@@ -147,6 +147,34 @@ fruit_and_cream
 This is the same toy example used in the thesis to introduce the mosaic plot convention. Bar width encodes the marginal distribution of the x-variable -- fruit -- which is equal here (25 Apple, 25 Orange lovers). Within each bar, the vertical split encodes the conditional distribution of the fill variable -- ice cream -- given that fruit: 80% of Apple-lovers prefer Vanilla, while 80% of Orange-lovers prefer Strawberry. So a box's area is proportional to the joint proportion of that fruit/ice-cream combination. The key thing to look for is a *difference* in the split, not the width: if the split points lined up across bars, fruit and ice cream would be independent; here they reverse almost entirely, signalling a strong association. Keep this convention in mind for the next few slides, which compare mosaic plots of samples against their drawn panels, with age brackets on the x-axis and tenure as fill.
 :::
 
+## The pipeline, in practice
+
+```{r}
+#| label: fig-pipeline-mosaic
+#| fig-width: 11
+#| fig-height: 3.4
+#| out-width: 90%
+invisible(capture.output(source("scripts/patchwork.R")))
+n_fmt <- function(x) format(x, big.mark = ",")
+
+(pop2_cov_plot +
+  labs(title = paste0("Population (n = ", n_fmt(nrow(sim_data2_cov)), ")"))) +
+  (pop2_cov_slice_plot +
+    labs(title = paste0("Slice (n = ", n_fmt(nrow(sim_data2_cov_slice)), ")"))) +
+  (pop2_cov_eq_respondents_plot +
+    labs(title = paste0("Respondents (n = ", n_fmt(nrow(sim_data2_cov_eq_yes)), ")"))) +
+  plot_layout(ncol = 3, guides = "collect") &
+  rotate_age_labels
+```
+
+::: {style="font-size: 80%;"}
+Associated population, equal-chance response: the age-tenure relationship stays smooth and gradual from the population through the slice to actual respondents. It's only once Panelot selects a panel (next slides) that this breaks down.
+:::
+
+::: {.notes}
+Nothing unusual happens before panel selection -- population, slice and respondents all show the same gentle age-tenure gradient, using the mosaic convention from the previous slide. The independent population and the age-associated response case look the same in this respect (see the thesis for all four population/response combinations); this associated/equal-chance case is shown here as the illustrative example for time.
+:::
+
 ## Does the panel preserve the association?
 
 ```{r}
@@ -175,7 +203,7 @@ plot_panel_vs_sample(ind_eq_source, most_likely_ind_eq)
 
 The independent population's sample is close to flat across age brackets (left) -- yet its panel (right) is, if anything, *more* distorted. There is no real association here for the panel to exaggerate: the distortion is a property of the quota mechanism itself.
 
-## The headline result {.small-text}
+## The headline result
 
 ```{r}
 #| label: tbl-panel-association-summary
@@ -186,7 +214,40 @@ display_tbl <- lottery_summary[order(match(lottery_summary$file, file_order)), ]
 display_tbl$file <- gsub("^lottery_|\\.csv$", "", display_tbl$file)
 ```
 
-::: {style="font-size: 75%;"}
+```{r}
+#| label: srs-benchmark-pres
+#| include: false
+set.seed(6821)
+n_reps <- 500
+file_keys <- c(cov_eq = "cov_eq", cov_ass = "cov_ass", ind_eq = "ind_eq", ind_ass = "ind_ass")
+
+srs_benchmark_for <- function(key) {
+  pool <- survey_samples[[key]]
+  do.call(rbind, lapply(seq_len(n_reps), function(r) {
+    ids <- sample(pool$ID, 50)
+    members <- pool[pool$ID %in% ids, ]
+    within <- test_within_panel(members)
+    vs_p <- test_panel_vs_sample(ids, pool)
+    data.frame(cramers_v = within$cramers_v, vs_sample_p = vs_p)
+  }))
+}
+srs_results <- lapply(file_keys, srs_benchmark_for)
+
+benchmark_comparison <- do.call(rbind, lapply(names(file_keys), function(key) {
+  lottery_file <- paste0("lottery_", key, ".csv")
+  panels <- lottery_evaluations[[lottery_file]]$results
+  srs_df <- srs_results[[key]]
+  data.frame(
+    file = key,
+    prop_sig_panels = mean(panels$sig_different),
+    prop_sig_srs = mean(srs_df$vs_sample_p < 0.05),
+    median_v_panels = median(panels$within_panel_cramers_v),
+    median_v_srs = median(srs_df$cramers_v, na.rm = TRUE)
+  )
+}))
+```
+
+::: {style="font-size: 80%;"}
 
 ```{r}
 #| echo: false
@@ -200,9 +261,34 @@ knitr::kable(
 
 :::
 
+::: {style="font-size: 72%;"}
 - Across **all four** simulated conditions (independent/associated population, equal-chance/age-skewed response), **`r round(min(lottery_summary$prop_sig_different) * 100, 1)`-100%** of feasible panels show an age-tenure association significantly different from their own sample
 - True even for the **independent** population, where there is no association to distort in the first place
-- Against a simple-random-sampling benchmark (500 draws of equal size), panels are flagged at a rate **roughly an order of magnitude higher** than chance
+- Against a simple-random-sampling benchmark (500 draws of equal size), panels are flagged **`r round(min(benchmark_comparison$prop_sig_panels) * 100, 1)`-100%** of the time vs. only **`r round(min(benchmark_comparison$prop_sig_srs) * 100, 1)`-`r round(max(benchmark_comparison$prop_sig_srs) * 100, 1)`%** for random samples -- roughly an order of magnitude higher than chance
+:::
+
+## Panels vs. random chance
+
+```{r}
+#| label: fig-panel-vs-random
+#| fig-width: 12
+#| fig-height: 4
+#| out-width: 95%
+invisible(capture.output(source("scripts/srs_visualiser.R")))
+random_draw <- draw_random_sample_for_panel(
+  cov_eq_source$survey_sample, cov_eq_source$file, most_likely_panel_id
+)
+plot_panel_mosaic(cov_eq_source, most_likely_panel_id) +
+  plot_sample_mosaic(cov_eq_source) +
+  plot_srs_mosaic(random_draw) +
+  plot_layout(guides = "collect", ncol = 3)
+```
+
+The most likely LexiMin panel (left) and a size-matched random draw (right), anchored against the survey sample they're both drawn from (middle): the panel's joint structure is visibly blockier than either, with about **`r round(min(benchmark_comparison$median_v_panels) / max(benchmark_comparison$median_v_srs), 1)`x** the median Cramer's V of a random draw.
+
+::: {.notes}
+The random draw shown is a deterministic, seeded draw paired to this specific panel (via scripts/srs_visualiser.R's draw_random_sample_for_panel()), so re-rendering reproduces the same comparison rather than a fresh one. The Cramer's V multiplier, like the rates on the previous slide, comes from the same 500-draw simple-random-sampling comparison repeated across all four lottery files (thesis ch. 4) -- panels show a much higher median within-group Cramer's V than equivalently sized random samples, regardless of population structure or response case.
+:::
 
 ## Why does this happen? {.nostretch}
 
